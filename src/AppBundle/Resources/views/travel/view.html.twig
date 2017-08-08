@@ -1,5 +1,9 @@
 {% extends '::base.html.twig' %}
-
+{% block nav_left %}
+    <ul class="nav navbar-nav">
+        <li><a href="{{ path('app_homepage') }}"><i class="glyphicon glyphicon-arrow-left"></i></a></li>
+    </ul>
+{% endblock %}
 {% block main %}
     <div class="row">
         <div class="col-md-4">
@@ -12,6 +16,13 @@
                     <p>{{ travel.dateStart|date("d/m/Y") }} {% if travel.dateEnd %} - {{ travel.dateEnd|date("d/m/Y") }}{% endif %}</p>
                     <div class="btn-group" role="group" aria-label="...">
                         <a href="{{ path('app_travel_view', { 'travel': travel.id }) }}" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-pencil"></i></a>
+                        <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ path('app_travel_view', { 'travel': travel.id }) }}">Supprimer</a></li>
+                        </ul>
                     </div>
                 </div>
             </div>

@@ -14,7 +14,12 @@
     </head>
     <body>
         <header class="header">
-            <nav class="navbar navbar-default navbar-fixed-top"></nav>
+            <nav class="navbar navbar-default navbar-fixed-top">
+                <div class="container">
+                    <div class="navbar-left">{% block nav_left %}{% endblock %}</div>
+                    <a class="navbar-brand" href="{{ path('app_homepage') }}">TravelSheets</a>
+                </div>
+            </nav>
         </header>
         <main class="container">
             {% block main %}{% endblock %}
