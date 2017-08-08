@@ -2,3 +2,8 @@ app_homepage:
     path:     /
     defaults:
       _controller: 'AppBundle:Travel:list'
+
+app_travel_view:
+    path: /travels/{travel}
+    defaults:
+      _controller: 'AppBundle:Travel:view'
