@@ -17,3 +17,8 @@ app_travel_edit:
     path: /travels/{travel}/edit
     defaults:
       _controller: 'AppBundle:Travel:edit'
+
+app_travel_delete:
+    path: /travels/{travel}/delete
+    defaults:
+      _controller: 'AppBundle:Travel:delete'

@@ -10,6 +10,8 @@
             </a>
             {% endfor %}
         </div>
+    {% else %}
+        <p>Vous n'avez aucun voyage de prévu, <a href="{{ path('app_travel_new') }}">créez le premier</a> !</p>
     {% endif %}
     <div class="btn-group" role="group" aria-label="...">
         <a href="{{ path('app_travel_new') }}" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-plus"></i></a>

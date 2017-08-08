@@ -1,0 +1,14 @@
+{% extends '::base.html.twig' %}
+{% block nav_left %}
+    <ul class="nav navbar-nav">
+        <li><a href="{{ path('app_travel_view', { 'travel': travel.id } ) }}"><i class="glyphicon glyphicon-arrow-left"></i></a></li>
+    </ul>
+{% endblock %}
+{% block main %}
+    <h2>Supprimer "{{ travel.name }}"</h2>
+    <p>Êtes-vous sur de vouloir supprimer ce voyage et toutes les étapes liées ?</p>
+    <p>
+        <a href="{{ path('app_travel_view', { 'travel': travel.id } ) }}" class="btn btn-default">Annuler</a>
+        <a href="{{ path('app_travel_delete', { 'travel': travel.id, 'confirm': true }) }}" class="btn btn-danger">Supprimer</a>
+    </p>
+{% endblock %}

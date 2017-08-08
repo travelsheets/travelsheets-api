@@ -1,4 +1,5 @@
 <?php
+
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Travel;
@@ -31,6 +32,8 @@ class TravelController extends Controller
     }
 
     /**
+     * Create a new Travel
+     *
      * @param Request $request
      * @return Response
      */
@@ -39,7 +42,7 @@ class TravelController extends Controller
         $form = $this->createForm(TravelType::class);
         $form->handleRequest($request);
 
-        if($form->isValid()) {
+        if ($form->isValid()) {
             /** @var Travel $travel */
             $travel = $form->getData();
 
@@ -64,17 +67,26 @@ class TravelController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function viewAction(Travel $travel, Request $request) {
+    public function viewAction(Travel $travel, Request $request)
+    {
         return $this->render('@App/travel/view.html.twig', array(
-           'travel' => $travel,
+            'travel' => $travel,
         ));
     }
 
-    public function editAction(Travel $travel, Request $request) {
+    /**
+     * Edit a Travel
+     *
+     * @param Travel $travel
+     * @param Request $request
+     * @return Response
+     */
+    public function editAction(Travel $travel, Request $request)
+    {
         $form = $this->createForm(TravelType::class, $travel);
         $form->handleRequest($request);
 
-        if($form->isValid()) {
+        if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($travel);
             $em->flush();
@@ -87,6 +99,30 @@ class TravelController extends Controller
         return $this->render('@App/travel/edit.html.twig', array(
             'travel' => $travel,
             'form' => $form->createView(),
+        ));
+    }
+
+    /**
+     * Delete a Travel
+     *
+     * @param Travel $travel
+     * @param Request $request
+     * @return Response
+     */
+    public function deleteAction(Travel $travel, Request $request)
+    {
+        $confirm = $request->get('confirm', false);
+
+        if($confirm) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($travel);
+            $em->flush();
+
+            return $this->redirectToRoute('app_homepage');
+        }
+
+        return $this->render('@App/travel/delete.html.twig', array(
+            'travel' => $travel,
         ));
     }
 }
