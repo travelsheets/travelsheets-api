@@ -64,6 +64,13 @@ abstract class AbstractStep
     private $currency;
 
     /**
+     * @var Travel
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Travel", inversedBy="id")
+     */
+    private $travel;
+
+    /**
      * Get id
      *
      * @return int
@@ -78,7 +85,7 @@ abstract class AbstractStep
      *
      * @param string $name
      *
-     * @return Step
+     * @return $this
      */
     public function setName($name)
     {
@@ -102,7 +109,7 @@ abstract class AbstractStep
      *
      * @param DateTime $dateStart
      *
-     * @return Step
+     * @return $this
      */
     public function setDateStart(DateTime $dateStart)
     {
@@ -126,7 +133,7 @@ abstract class AbstractStep
      *
      * @param DateTime $dateEnd
      *
-     * @return Step
+     * @return $this
      */
     public function setDateEnd(DateTime $dateEnd = null)
     {
@@ -150,7 +157,7 @@ abstract class AbstractStep
      *
      * @param string $summary
      *
-     * @return Step
+     * @return $this
      */
     public function setSummary($summary)
     {
@@ -174,7 +181,7 @@ abstract class AbstractStep
      *
      * @param float $price
      *
-     * @return Step
+     * @return $this
      */
     public function setPrice($price)
     {
@@ -210,5 +217,21 @@ abstract class AbstractStep
     {
         $this->currency = $currency;
         return $this;
+    }
+
+    /**
+     * @return Travel
+     */
+    public function getTravel()
+    {
+        return $this->travel;
+    }
+
+    /**
+     * @param Travel $travel
+     */
+    public function setTravel(Travel $travel)
+    {
+        $this->travel = $travel;
     }
 }
