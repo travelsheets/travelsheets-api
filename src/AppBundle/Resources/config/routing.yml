@@ -1,0 +1,24 @@
+app_homepage:
+    path:     /
+    defaults:
+      _controller: 'AppBundle:Travel:list'
+
+app_travel_new:
+    path: /travels/new
+    defaults:
+      _controller: 'AppBundle:Travel:new'
+
+app_travel_view:
+    path: /travels/{travel}
+    defaults:
+      _controller: 'AppBundle:Travel:view'
+
+app_travel_edit:
+    path: /travels/{travel}/edit
+    defaults:
+      _controller: 'AppBundle:Travel:edit'
+
+app_travel_delete:
+    path: /travels/{travel}/delete
+    defaults:
+      _controller: 'AppBundle:Travel:delete'

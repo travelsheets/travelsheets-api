@@ -1,0 +1,15 @@
+{% extends '::base.html.twig' %}
+{% block nav_left %}
+    <ul class="nav navbar-nav">
+        <li><a href="{{ path('app_homepage') }}"><i class="glyphicon glyphicon-arrow-left"></i></a></li>
+    </ul>
+{% endblock %}
+
+{% block title %}Créer un voyage{% endblock %}
+
+{% block main %}
+    <h2>Créer un voyage</h2>
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+{% endblock %}
