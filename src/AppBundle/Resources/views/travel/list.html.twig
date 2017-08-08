@@ -1,0 +1,14 @@
+{% extends '::base.html.twig' %}
+{% block main %}
+    {% if entities %}
+        <div class="list-group">
+            {% for entity in entities %}
+            <a href="#" class="list-group-item">
+                <h4 class="list-group-item-heading">{{ entity.name }}</h4>
+                <p class="list-group-item-text">{{ entity.summary }}</p>
+                <p class="list-group-item-text">{{ entity.dateStart|date("d/m/Y") }} {% if entity.dateEnd %} - {{ entity.dateEnd|date("d/m/Y") }}{% endif %}</p>
+            </a>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}
