@@ -33,7 +33,7 @@ class TravelType extends AbstractType
         $builder->add('dateEnd', DateType::class, array(
             'required' => false,
         ));
-        $builder->add('save', SubmitType::class, array('label' => 'Créer le voyage'));
+        $builder->add('save', SubmitType::class, array('label' => 'Enregistrer'));
     }
 
     /**

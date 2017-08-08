@@ -12,3 +12,8 @@ app_travel_view:
     path: /travels/{travel}
     defaults:
       _controller: 'AppBundle:Travel:view'
+
+app_travel_edit:
+    path: /travels/{travel}/edit
+    defaults:
+      _controller: 'AppBundle:Travel:edit'

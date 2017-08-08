@@ -15,13 +15,13 @@
                     <p>{{ travel.summary }}</p>
                     <p>{{ travel.dateStart|date("d/m/Y") }} {% if travel.dateEnd %} - {{ travel.dateEnd|date("d/m/Y") }}{% endif %}</p>
                     <div class="btn-group" role="group" aria-label="...">
-                        <a href="{{ path('app_travel_view', { 'travel': travel.id }) }}" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-pencil"></i></a>
+                        <a href="{{ path('app_travel_edit', { 'travel': travel.id }) }}" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-pencil"></i></a>
                         <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="caret"></span>
                             <span class="sr-only">Toggle Dropdown</span>
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a href="{{ path('app_travel_view', { 'travel': travel.id }) }}">Supprimer</a></li>
+                            <li><a href="{{ path('app_travel_edit', { 'travel': travel.id }) }}">Supprimer</a></li>
                         </ul>
                     </div>
                 </div>
