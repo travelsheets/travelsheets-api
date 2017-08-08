@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -35,6 +36,19 @@ class Travel
      */
     private $summary;
 
+    /**
+     * @var DateTime
+     *
+     * @ORM\Column(name="date_start", type="datetime")
+     */
+    private $dateStart;
+
+    /**
+     * @var DateTime
+     *
+     * @ORM\Column(name="date_end", type="datetime", nullable=true)
+     */
+    private $dateEnd;
 
     /**
      * Get id
@@ -51,7 +65,7 @@ class Travel
      *
      * @param string $name
      *
-     * @return Travel
+     * @return $this
      */
     public function setName($name)
     {
@@ -75,7 +89,7 @@ class Travel
      *
      * @param string $summary
      *
-     * @return Travel
+     * @return $this
      */
     public function setSummary($summary)
     {
@@ -92,6 +106,45 @@ class Travel
     public function getSummary()
     {
         return $this->summary;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getDateStart()
+    {
+        return $this->dateStart;
+    }
+
+    /**
+     * @param DateTime $dateStart
+     *
+     * @return $this
+     */
+    public function setDateStart(DateTime $dateStart)
+    {
+        $this->dateStart = $dateStart;
+        return $this;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getDateEnd()
+    {
+        return $this->dateEnd;
+    }
+
+    /**
+     * @param DateTime $dateEnd
+     *
+     * @return $this
+     */
+    public function setDateEnd(DateTime $dateEnd)
+    {
+        $this->dateEnd = $dateEnd;
+
+        return $this;
     }
 }
 
