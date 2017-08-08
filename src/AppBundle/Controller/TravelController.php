@@ -2,6 +2,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Travel;
+use AppBundle\Form\TravelType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,6 +27,33 @@ class TravelController extends Controller
 
         return $this->render('@App/travel/list.html.twig', array(
             'entities' => $entities,
+        ));
+    }
+
+    /**
+     * @param Request $request
+     * @return Response
+     */
+    public function newAction(Request $request)
+    {
+        $form = $this->createForm(TravelType::class);
+        $form->handleRequest($request);
+
+        if($form->isValid()) {
+            /** @var Travel $travel */
+            $travel = $form->getData();
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($travel);
+            $em->flush();
+
+            return $this->redirectToRoute('app_travel_view', array(
+                'travel' => $travel->getId(),
+            ));
+        }
+
+        return $this->render('@App/travel/new.html.twig', array(
+            'form' => $form->createView(),
         ));
     }
 

@@ -91,7 +91,7 @@ class Travel
      *
      * @return $this
      */
-    public function setSummary($summary)
+    public function setSummary($summary = null)
     {
         $this->summary = $summary;
 
@@ -140,7 +140,7 @@ class Travel
      *
      * @return $this
      */
-    public function setDateEnd(DateTime $dateEnd)
+    public function setDateEnd(DateTime $dateEnd = null)
     {
         $this->dateEnd = $dateEnd;
 

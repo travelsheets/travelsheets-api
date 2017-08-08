@@ -3,6 +3,11 @@ app_homepage:
     defaults:
       _controller: 'AppBundle:Travel:list'
 
+app_travel_new:
+    path: /travels/new
+    defaults:
+      _controller: 'AppBundle:Travel:new'
+
 app_travel_view:
     path: /travels/{travel}
     defaults:
