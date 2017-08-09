@@ -35,14 +35,17 @@ abstract class AbstractStepType extends AbstractType
 
         $builder->add('dateEnd', DateTimeType::class, array(
             'label' => 'Date de fin',
+            'required' => false,
         ));
 
         $builder->add('summary', TextareaType::class, array(
             'label' => 'Description / Notes',
+            'required' => false,
         ));
 
         $builder->add('price', MoneyType::class, array(
             'label' => 'Prix',
+            'required' => false,
         ));
 
         $this->addCustomFields($builder, $options);

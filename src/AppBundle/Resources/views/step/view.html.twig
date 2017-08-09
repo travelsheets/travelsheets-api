@@ -15,8 +15,10 @@
             {{ step.name }}
         </h3>
     </div>
+    {% if step.summary %}
     <div class="panel-body">
         <p>{{ step.summary }}</p>
     </div>
+    {% endif %}
     {% block step_informations %}{% endblock %}
 </div>
