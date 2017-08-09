@@ -8,7 +8,6 @@
 
 namespace AppBundle\Controller;
 
-
 use AppBundle\Entity\AbstractStep;
 use AppBundle\Entity\Travel;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -34,7 +33,7 @@ class StepController extends Controller
         $params = $optionResolver->resolve($request->query->all());
 
         $type = $params['type'];
-        $formType = 'AppBundle\\Form\\Step\\' . ucfirst($params['type']) . 'StepType';
+        $formType = 'AppBundle\\Form\\Step\\' . ucfirst($type) . 'StepType';
 
         if(!class_exists($formType)) {
             throw new NotFoundHttpException('Type not found');
@@ -60,6 +59,37 @@ class StepController extends Controller
         return $this->render('@App/step/new.html.twig', array(
             'travel' => $travel,
             'type' => $type,
+            'form' => $form->createView(),
+        ));
+    }
+
+    /**
+     * Edit a Step in Travel
+     *
+     * @param AbstractStep $step
+     * @param Travel $travel
+     * @param Request $request
+     * @return Response
+     */
+    public function editAction(AbstractStep $step, Travel $travel, Request $request) {
+        $formType = 'AppBundle\\Form\\Step\\' . ucfirst($step->getDType()) . 'StepType';
+
+        $form = $this->createForm($formType, $step);
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($step);
+            $em->flush();
+
+            return $this->redirectToRoute('app_travel_view', array(
+                'travel' => $travel->getId(),
+            ));
+        }
+
+        return $this->render('@App/step/edit.html.twig', array(
+            'travel' => $travel,
+            'step' => $step,
             'form' => $form->createView(),
         ));
     }

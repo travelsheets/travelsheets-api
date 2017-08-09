@@ -27,3 +27,11 @@ app_step_new:
     path: /travels/{travel}/steps/new
     defaults:
       _controller: 'AppBundle:Step:new'
+
+app_step_edit:
+    path: /travels/{travel}/steps/{step}/edit
+    defaults:
+      _controller: 'AppBundle:Step:edit'
+
+app_step_delete:
+    path: /travels/{travel}/steps/{step}/delete
