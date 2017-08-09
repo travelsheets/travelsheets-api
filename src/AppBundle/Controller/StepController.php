@@ -93,4 +93,32 @@ class StepController extends Controller
             'form' => $form->createView(),
         ));
     }
+
+    /**
+     * Delete a Travel
+     *
+     * @param AbstractStep $step
+     * @param Travel $travel
+     * @param Request $request
+     * @return Response
+     */
+    public function deleteAction(AbstractStep $step, Travel $travel, Request $request)
+    {
+        $confirm = $request->get('confirm', false);
+
+        if($confirm) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($step);
+            $em->flush();
+
+            return $this->redirectToRoute('app_travel_view', array(
+                'travel' => $travel->getId(),
+            ));
+        }
+
+        return $this->render('@App/step/delete.html.twig', array(
+            'travel' => $travel,
+            'step' => $step,
+        ));
+    }
 }

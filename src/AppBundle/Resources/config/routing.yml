@@ -35,3 +35,5 @@ app_step_edit:
 
 app_step_delete:
     path: /travels/{travel}/steps/{step}/delete
+    defaults:
+      _controller: 'AppBundle:Step:delete'
