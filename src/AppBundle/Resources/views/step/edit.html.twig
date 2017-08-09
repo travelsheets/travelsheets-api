@@ -1,0 +1,15 @@
+{% extends '::base.html.twig' %}
+{% block nav_left %}
+    <ul class="nav navbar-nav">
+        <li><a href="{{ path('app_travel_view', { 'travel': travel.id } ) }}"><i class="glyphicon glyphicon-arrow-left"></i></a></li>
+    </ul>
+{% endblock %}
+
+{% block title %}Modifier // {{ step.name }}{% endblock %}
+
+{% block main %}
+    <h2>Modifier "{{ step.name }}"</h2>
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+{% endblock %}

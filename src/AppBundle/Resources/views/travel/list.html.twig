@@ -1,0 +1,19 @@
+{% extends '::base.html.twig' %}
+{% block main %}
+    {% if entities %}
+        <div class="list-group">
+            {% for entity in entities %}
+            <a href="{{ path('app_travel_view', {'travel': entity.id}) }}" class="list-group-item">
+                <h4 class="list-group-item-heading">{{ entity.name }}</h4>
+                <p class="list-group-item-text">{{ entity.summary }}</p>
+                <p class="list-group-item-text">{{ entity.dateStart|date("d/m/Y") }} {% if entity.dateEnd %} - {{ entity.dateEnd|date("d/m/Y") }}{% endif %}</p>
+            </a>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>Vous n'avez aucun voyage de prévu, <a href="{{ path('app_travel_new') }}">créez le premier</a> !</p>
+    {% endif %}
+    <div class="btn-group" role="group" aria-label="...">
+        <a href="{{ path('app_travel_new') }}" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-plus"></i></a>
+    </div>
+{% endblock %}
