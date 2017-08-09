@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\AbstractStep;
 use AppBundle\Entity\Travel;
 use AppBundle\Form\TravelType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -69,8 +70,13 @@ class TravelController extends Controller
      */
     public function viewAction(Travel $travel, Request $request)
     {
+        $steps = $this->getDoctrine()->getRepository(AbstractStep::class)->findBy(array(
+            'travel' => $travel,
+        ), array('dateStart' => 'ASC'));
+
         return $this->render('@App/travel/view.html.twig', array(
             'travel' => $travel,
+            'steps' => $steps,
         ));
     }
 

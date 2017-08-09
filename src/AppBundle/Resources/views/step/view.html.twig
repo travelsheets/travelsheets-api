@@ -1,0 +1,24 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="btn-group fr" role="group" aria-label="...">
+            <a href="{{ path('app_step_edit', { 'travel': travel.id, 'step': step.id }) }}" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-pencil"></i></a>
+            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a href="{{ path('app_step_delete', { 'travel': travel.id, 'step': step.id }) }}">Supprimer</a></li>
+            </ul>
+        </div>
+        <h3 class="panel-title">
+            <i class="icon-step {{ step.dtype }} {{ step.type }}"></i>&nbsp;&nbsp;
+            {{ step.name }}
+        </h3>
+    </div>
+    {% if step.summary %}
+    <div class="panel-body">
+        <p>{{ step.summary|raw }}</p>
+    </div>
+    {% endif %}
+    {% block step_informations %}{% endblock %}
+</div>
