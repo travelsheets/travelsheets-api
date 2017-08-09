@@ -72,7 +72,7 @@ class TravelController extends Controller
     {
         $steps = $this->getDoctrine()->getRepository(AbstractStep::class)->findBy(array(
             'travel' => $travel,
-        ));
+        ), array('dateStart' => 'ASC'));
 
         return $this->render('@App/travel/view.html.twig', array(
             'travel' => $travel,
