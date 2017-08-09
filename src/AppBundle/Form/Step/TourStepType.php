@@ -27,6 +27,9 @@ class TourStepType extends AbstractStepType
             'choices' => array(
                 'Musée' => 'museum',
                 'Lieu touristique' => 'place',
+                'Restaurant' => 'restaurant',
+                'Café' => 'coffee',
+                'Bar / Club' => 'club',
                 'Autre' => 'other',
             ),
             'placeholder' => 'Choisir un type de visite',

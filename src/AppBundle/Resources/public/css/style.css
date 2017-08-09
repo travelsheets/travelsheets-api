@@ -6,3 +6,87 @@ body {
 .fr {
     float: right
 }
+
+@font-face {
+    font-family: 'icomoon';
+    src:  url('../fonts/icomoon.eot?vxg909');
+    src:  url('../fonts/icomoon.eot?vxg909#iefix') format('embedded-opentype'),
+    url('../fonts/icomoon.ttf?vxg909') format('truetype'),
+    url('../fonts/icomoon.woff?vxg909') format('woff'),
+    url('../fonts/icomoon.svg?vxg909#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.icon-step {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'icomoon' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-step.accomodation {
+    color: #18bc9c;
+}
+
+.icon-step.accomodation.other:before {
+    content: "\e901";
+}
+.icon-step.accomodation.hotel:before {
+    content: "\e90a";
+}
+.icon-step.accomodation.camping:before {
+    content: "\e90e";
+}
+
+.icon-step.transportation {
+    color: #f39c12;
+}
+
+.icon-step.transportation.plane:before {
+    content: "\e900";
+}
+.icon-step.transportation.subway:before {
+    content: "\e903";
+}
+.icon-step.transportation.car:before {
+    content: "\e904";
+}
+.icon-step.transportation.helicopter:before {
+    content: "\e909";
+}
+.icon-step.transportation.boat:before {
+    content: "\e90d";
+}
+.icon-step.transportation.train:before {
+    content: "\e90f";
+}
+
+.icon-step.tour {
+    color: #3498db;
+}
+
+.icon-step.tour.club:before {
+    content: "\e905";
+}
+.icon-step.tour.coffee:before {
+    content: "\e906";
+}
+.icon-step.tour.restaurant:before {
+    content: "\e907";
+}
+.icon-step.tour.place:before {
+    content: "\e908";
+}
+.icon-step.tour.museum:before,
+.icon-step.tour.other:before {
+    content: "\e90c";
+}

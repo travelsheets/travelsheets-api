@@ -27,6 +27,7 @@ class AccomodationStepType extends AbstractStepType
                 'Hotel' => 'hotel',
                 'Location' => 'location',
                 'Camping' => 'camping',
+                'Auberge' => 'hostel',
                 'Autre' => 'other',
             ),
             'placeholder' => 'Choisir un type de logement',
