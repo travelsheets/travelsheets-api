@@ -1,0 +1,17 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            [{{ step.type }}]
+            {{ step.name }}
+        </h3>
+    </div>
+    <div class="panel-body">
+        <p>{{ step.summary }}</p>
+    </div>
+    <ul class="list-group">
+        <li class="list-group-item">Départ le <strong>{{ step.dateStart|date('d/m/Y') }}</strong> à <strong>{{ step.dateStart|date('H:i') }}</strong></li>
+        <li class="list-group-item">Arrivée le <strong>{{ step.dateEnd|date('d/m/Y') }}</strong> à <strong>{{ step.dateEnd|date('H:i') }}</strong></li>
+        <li class="list-group-item">Moyen de transport : <strong>{{ step.type }}</strong></li>
+        <li class="list-group-item">Prix : <strong>{{ step.price }} €</strong></li>
+    </ul>
+</div>
