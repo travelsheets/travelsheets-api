@@ -72,4 +72,12 @@ class TourStep extends AbstractStep
         $this->type = $type;
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getDType()
+    {
+        return 'tour';
+    }
 }

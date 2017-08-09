@@ -8,7 +8,9 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Step
  *
- * @ORM\MappedSuperclass(repositoryClass="AppBundle\Repository\StepRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\StepRepository")
+ * @ORM\Table(name="step")
+ * @ORM\InheritanceType("JOINED")
  */
 abstract class AbstractStep
 {
@@ -234,4 +236,9 @@ abstract class AbstractStep
     {
         $this->travel = $travel;
     }
+
+    /**
+     * @return string
+     */
+    public abstract function getDType();
 }

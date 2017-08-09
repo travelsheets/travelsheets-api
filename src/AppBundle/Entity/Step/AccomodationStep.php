@@ -74,4 +74,11 @@ class AccomodationStep extends AbstractStep
     }
 
 
+    /**
+     * @return string
+     */
+    public function getDType()
+    {
+        return 'accomodation';
+    }
 }

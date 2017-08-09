@@ -99,4 +99,12 @@ class TransportationStep extends AbstractStep
     {
         $this->type = $type;
     }
+
+    /**
+     * @return string
+     */
+    public function getDType()
+    {
+        return 'transportation';
+    }
 }
