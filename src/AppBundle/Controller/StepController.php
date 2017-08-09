@@ -3,20 +3,21 @@
  * Created by PhpStorm.
  * User: quentinmachard
  * Date: 09/08/2017
- * Time: 12:13
+ * Time: 12:12
  */
 
-namespace AppBundle\Controller\Step;
+namespace AppBundle\Controller;
 
 
-use AppBundle\Controller\AbstractStepController;
-use AppBundle\Entity\Step\TransportationStep;
+use AppBundle\Entity\AbstractStep;
 use AppBundle\Entity\Travel;
-use AppBundle\Form\Step\TransportationStepType;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class TransportationStepController extends AbstractStepController
+class StepController extends Controller
 {
     /**
      * Add new Step in Travel
@@ -27,11 +28,23 @@ class TransportationStepController extends AbstractStepController
      */
     public function newAction(Travel $travel, Request $request)
     {
-        $form = $this->createForm(TransportationStepType::class);
+        // Resolve all query params
+        $optionResolver = new OptionsResolver();
+        $optionResolver->setRequired(array('type'));
+        $params = $optionResolver->resolve($request->query->all());
+
+        $type = $params['type'];
+        $formType = 'AppBundle\\Form\\Step\\' . ucfirst($params['type']) . 'StepType';
+
+        if(!class_exists($formType)) {
+            throw new NotFoundHttpException('Type not found');
+        }
+
+        $form = $this->createForm($formType);
         $form->handleRequest($request);
 
         if($form->isValid()) {
-            /** @var TransportationStep $step */
+            /** @var AbstractStep $step */
             $step = $form->getData();
             $step->setTravel($travel);
 
@@ -46,7 +59,7 @@ class TransportationStepController extends AbstractStepController
 
         return $this->render('@App/step/new.html.twig', array(
             'travel' => $travel,
-            'type' => 'Transport',
+            'type' => $type,
             'form' => $form->createView(),
         ));
     }
