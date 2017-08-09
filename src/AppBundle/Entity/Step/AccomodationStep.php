@@ -3,41 +3,32 @@
  * Created by PhpStorm.
  * User: quentinmachard
  * Date: 09/08/2017
- * Time: 01:00
+ * Time: 11:59
  */
 
 namespace AppBundle\Entity\Step;
 
 
-use AppBundle\Entity\Place;
 use AppBundle\Entity\AbstractStep;
-
+use AppBundle\Entity\Place;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class TransportationStep
+ * Class AccomodationStep
  * @package AppBundle\Entity\Step
  *
  * @ORM\Entity(repositoryClass="AppBundle\Repository\StepRepository")
- * @ORM\Table(name="transportation_step")
+ * @ORM\Table(name="accomodation_step")
+ *
  */
-class TransportationStep extends AbstractStep
+class AccomodationStep extends AbstractStep
 {
     /**
      * @var Place
-     *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Place")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Place", inversedBy="id")
      * @ORM\JoinColumn(nullable=true)
      */
-    private $from;
-
-    /**
-     * @var Place
-     *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Place")
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $to;
+    private $place;
 
     /**
      * @var string
@@ -49,38 +40,18 @@ class TransportationStep extends AbstractStep
     /**
      * @return Place
      */
-    public function getFrom()
+    public function getPlace()
     {
-        return $this->from;
+        return $this->place;
     }
 
     /**
-     * @param Place $from
-     *
+     * @param Place $place
      * @return $this
      */
-    public function setFrom(Place $from = null)
+    public function setPlace(Place $place = null)
     {
-        $this->from = $from;
-        return $this;
-    }
-
-    /**
-     * @return Place
-     */
-    public function getTo()
-    {
-        return $this->to;
-    }
-
-    /**
-     * @param Place $to
-     *
-     * @return $this
-     */
-    public function setTo(Place $to = null)
-    {
-        $this->to = $to;
+        $this->place = $place;
         return $this;
     }
 
@@ -94,9 +65,13 @@ class TransportationStep extends AbstractStep
 
     /**
      * @param string $type
+     * @return $this
      */
     public function setType($type)
     {
         $this->type = $type;
+        return $this;
     }
+
+
 }
