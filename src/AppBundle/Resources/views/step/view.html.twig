@@ -17,7 +17,7 @@
     </div>
     {% if step.summary %}
     <div class="panel-body">
-        <p>{{ step.summary }}</p>
+        <p>{{ step.summary|raw }}</p>
     </div>
     {% endif %}
     {% block step_informations %}{% endblock %}
