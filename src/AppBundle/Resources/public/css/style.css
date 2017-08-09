@@ -7,6 +7,10 @@ body {
     float: right
 }
 
+.navbar-left {
+    float: left !important;
+}
+
 @font-face {
     font-family: 'icomoon';
     src:  url('../fonts/icomoon.eot?vxg909');
