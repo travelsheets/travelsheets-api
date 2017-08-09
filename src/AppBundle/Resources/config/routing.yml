@@ -22,3 +22,8 @@ app_travel_delete:
     path: /travels/{travel}/delete
     defaults:
       _controller: 'AppBundle:Travel:delete'
+
+app_step_transportation_new:
+    path: /travels/{travel}/steps/new/transportation
+    defaults:
+      _controller: 'AppBundle:Step\TransportationStep:new'

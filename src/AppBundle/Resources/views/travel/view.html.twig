@@ -31,7 +31,9 @@
             </div>
         </div>
         <div class="col-md-8">
-            <-- STEPS HERE -->
+            <div class="btn-group" role="group" aria-label="...">
+                <a href="{{ path('app_step_transportation_new', { 'travel': travel.id }) }}" class="btn btn-default btn-sm">Ajouter une étape de transport</a>
+            </div>
         </div>
     </div>
 {% endblock %}
