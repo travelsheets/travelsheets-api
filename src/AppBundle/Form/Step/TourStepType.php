@@ -23,16 +23,16 @@ class TourStepType extends AbstractStepType
     {
 //        $builder->add('place', )
         $builder->add('type', ChoiceType::class, array(
-            'label' => 'Type de visite',
+            'label' => 'entities.step.tour.info.type',
             'choices' => array(
-                'Musée' => 'museum',
-                'Lieu touristique' => 'place',
-                'Restaurant' => 'restaurant',
-                'Café' => 'coffee',
-                'Bar / Club' => 'club',
-                'Autre' => 'other',
+                'entities.step.tour.types.museum' => 'museum',
+                'entities.step.tour.types.place' => 'place',
+                'entities.step.tour.types.restaurant' => 'restaurant',
+                'entities.step.tour.types.coffee' => 'coffee',
+                'entities.step.tour.types.club' => 'club',
+                'entities.step.tour.types.other' => 'other',
             ),
-            'placeholder' => 'Choisir un type de visite',
+            'placeholder' => 'entities.step.tour.info.type',
         ));
     }
 

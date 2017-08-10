@@ -2,14 +2,15 @@
 
 {% block step_informations %}
     <ul class="list-group">
-        {% if step.dateStart %}<li class="list-group-item">Départ le <strong>{{ step.dateStart|date('d/m/Y') }}</strong> à <strong>{{ step.dateStart|date('H:i') }}</strong></li>{% endif %}
-        {% if step.dateEnd %}<li class="list-group-item">Arrivée le <strong>{{ step.dateEnd|date('d/m/Y') }}</strong> à <strong>{{ step.dateEnd|date('H:i') }}</strong></li>{% endif %}
-        {% if step.price %}<li class="list-group-item">Prix : <strong>{{ step.price }} €</strong></li>{% endif %}
-        {% if step.company %}<li class="list-group-item">Compagnie : <strong>{{ step.company }}</strong></li>{% endif %}
-        {% if step.bookingNumber %}<li class="list-group-item">bookingNumber : <strong>{{ step.bookingNumber }}</strong></li>{% endif %}
-        {% if step.flightNumber %}<li class="list-group-item">flightNumber : <strong>{{ step.flightNumber }}</strong></li>{% endif %}
-        {% if step.openingLuggage %}<li class="list-group-item">openingLuggage : <strong>{{ step.openingLuggage|date('H:i') }}</strong></li>{% endif %}
-        {% if step.closingLuggage %}<li class="list-group-item">closingLuggage : <strong>{{ step.closingLuggage|date('H:i') }}</strong></li>{% endif %}
-        {% if step.seat %}<li class="list-group-item">seat : <strong>{{ step.seat }}</strong></li>{% endif %}
+        {% if step.dateStart %}<li class="list-group-item">{{ 'entities.step.transportation.info.date_start'|trans }} <strong>{{ step.dateStart|localizeddate('long', 'short') }}</strong></li>{% endif %}
+        {% if step.dateEnd %}<li class="list-group-item">{{ 'entities.step.transportation.info.date_end'|trans }} <strong>{{ step.dateEnd|localizeddate('long', 'short') }}</strong></li>{% endif %}
+        {% if step.type %}<li class="list-group-item">{{ 'entities.step.transportation.info.type'|trans }} : <strong>{{ ('entities.step.transportation.types.'~step.type)|trans }}</strong></li>{% endif %}
+        {% if step.company %}<li class="list-group-item">{{ 'entities.step.transportation.info.company'|trans }} : <strong>{{ step.company }}</strong></li>{% endif %}
+        {% if step.bookingNumber %}<li class="list-group-item">{{ 'entities.step.transportation.info.bookingNumber'|trans }} : <strong>{{ step.bookingNumber }}</strong></li>{% endif %}
+        {% if step.flightNumber %}<li class="list-group-item">{{ 'entities.step.transportation.info.flightNumber'|trans }} : <strong>{{ step.flightNumber }}</strong></li>{% endif %}
+        {% if step.openingLuggage %}<li class="list-group-item">{{ 'entities.step.transportation.info.openingLuggage'|trans }} : <strong>{{ step.openingLuggage|date('H:i') }}</strong></li>{% endif %}
+        {% if step.closingLuggage %}<li class="list-group-item">{{ 'entities.step.transportation.info.closingLuggage'|trans }} : <strong>{{ step.closingLuggage|date('H:i') }}</strong></li>{% endif %}
+        {% if step.seat %}<li class="list-group-item">{{ 'entities.step.transportation.info.seat'|trans }} : <strong>{{ step.seat }}</strong></li>{% endif %}
+        {% if step.price %}<li class="list-group-item">{{ 'entities.step.transportation.info.price'|trans }} : <strong>{{ step.price|localizedcurrency('EUR') }}</strong></li>{% endif %}
     </ul>
 {% endblock %}

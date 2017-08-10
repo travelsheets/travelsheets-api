@@ -6,8 +6,10 @@
     </ul>
 {% endblock %}
 
+{% block title %}{{ 'actions.add'|trans }}{% endblock %}
+
 {% block main %}
-    <h2>Ajouter une étape <small>{{ type }}</small></h2>
+    <h2>{{ 'entities.step.add'|trans }} <small>{{ ('entities.step.'~type~'.name')|trans }}</small></h2>
     {{ form_start(form) }}
     {{ form_widget(form) }}
     {{ form_end(form) }}

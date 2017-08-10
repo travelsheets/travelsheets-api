@@ -26,27 +26,27 @@ class TravelType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('name', TextType::class, array(
-            'label' => 'Nom',
+            'label' => 'form.name',
         ));
         $builder->add('summary', TextareaType::class, array(
-            'label' => 'Description',
+            'label' => 'form.summary',
             'required' => false,
         ));
         $builder->add('dateStart', DateType::class, array(
-            'label' => 'Date de début',
+            'label' => 'form.date_start',
             'placeholder' => array(
-                'year' => 'Année', 'month' => 'Mois', 'day' => 'Jour'
+                'year' => 'form.date.year', 'month' => 'form.date.month', 'day' => 'form.date.day'
             ),
             'model_timezone' => 'Europe/Paris',
         ));
         $builder->add('dateEnd', DateType::class, array(
-            'label' => 'Date de fin',
+            'label' => 'form.date_end',
             'placeholder' => array(
-                'year' => 'Année', 'month' => 'Mois', 'day' => 'Jour'
+                'year' => 'form.date.year', 'month' => 'form.date.month', 'day' => 'form.date.day'
             ),
             'required' => false,
         ));
-        $builder->add('save', SubmitType::class, array('label' => 'Enregistrer'));
+        $builder->add('save', SubmitType::class, array('label' => 'actions.save'));
     }
 
     /**
