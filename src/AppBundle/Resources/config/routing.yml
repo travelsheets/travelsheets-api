@@ -45,6 +45,8 @@ app_attachment_new:
 
 app_attachment_download:
     path: /attachments/{attachment}/download
+    defaults:
+      _controller: 'AppBundle:Attachment:download'
 
 app_attachment_edit:
     path: /attachments/{attachment}/edit

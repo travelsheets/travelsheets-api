@@ -273,7 +273,7 @@ class Attachment
             $this->path = '/attachments/' . $date->format('Y/m/d') . '/';
         }
 
-        $rootDir = __DIR__ . '/../../../web' . $this->path;
+        $rootDir = __DIR__ . '/../../../var' . $this->path;
 
         if (!file_exists($rootDir)) {
             mkdir($rootDir, 0777, true);

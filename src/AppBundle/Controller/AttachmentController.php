@@ -15,8 +15,10 @@ use AppBundle\Entity\StepAttachment;
 use AppBundle\Entity\Travel;
 use AppBundle\Form\AttachmentType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 class AttachmentController extends Controller
 {
@@ -81,5 +83,17 @@ class AttachmentController extends Controller
         return $this->render('@App/attachment/new.html.twig', array(
             'form' => $form->createView(),
         ));
+    }
+
+    /**
+     * @param Attachment $attachment
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function downloadAction(Attachment $attachment, Request $request) {
+        $response = new BinaryFileResponse($attachment->getFile());
+        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $attachment->getName() . '.' . $attachment->getFile()->guessExtension());
+        return $response;
     }
 }
