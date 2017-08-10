@@ -68,6 +68,13 @@ class Attachment
     protected $file;
 
     /**
+     * @var Travel
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Travel")
+     */
+    protected $travel;
+
+    /**
      * Get id
      *
      * @return int
@@ -310,6 +317,24 @@ class Attachment
     public function setName($name)
     {
         $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * @return Travel
+     */
+    public function getTravel()
+    {
+        return $this->travel;
+    }
+
+    /**
+     * @param Travel $travel
+     * @return $this
+     */
+    public function setTravel($travel)
+    {
+        $this->travel = $travel;
         return $this;
     }
 }

@@ -86,12 +86,15 @@ class AttachmentController extends Controller
     }
 
     /**
+     * Download an Attachment
+     *
      * @param Attachment $attachment
+     * @param Travel $travel
      * @param Request $request
      *
      * @return Response
      */
-    public function downloadAction(Attachment $attachment, Request $request) {
+    public function downloadAction(Attachment $attachment, Travel $travel, Request $request) {
         $response = new BinaryFileResponse($attachment->getFile());
         $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $attachment->getName() . '.' . $attachment->getFile()->guessExtension());
         return $response;

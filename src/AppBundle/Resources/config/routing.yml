@@ -39,20 +39,20 @@ app_step_delete:
       _controller: 'AppBundle:Step:delete'
 
 app_attachment_new:
-    path: /attachments/new
+    path: /travels/{travel}/attachments/new
     defaults:
       _controller: 'AppBundle:Attachment:new'
 
 app_attachment_download:
-    path: /attachments/{attachment}/download
+    path: /travel/{travel}/attachments/{attachment}/download
     defaults:
       _controller: 'AppBundle:Attachment:download'
 
 app_attachment_edit:
-    path: /attachments/{attachment}/edit
+    path: /travel/{travel}/attachments/{attachment}/edit
 
 app_attachment_delete:
-    path: /attachments/{attachment}/delete
+    path: /travel/{travel}/attachments/{attachment}/delete
 
 app_attachment_new_step:
     path: /travels/{travel}/steps/{step}/attachments/new
