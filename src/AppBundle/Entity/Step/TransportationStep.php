@@ -47,6 +47,48 @@ class TransportationStep extends AbstractStep
     private $type;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="company", type="string", length=255, nullable=true)
+     */
+    private $company;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="booking_number", type="string", length=255, nullable=true)
+     */
+    private $bookingNumber;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="flight_number", type="string", length=255, nullable=true)
+     */
+    private $flightNumber;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="opening_luggage", type="datetime", nullable=true)
+     */
+    private $openingLuggage;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="closing_luggage", type="datetime", nullable=true)
+     */
+    private $closingLuggage;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="seat", type="string", nullable=true)
+     */
+    private $seat;
+
+    /**
      * @return Place
      */
     public function getFrom()
@@ -98,6 +140,114 @@ class TransportationStep extends AbstractStep
     public function setType($type)
     {
         $this->type = $type;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCompany()
+    {
+        return $this->company;
+    }
+
+    /**
+     * @param string $company
+     * @return TransportationStep
+     */
+    public function setCompany($company)
+    {
+        $this->company = $company;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBookingNumber()
+    {
+        return $this->bookingNumber;
+    }
+
+    /**
+     * @param string $bookingNumber
+     * @return TransportationStep
+     */
+    public function setBookingNumber($bookingNumber)
+    {
+        $this->bookingNumber = $bookingNumber;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFlightNumber()
+    {
+        return $this->flightNumber;
+    }
+
+    /**
+     * @param string $flightNumber
+     * @return TransportationStep
+     */
+    public function setFlightNumber($flightNumber)
+    {
+        $this->flightNumber = $flightNumber;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOpeningLuggage()
+    {
+        return $this->openingLuggage;
+    }
+
+    /**
+     * @param string $openingLuggage
+     * @return TransportationStep
+     */
+    public function setOpeningLuggage($openingLuggage)
+    {
+        $this->openingLuggage = $openingLuggage;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getClosingLuggage()
+    {
+        return $this->closingLuggage;
+    }
+
+    /**
+     * @param string $closingLuggage
+     * @return TransportationStep
+     */
+    public function setClosingLuggage($closingLuggage)
+    {
+        $this->closingLuggage = $closingLuggage;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSeat()
+    {
+        return $this->seat;
+    }
+
+    /**
+     * @param string $seat
+     * @return TransportationStep
+     */
+    public function setSeat($seat)
+    {
+        $this->seat = $seat;
+        return $this;
     }
 
     /**
