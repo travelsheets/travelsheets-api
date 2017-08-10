@@ -65,6 +65,7 @@ entities:
     delete: 'Supprimer "%name%"'
     delete_confirm: 'Êtes-vous sur de vouloir supprimer cette étape et tous les fichiers liés ?'
     add: 'Ajouter une étape'
+    infos: 'Informations'
   attachments:
     nothing: 'Il n''y a pas encore de fichier, %link_start%importe le premier%link_end%.'
     name: 'Fichier'

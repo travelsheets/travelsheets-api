@@ -12,14 +12,14 @@
         </h3>
     </div>
     <div id="collapse-{{ step.id }}" class="panel-collapse collapse{% if display_step == step.id %} in{% endif %}" role="tabpanel" aria-labelledby="heading-{{ step.id }}">
-        {% block step_informations %}{% endblock %}
-
-        {% if step.summary %}
-            <div class="panel-body">
-                <h4>Informations</h4>
+        <div class="panel-body">
+            <h4>{{ 'entities.step.infos'|trans }}</h4>
+            {% if step.summary %}
                 <p>{{ step.summary|raw }}</p>
-            </div>
-        {% endif %}
+            {% endif %}
+        </div>
+
+        {% block step_informations %}{% endblock %}
 
         {% include '@App/attachment/list.html.twig' with {'attachments': step.attachments, 'travel': travel, 'editable': false } %}
     </div>
