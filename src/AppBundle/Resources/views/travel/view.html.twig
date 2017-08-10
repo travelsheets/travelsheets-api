@@ -16,11 +16,11 @@
                         <a href="{{ path('app_travel_edit', { 'travel': travel.id }) }}" class="btn btn-default btn-xs" data-toggle="tooltip" data-placement="top" title="{{ 'actions.edit'|trans }}"><i class="glyphicon glyphicon-pencil"></i></a>
                         <a href="{{ path('app_travel_delete', { 'travel': travel.id }) }}" class="btn btn-default btn-xs" data-toggle="tooltip" data-placement="top" title="{{ 'actions.delete'|trans }}"><i class="glyphicon glyphicon-trash"></i></a>
                     </div>
-                    <h3 class="panel-title">{{ travel.name }}</h3>
+                    <div class="panel-title">{{ travel.name }}</div>
                 </div>
                 <div class="panel-body">
                     <p>{{ travel.summary|raw }}</p>
-                    <p>{{ travel.dateStart|date("d/m/Y") }} {% if travel.dateEnd %} - {{ travel.dateEnd|date("d/m/Y") }}{% endif %}</p>
+                    <p>– {{ 'date.from'|trans }} {{ travel.dateStart|localizeddate('long', 'none') }} {% if travel.dateEnd %} {{ 'date.to'|trans }} {{ travel.dateEnd|localizeddate('long', 'none') }}{% endif %}</p>
                 </div>
             </div>
         </div>

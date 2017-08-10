@@ -89,3 +89,6 @@ form:
     year: 'Année'
     hour: 'Heures'
     minute: 'Minutes'
+date:
+  to: 'au'
+  from: 'du'
