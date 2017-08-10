@@ -42,3 +42,8 @@ app_attachment_new:
     path: /attachments/new
     defaults:
       _controller: 'AppBundle:Attachment:new'
+
+app_attachment_new_step:
+    path: /travels/{travel}/steps/{step}/attachments/new
+    defaults:
+      _controller: 'AppBundle:Attachment:newForStep'
