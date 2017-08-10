@@ -5,13 +5,13 @@
     </ul>
 {% endblock %}
 
-{% block title %}Supprimer // {{ travel.name }}{% endblock %}
+{% block title %}{{ 'actions.delete'|trans }} // {{ travel.name }}{% endblock %}
 
 {% block main %}
-    <h2>Supprimer "{{ attachment.name }}"</h2>
-    <p>Êtes-vous sur de vouloir supprimer ce fichier ?</p>
+    <h2>{{ 'entities.attachments.delete'|trans({'%name%': attachment.name}) }}"</h2>
+    <p>{{ 'entities.attachments.delete_confirm'|trans }}</p>
     <p>
-        <a href="{{ path('app_travel_view', { 'travel': travel.id } ) }}" class="btn btn-default">Annuler</a>
-        <a href="{{ path('app_attachment_delete', { 'attachment': attachment.id, 'travel': travel.id, 'step': app.request.get('step'), 'confirm': true }) }}" class="btn btn-danger">Supprimer</a>
+        <a href="{{ path('app_travel_view', { 'travel': travel.id } ) }}" class="btn btn-default">{{ 'actions.cancel'|trans }}</a>
+        <a href="{{ path('app_attachment_delete', { 'attachment': attachment.id, 'travel': travel.id, 'step': app.request.get('step'), 'confirm': true }) }}" class="btn btn-danger">{{ 'actions.delete'|trans }}</a>
     </p>
 {% endblock %}

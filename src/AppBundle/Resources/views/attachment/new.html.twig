@@ -8,8 +8,11 @@
     {% endif %}
     </ul>
 {% endblock %}
+
+{% block title %}{{ 'entities.attachments.add'|trans }} // {{ step.name }}{% endblock %}
+
 {% block main %}
-    <h2>Importer un fichier</h2>
+    <h2>{{ 'entities.attachments.add'|trans }}</h2>
     {{ form_start(form) }}
     {{ form_widget(form) }}
     {{ form_end(form) }}

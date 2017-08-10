@@ -9,8 +9,11 @@
         {% endif %}
     </ul>
 {% endblock %}
+
+{% block title %}{{ 'actions.edit'|trans }} // {{ attachment.name }}{% endblock %}
+
 {% block main %}
-    <h2>Modifier "{{ attachment.name }}"</h2>
+    <h2>{{ 'entities.attachments.edit'|trans({'%name%': attachment.name}) }}</h2>
     {{ form_start(form) }}
     {{ form_widget(form) }}
     {{ form_end(form) }}

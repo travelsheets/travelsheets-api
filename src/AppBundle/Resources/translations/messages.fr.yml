@@ -69,4 +69,8 @@ entities:
     nothing: 'Il n''y a pas encore de fichier, %link_start%importe le premier%link_end%.'
     name: 'Fichier'
     plural: 'Fichiers'
+    add: 'Importer un fichier'
+    edit: 'Modifier le fichier "%name%"'
+    delete: 'Supprimer le fichier "%name%'
+    delete_confirm: 'Êtes-vous sur de vouloir supprimer ce fichier ?'
 
