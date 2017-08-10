@@ -14,6 +14,7 @@ use AppBundle\Form\AbstractStepType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -40,6 +41,30 @@ class TransportationStepType extends AbstractStepType
             ),
             'label' => 'Moyen de transport',
             'placeholder' => 'Choisir un moyen de transport'
+        ));
+
+        $builder->add('company', TextType::class, array(
+            'required' => false,
+        ));
+
+        $builder->add('bookingNumber', TextType::class, array(
+            'required' => false,
+        ));
+
+        $builder->add('flightNumber', TextType::class, array(
+            'required' => false,
+        ));
+
+        $builder->add('openingLuggage', TimeType::class, array(
+            'required' => false,
+        ));
+
+        $builder->add('closingLuggage', TimeType::class, array(
+            'required' => false,
+        ));
+
+        $builder->add('seat', TextType::class, array(
+            'required' => false,
         ));
     }
 
