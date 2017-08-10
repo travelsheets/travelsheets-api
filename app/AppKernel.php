@@ -10,6 +10,7 @@ class AppKernel extends Kernel
     public function __construct($environment, $debug)
     {
         date_default_timezone_set( 'Europe/Paris' );
+        setlocale(LC_TIME, "fr_FR");
         parent::__construct($environment, $debug);
     }
 
