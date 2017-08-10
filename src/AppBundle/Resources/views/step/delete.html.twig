@@ -5,13 +5,13 @@
     </ul>
 {% endblock %}
 
-{% block title %}Supprimer // {{ travel.name }}{% endblock %}
+{% block title %}{{ 'actions.delete'|trans }} // {{ travel.name }}{% endblock %}
 
 {% block main %}
-    <h2>Supprimer "{{ step.name }}"</h2>
-    <p>Êtes-vous sur de vouloir supprimer cette étape ?</p>
+    <h2>{{ 'entities.step.delete'|trans({'%name%': step.name}) }}</h2>
+    <p>{{ 'entities.step.delete_confirm'|trans }}</p>
     <p>
-        <a href="{{ path('app_travel_view', { 'travel': travel.id } ) }}" class="btn btn-default">Annuler</a>
-        <a href="{{ path('app_step_delete', { 'step': step.id, 'travel': travel.id, 'confirm': true }) }}" class="btn btn-danger">Supprimer</a>
+        <a href="{{ path('app_travel_view', { 'travel': travel.id } ) }}" class="btn btn-default">{{ 'actions.cancel'|trans }}</a>
+        <a href="{{ path('app_step_delete', { 'step': step.id, 'travel': travel.id, 'confirm': true }) }}" class="btn btn-danger">{{ 'actions.delete'|trans }}</a>
     </p>
 {% endblock %}

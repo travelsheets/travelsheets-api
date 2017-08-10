@@ -37,7 +37,10 @@ class TransportationStepType extends AbstractStepType
                 'Bateau' => 'boat',
                 'Voiture' => 'car',
                 'Train' => 'train',
+                'Taxi' => 'taxi',
+                'Vélo' => 'bike',
                 'Transports en communs' => 'subway',
+                'Autre' => 'other',
             ),
             'label' => 'Moyen de transport',
             'placeholder' => 'Choisir un moyen de transport'

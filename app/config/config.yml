@@ -33,7 +33,7 @@ framework:
     assets: ~
     php_errors:
         log: true
-    translator: { fallback: '%locale%' }
+    translator: { fallback: ['%locale%'] }
     default_locale: '%locale%'
 
 # Twig Configuration

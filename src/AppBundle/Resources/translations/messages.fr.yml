@@ -11,3 +11,62 @@ entities:
     edit: 'Modifier le voyage "%name%"'
     delete: 'Supprimer le voyage "%name%"'
     delete_confirm: 'Êtes-vous sur de vouloir supprimer ce voyage et toutes les étapes liées ?'
+  step:
+    nothing: 'Ce voyage n''a pas encore d''étape, commencez par %link_start%ajouter un transport%link_end%.'
+    edit: 'Modifier l''étape "%name%"'
+    transportation:
+      name: 'Transport'
+      info:
+        date_start: 'Départ le'
+        date_end: 'Arrivée le'
+        type: 'Type de transport'
+        company: 'Compagnie'
+        bookingNumber: 'Numéro de réservation'
+        flightNumber: 'Numéro de vol, train ou bateau'
+        openingLuggage: 'Ouverture de l''enregistrement des bagages'
+        closingLuggage: 'Fermeture de l''enregistrement des bagages'
+        seat: 'Sièges'
+        price: 'Prix'
+      types:
+        plane: 'Avion'
+        boat: 'Bateau'
+        car: 'Voiture'
+        train: 'Train'
+        taxi: 'Taxi / VTC'
+        bike: 'Vélo'
+        subway: 'Transports en commun'
+    accomodation:
+      name: 'Logement'
+      info:
+        date_start: 'Arrivée le'
+        date_end: 'Départ le'
+        type: 'Type de logement'
+        price: 'Prix'
+      types:
+        hotel: 'Hôtel'
+        location: 'Location'
+        camping: 'Camping'
+        hostel: 'Auberge'
+        other: 'Autre'
+    tour:
+      name: 'Visite'
+      info:
+        date_start: 'Début le'
+        date_end: 'Fin le'
+        type: 'Type de visite'
+        price: 'Prix'
+      types:
+        museum: 'Musée'
+        place: 'Lieu touristique'
+        restaurant: 'Restaurant'
+        coffee: 'Café'
+        club: 'Bar / Club'
+        other: 'Autre'
+    delete: 'Supprimer "%name%"'
+    delete_confirm: 'Êtes-vous sur de vouloir supprimer cette étape et tous les fichiers liés ?'
+    add: 'Ajouter une étape'
+  attachments:
+    nothing: 'Il n''y a pas encore de fichier, %link_start%importe le premier%link_end%.'
+    name: 'Fichier'
+    plural: 'Fichiers'
+
