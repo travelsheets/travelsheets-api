@@ -31,6 +31,7 @@ class StepAttachment
      *
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Attachment", fetch="EAGER")
+     * @ORM\JoinColumn(name="attachment_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $attachment;
 

@@ -241,10 +241,7 @@ class Attachment
      */
     public function postRemove()
     {
-        $file = $this->getUploadRootDir() . $this->getFilename();
-        if (file_exists($file)) {
-            unlink($file);
-        }
+        $this->deleteFile();
     }
 
     /**
@@ -268,10 +265,7 @@ class Attachment
         $fileName = md5(uniqid()) . '.' . $this->uploadedFile->guessExtension();
 
         // Remove old file
-        if(isset($this->file) && $this->file instanceof File) {
-            $fs = new Filesystem();
-            $fs->remove($this->file);
-        }
+        $this->deleteFile();
 
         $this->file = $this->uploadedFile->move(
             $this->getUploadRootDir(),
@@ -281,6 +275,22 @@ class Attachment
 
         $this->mimeType = $this->file->getMimeType();
         $this->filename = $fileName;
+
+        return $this;
+    }
+
+    /**
+     * Remove file
+     *
+     * @return $this
+     */
+    private function deleteFile() {
+        if(isset($this->file) && $this->file instanceof File) {
+            $fs = new Filesystem();
+            $fs->remove($this->file);
+        }
+
+        $this->file = null;
 
         return $this;
     }

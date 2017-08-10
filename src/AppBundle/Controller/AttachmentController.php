@@ -131,4 +131,32 @@ class AttachmentController extends Controller
             'form' => $form->createView(),
         ));
     }
+
+    /**
+     * Delete an Attachment
+     *
+     * @param Attachment $attachment
+     * @param Travel $travel
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function deleteAction(Attachment $attachment, Travel $travel, Request $request) {
+        $confirm = $request->get('confirm', false);
+
+        if($confirm) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($attachment);
+            $em->flush();
+
+            return $this->redirectToRoute('app_travel_view', array(
+                'travel' => $travel->getId(),
+            ));
+        }
+
+        return $this->render('@App/attachment/delete.html.twig', array(
+            'travel' => $travel,
+            'attachment' => $attachment,
+        ));
+    }
 }

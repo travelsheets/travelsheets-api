@@ -55,6 +55,8 @@ app_attachment_edit:
 
 app_attachment_delete:
     path: /travel/{travel}/attachments/{attachment}/delete
+    defaults:
+      _controller: 'AppBundle:Attachment:delete'
 
 app_attachment_new_step:
     path: /travels/{travel}/steps/{step}/attachments/new
