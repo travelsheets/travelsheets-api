@@ -1,28 +1,26 @@
 <div class="panel panel-default">
     <div class="panel-heading" role="tab" id="heading-{{ step.id }}">
         <div class="btn-group fr" role="group" aria-label="...">
-            <a href="{{ path('app_step_edit', { 'travel': travel.id, 'step': step.id }) }}" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-pencil"></i></a>
-            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="caret"></span>
-                <span class="sr-only">Toggle Dropdown</span>
-            </button>
-            <ul class="dropdown-menu">
-                <li><a href="{{ path('app_step_delete', { 'travel': travel.id, 'step': step.id }) }}">Supprimer</a></li>
-            </ul>
+            <a href="{{ path('app_step_edit', { 'step': step.id, 'travel': travel.id }) }}" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-pencil"></i></a>
+            <a href="{{ path('app_step_delete', { 'step': step.id, 'travel': travel.id }) }}" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-trash"></i></a>
         </div>
         <h3 class="panel-title">
-            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-{{ step.id }}" aria-expanded="false" aria-controls="collapseTwo">
+            <a class="{% if display_step == step.id %} collapsed{% endif %}" data-toggle="collapse" data-parent="#accordion" href="#collapse-{{ step.id }}" aria-expanded="true" aria-controls="collapse-{{ step.id }}">
                 <i class="icon-step {{ step.dtype }} {{ step.type }}"></i>&nbsp;&nbsp;
                 {{ step.name }}
             </a>
         </h3>
     </div>
-    <div id="collapse-{{ step.id }}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading-{{ step.id }}">
-    {% if step.summary %}
-    <div class="panel-body">
-        <p>{{ step.summary|raw }}</p>
-    </div>
-    {% endif %}
-    {% block step_informations %}{% endblock %}
+    <div id="collapse-{{ step.id }}" class="panel-collapse collapse{% if display_step == step.id %} in{% endif %}" role="tabpanel" aria-labelledby="heading-{{ step.id }}">
+        {% block step_informations %}{% endblock %}
+
+        {% if step.summary %}
+            <div class="panel-body">
+                <h4>Informations</h4>
+                <p>{{ step.summary|raw }}</p>
+            </div>
+        {% endif %}
+
+        {% include '@App/attachment/list.html.twig' with {'attachments': step.attachments, 'travel': travel, 'editable': false } %}
     </div>
 </div>

@@ -11,6 +11,16 @@ body {
     float: left !important;
 }
 
+.panel-title a:focus {
+    text-decoration: none;
+    color: inherit;
+}
+
+.panel-title a:hover {
+    text-decoration: none;
+    color: #18bc9c;
+}
+
 @font-face {
     font-family: 'icomoon';
     src:  url('../fonts/icomoon.eot?vxg909');

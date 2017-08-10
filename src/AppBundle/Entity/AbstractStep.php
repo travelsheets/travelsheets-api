@@ -73,6 +73,13 @@ abstract class AbstractStep
     private $travel;
 
     /**
+     * @var StepAttachment[]
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\StepAttachment", mappedBy="step")
+     */
+    private $attachments;
+
+    /**
      * Get id
      *
      * @return int
@@ -241,4 +248,20 @@ abstract class AbstractStep
      * @return string
      */
     public abstract function getDType();
+
+    /**
+     * @return StepAttachment[]
+     */
+    public function getAttachments()
+    {
+        return $this->attachments;
+    }
+
+    /**
+     * @param StepAttachment[] $attachments
+     */
+    public function setAttachments($attachments)
+    {
+        $this->attachments = $attachments;
+    }
 }

@@ -1,5 +1,6 @@
 {% if steps %}
-    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="false">
+    {% set display_step = app.request.query.get('display_step') ? app.request.query.get('display_step') : steps[0].id %}
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
     {% for step in steps %}
         {% set template = '@App/step/' ~ step.dtype ~ '/view.html.twig' %}
         {% include template ignore missing %}
