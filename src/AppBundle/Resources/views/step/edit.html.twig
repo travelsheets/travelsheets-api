@@ -1,7 +1,7 @@
 {% extends '::base.html.twig' %}
 {% block nav_left %}
     <ul class="nav navbar-nav">
-        <li><a href="{{ path('app_travel_view', { 'travel': travel.id } ) }}"><i class="glyphicon glyphicon-arrow-left"></i></a></li>
+        <li><a href="{{ path('app_travel_view', { 'travel': travel.id, 'display_step': step.id } ) }}"><i class="glyphicon glyphicon-arrow-left"></i></a></li>
     </ul>
 {% endblock %}
 
@@ -15,7 +15,7 @@
 
     <h3>Fichiers <a href="{{ path('app_attachment_new_step', {'step': step.id, 'travel': travel.id}) }}" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-plus"></i></a></h3>
     {% if step.attachments is not empty %}
-        {% include '@App/attachment/list.html.twig' with {'attachments': step.attachments, 'travel': travel } %}
+        {% include '@App/attachment/list.html.twig' with {'attachments': step.attachments, 'travel': travel, 'editable': true } %}
     {% else %}
         <p>Il n'y a pas encore de fichier, <a href="{{ path('app_attachment_new_step', {'step': step.id, 'travel': travel.id}) }}">importe le premier</a>.</p>
     {% endif %}

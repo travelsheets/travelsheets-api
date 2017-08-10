@@ -84,6 +84,7 @@ class StepController extends Controller
 
             return $this->redirectToRoute('app_travel_view', array(
                 'travel' => $travel->getId(),
+                'display_step' => $step->getId(),
             ));
         }
 

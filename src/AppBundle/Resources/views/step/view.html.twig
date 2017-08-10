@@ -5,13 +5,13 @@
             <a href="{{ path('app_step_delete', { 'step': step.id, 'travel': travel.id }) }}" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-trash"></i></a>
         </div>
         <h3 class="panel-title">
-            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-{{ step.id }}" aria-expanded="false" aria-controls="collapseTwo">
+            <a role="button" class="{% if display_step == step.id %} collapsed{% endif %}" data-toggle="collapse" data-parent="#accordion" href="#collapse-{{ step.id }}" aria-expanded="true" aria-controls="collapse-{{ step.id }}">
                 <i class="icon-step {{ step.dtype }} {{ step.type }}"></i>&nbsp;&nbsp;
                 {{ step.name }}
             </a>
         </h3>
     </div>
-    <div id="collapse-{{ step.id }}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading-{{ step.id }}">
+    <div id="collapse-{{ step.id }}" class="panel-collapse collapse{% if display_step == step.id %} in{% endif %}" role="tabpanel" aria-labelledby="heading-{{ step.id }}">
         {% block step_informations %}{% endblock %}
 
         {% if step.summary %}
@@ -21,6 +21,6 @@
             </div>
         {% endif %}
 
-        {% include '@App/attachment/list.html.twig' with {'attachments': step.attachments, 'travel': travel } %}
+        {% include '@App/attachment/list.html.twig' with {'attachments': step.attachments, 'travel': travel, 'editable': false } %}
     </div>
 </div>

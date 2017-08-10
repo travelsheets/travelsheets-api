@@ -12,6 +12,6 @@
     <p>Êtes-vous sur de vouloir supprimer ce fichier ?</p>
     <p>
         <a href="{{ path('app_travel_view', { 'travel': travel.id } ) }}" class="btn btn-default">Annuler</a>
-        <a href="{{ path('app_attachment_delete', { 'attachment': attachment.id, 'travel': travel.id, 'confirm': true }) }}" class="btn btn-danger">Supprimer</a>
+        <a href="{{ path('app_attachment_delete', { 'attachment': attachment.id, 'travel': travel.id, 'step': app.request.get('step'), 'confirm': true }) }}" class="btn btn-danger">Supprimer</a>
     </p>
 {% endblock %}

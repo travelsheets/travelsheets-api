@@ -126,6 +126,15 @@ class AttachmentController extends Controller
             $em->persist($attachment);
             $em->flush();
 
+            $step = $request->get('step');
+
+            if(isset($step)) {
+                return $this->redirectToRoute('app_step_edit', array(
+                    'travel' => $travel->getId(),
+                    'step' => $request->get('step'),
+                ));
+            }
+
             return $this->redirectToRoute('app_travel_view', array(
                 'travel' => $travel->getId(),
             ));
@@ -154,6 +163,15 @@ class AttachmentController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->remove($attachment);
             $em->flush();
+
+            $step = $request->get('step');
+
+            if(isset($step)) {
+                return $this->redirectToRoute('app_step_edit', array(
+                    'travel' => $travel->getId(),
+                    'step' => $request->get('step'),
+                ));
+            }
 
             return $this->redirectToRoute('app_travel_view', array(
                 'travel' => $travel->getId(),

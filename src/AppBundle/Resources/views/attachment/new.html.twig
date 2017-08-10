@@ -1,7 +1,11 @@
 {% extends '::base.html.twig' %}
 {% block nav_left %}
     <ul class="nav navbar-nav">
+    {% if step is defined %}
+        <li><a href="{{ path('app_step_edit', { 'travel': travel.id, 'step': step.id } ) }}"><i class="glyphicon glyphicon-arrow-left"></i></a></li>
+    {% else %}
         <li><a href="{{ path('app_travel_view', { 'travel': travel.id } ) }}"><i class="glyphicon glyphicon-arrow-left"></i></a></li>
+    {% endif %}
     </ul>
 {% endblock %}
 {% block main %}
