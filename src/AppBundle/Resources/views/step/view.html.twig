@@ -1,14 +1,8 @@
 <div class="panel panel-default">
     <div class="panel-heading" role="tab" id="heading-{{ step.id }}">
         <div class="btn-group fr" role="group" aria-label="...">
-            <a href="{{ path('app_step_edit', { 'travel': travel.id, 'step': step.id }) }}" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-pencil"></i></a>
-            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="caret"></span>
-                <span class="sr-only">Toggle Dropdown</span>
-            </button>
-            <ul class="dropdown-menu">
-                <li><a href="{{ path('app_step_delete', { 'travel': travel.id, 'step': step.id }) }}">Supprimer</a></li>
-            </ul>
+            <a href="{{ path('app_step_edit', { 'step': step.id, 'travel': travel.id }) }}" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-pencil"></i></a>
+            <a href="{{ path('app_step_delete', { 'step': step.id, 'travel': travel.id }) }}" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-trash"></i></a>
         </div>
         <h3 class="panel-title">
             <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-{{ step.id }}" aria-expanded="false" aria-controls="collapseTwo">
@@ -40,10 +34,6 @@
                     </li>
                 {% endfor %}
             </ul>
-        {% else %}
-            <div class="panel-body">
-                <p>Il n'y a aucun document, <a href="{{ path('app_attachment_new_step', { 'step': step.id, 'travel': travel.id }) }}">en ajouter un</a>.</p>
-            </div>
         {% endif %}
     </div>
 </div>

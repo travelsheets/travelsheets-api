@@ -25,10 +25,12 @@ class AttachmentController extends Controller
     /**
      * Add a new Attachment
      *
+     * @param Travel $travel
      * @param Request $request
+     *
      * @return Response
      */
-    public function newAction(Request $request)
+    public function newAction(Travel $travel, Request $request)
     {
         $attachment = new Attachment();
 
@@ -44,6 +46,7 @@ class AttachmentController extends Controller
         }
 
         return $this->render('@App/attachment/new.html.twig', array(
+            'travel' => $travel,
             'form' => $form->createView(),
         ));
     }
@@ -75,12 +78,15 @@ class AttachmentController extends Controller
 
             $em->flush();
 
-            return $this->redirectToRoute('app_travel_view', array(
+            return $this->redirectToRoute('app_step_edit', array(
                 'travel' => $travel->getId(),
+                'step' => $step->getId(),
             ));
         }
 
         return $this->render('@App/attachment/new.html.twig', array(
+            'travel' => $travel,
+            'step' => $step,
             'form' => $form->createView(),
         ));
     }
