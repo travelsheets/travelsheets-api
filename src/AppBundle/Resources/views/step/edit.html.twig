@@ -15,18 +15,7 @@
 
     <h3>Fichiers <a href="{{ path('app_attachment_new_step', {'step': step.id, 'travel': travel.id}) }}" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-plus"></i></a></h3>
     {% if step.attachments is not empty %}
-        <ul class="list-group">
-            {% for attachment in step.attachments %}
-                <li class="list-group-item">
-                    {{ attachment.attachment.name }}
-                    <div class="btn-group fr" role="group" aria-label="...">
-                        <a href="{{ path('app_attachment_download', { 'attachment': attachment.attachment.id, 'travel': travel.id }) }}" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-save"></i></a>
-                        <a href="{{ path('app_attachment_edit', { 'attachment': attachment.attachment.id, 'travel': travel.id }) }}" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-pencil"></i></a>
-                        <a href="{{ path('app_attachment_delete', { 'attachment': attachment.attachment.id, 'travel': travel.id }) }}" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-trash"></i></a>
-                    </div>
-                </li>
-            {% endfor %}
-        </ul>
+        {% include '@App/attachment/list.html.twig' with {'attachments': step.attachments, 'travel': travel } %}
     {% else %}
         <p>Il n'y a pas encore de fichier, <a href="{{ path('app_attachment_new_step', {'step': step.id, 'travel': travel.id}) }}">importe le premier</a>.</p>
     {% endif %}
