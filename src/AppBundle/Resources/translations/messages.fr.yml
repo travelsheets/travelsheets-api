@@ -1,0 +1,13 @@
+actions:
+  edit: 'Modifier'
+  delete: 'Supprimer'
+  add: 'Créer'
+  cancel: 'Annuler'
+
+entities:
+  travel:
+    new: 'Nouveau voyage'
+    nothing: 'Vous n''avez aucun voyage, %link_start%créez le premier%link_end%&nbsp;!'
+    edit: 'Modifier le voyage "%name%"'
+    delete: 'Supprimer le voyage "%name%"'
+    delete_confirm: 'Êtes-vous sur de vouloir supprimer ce voyage et toutes les étapes liées ?'
