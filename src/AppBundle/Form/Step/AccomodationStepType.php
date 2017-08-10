@@ -22,15 +22,15 @@ class AccomodationStepType extends AbstractStepType
     {
 //        $builder->add('place', )
         $builder->add('type', ChoiceType::class, array(
-            'label' => 'Type de logement',
+            'label' => 'entities.step.accomodation.info.type',
             'choices' => array(
-                'Hotel' => 'hotel',
-                'Location' => 'location',
-                'Camping' => 'camping',
-                'Auberge' => 'hostel',
-                'Autre' => 'other',
+                'entities.step.accomodation.types.hotel' => 'hotel',
+                'entities.step.accomodation.types.location' => 'location',
+                'entities.step.accomodation.types.camping' => 'camping',
+                'entities.step.accomodation.types.hostel' => 'hostel',
+                'entities.step.accomodation.types.other' => 'other',
             ),
-            'placeholder' => 'Choisir un type de logement',
+            'placeholder' => 'entities.step.accomodation.info.type',
         ));
     }
 

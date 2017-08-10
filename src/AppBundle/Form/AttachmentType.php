@@ -25,17 +25,17 @@ class AttachmentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('name', TextType::class, array(
-           'label' => 'Nom du fichier',
+           'label' => 'form.name',
         ));
 
         $builder->add('file', FileType::class, array(
-            'label' => 'Fichier',
+            'label' => 'form.file',
             'property_path' => 'uploadedFile',
             'required' => in_array('Upload', $options['validation_groups']),
         ));
 
         $builder->add('save', SubmitType::class, array(
-            'label' => 'Enregistrer',
+            'label' => 'actions.save',
         ));
     }
 

@@ -3,6 +3,7 @@ actions:
   delete: 'Supprimer'
   add: 'Créer'
   cancel: 'Annuler'
+  save: 'Enregistrer'
 
 entities:
   travel:
@@ -75,3 +76,16 @@ entities:
     delete: 'Supprimer le fichier "%name%'
     delete_confirm: 'Êtes-vous sur de vouloir supprimer ce fichier ?'
 
+form:
+  name: 'Nom'
+  summary: 'Description'
+  file: 'Fichier'
+  price: 'Prix'
+  date_start: 'Date de début'
+  date_end: 'Date de fin'
+  date:
+    month: 'Mois'
+    day: 'Jour'
+    year: 'Année'
+    hour: 'Heures'
+    minute: 'Minutes'
