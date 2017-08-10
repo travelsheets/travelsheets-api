@@ -37,3 +37,8 @@ app_step_delete:
     path: /travels/{travel}/steps/{step}/delete
     defaults:
       _controller: 'AppBundle:Step:delete'
+
+app_attachment_new:
+    path: /attachments/new
+    defaults:
+      _controller: 'AppBundle:Attachment:new'
