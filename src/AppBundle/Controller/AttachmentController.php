@@ -99,4 +99,36 @@ class AttachmentController extends Controller
         $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $attachment->getName() . '.' . $attachment->getFile()->guessExtension());
         return $response;
     }
+
+    /**
+     * Edit an Attachment
+     *
+     * @param Attachment $attachment
+     * @param Travel $travel
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function editAction(Attachment $attachment, Travel $travel, Request $request) {
+        $form = $this->createForm(AttachmentType::class, $attachment, array(
+            'validation_groups' => array('Default'),
+        ));
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($attachment);
+            $em->flush();
+
+            return $this->redirectToRoute('app_travel_view', array(
+                'travel' => $travel->getId(),
+            ));
+        }
+
+        return $this->render('@App/attachment/edit.html.twig', array(
+            'attachment' => $attachment,
+            'travel' => $travel,
+            'form' => $form->createView(),
+        ));
+    }
 }

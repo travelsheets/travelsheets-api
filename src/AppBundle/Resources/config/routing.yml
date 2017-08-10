@@ -50,6 +50,8 @@ app_attachment_download:
 
 app_attachment_edit:
     path: /travel/{travel}/attachments/{attachment}/edit
+    defaults:
+      _controller: 'AppBundle:Attachment:edit'
 
 app_attachment_delete:
     path: /travel/{travel}/attachments/{attachment}/delete

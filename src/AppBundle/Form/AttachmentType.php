@@ -31,6 +31,7 @@ class AttachmentType extends AbstractType
         $builder->add('file', FileType::class, array(
             'label' => 'Fichier',
             'property_path' => 'uploadedFile',
+            'required' => in_array('Upload', $options['validation_groups']),
         ));
 
         $builder->add('save', SubmitType::class, array(

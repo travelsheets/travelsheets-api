@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Intl\Exception\UnexpectedTypeException;
@@ -208,7 +209,8 @@ class Attachment
     public function setUploadedFile(File $uploadedFile)
     {
         $this->uploadedFile = $uploadedFile;
-        $this->file = null;
+        $this->filename = null;
+        $this->path = null;
     }
 
     /**
@@ -224,6 +226,13 @@ class Attachment
      */
     public function prePersist()
     {
+        $this->uploadFile();
+    }
+
+    /**
+     * @ORM\PreUpdate()
+     */
+    public function preUpdate() {
         $this->uploadFile();
     }
 
@@ -257,6 +266,12 @@ class Attachment
 
         // On déplace le fichier envoyé dans le répertoire de notre choix
         $fileName = md5(uniqid()) . '.' . $this->uploadedFile->guessExtension();
+
+        // Remove old file
+        if(isset($this->file) && $this->file instanceof File) {
+            $fs = new Filesystem();
+            $fs->remove($this->file);
+        }
 
         $this->file = $this->uploadedFile->move(
             $this->getUploadRootDir(),
