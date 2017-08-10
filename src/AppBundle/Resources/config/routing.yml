@@ -43,6 +43,15 @@ app_attachment_new:
     defaults:
       _controller: 'AppBundle:Attachment:new'
 
+app_attachment_download:
+    path: /attachments/{attachment}/download
+
+app_attachment_edit:
+    path: /attachments/{attachment}/edit
+
+app_attachment_delete:
+    path: /attachments/{attachment}/delete
+
 app_attachment_new_step:
     path: /travels/{travel}/steps/{step}/attachments/new
     defaults:

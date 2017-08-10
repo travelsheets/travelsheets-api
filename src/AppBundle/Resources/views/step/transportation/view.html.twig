@@ -4,7 +4,6 @@
     <ul class="list-group">
         {% if step.dateStart %}<li class="list-group-item">Départ le <strong>{{ step.dateStart|date('d/m/Y') }}</strong> à <strong>{{ step.dateStart|date('H:i') }}</strong></li>{% endif %}
         {% if step.dateEnd %}<li class="list-group-item">Arrivée le <strong>{{ step.dateEnd|date('d/m/Y') }}</strong> à <strong>{{ step.dateEnd|date('H:i') }}</strong></li>{% endif %}
-        {% if step.type %}<li class="list-group-item">Moyen de transport : <strong>{{ step.type }}</strong></li>{% endif %}
         {% if step.price %}<li class="list-group-item">Prix : <strong>{{ step.price }} €</strong></li>{% endif %}
     </ul>
 {% endblock %}

@@ -22,7 +22,7 @@ class StepAttachment
      * @var AbstractStep
      *
      * @ORM\Id
-     * @ORM\OneToOne(targetEntity="Appbundle\Entity\AbstractStep")
+     * @ORM\ManyToOne(targetEntity="Appbundle\Entity\AbstractStep", inversedBy="attachments", fetch="EAGER")
      */
     private $step;
 
@@ -30,7 +30,7 @@ class StepAttachment
      * @var Attachment
      *
      * @ORM\Id
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Attachment")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Attachment", fetch="EAGER")
      */
     private $attachment;
 
