@@ -5,7 +5,7 @@
             <a href="{{ path('app_step_delete', { 'step': step.id, 'travel': travel.id }) }}" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-trash"></i></a>
         </div>
         <h3 class="panel-title">
-            <a role="button" class="{% if display_step == step.id %} collapsed{% endif %}" data-toggle="collapse" data-parent="#accordion" href="#collapse-{{ step.id }}" aria-expanded="true" aria-controls="collapse-{{ step.id }}">
+            <a class="{% if display_step == step.id %} collapsed{% endif %}" data-toggle="collapse" data-parent="#accordion" href="#collapse-{{ step.id }}" aria-expanded="true" aria-controls="collapse-{{ step.id }}">
                 <i class="icon-step {{ step.dtype }} {{ step.type }}"></i>&nbsp;&nbsp;
                 {{ step.name }}
             </a>
