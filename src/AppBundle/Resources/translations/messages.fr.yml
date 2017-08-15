@@ -12,6 +12,8 @@ entities:
     edit: 'Modifier le voyage "%name%"'
     delete: 'Supprimer le voyage "%name%"'
     delete_confirm: 'Êtes-vous sur de vouloir supprimer ce voyage et toutes les étapes liées ?'
+    total: 'Total'
+    price_list: 'Coûts'
   step:
     nothing: 'Ce voyage n''a pas encore d''étape, commencez par %link_start%ajouter un transport%link_end%.'
     edit: 'Modifier l''étape "%name%"'
@@ -28,6 +30,7 @@ entities:
         closingLuggage: 'Fermeture de l''enregistrement des bagages'
         seat: 'Sièges'
         price: 'Prix'
+      total: 'Total transports'
       types:
         plane: 'Avion'
         boat: 'Bateau'
@@ -43,6 +46,7 @@ entities:
         date_end: 'Départ le'
         type: 'Type de logement'
         price: 'Prix'
+      total: 'Total logements'
       types:
         hotel: 'Hôtel'
         location: 'Location'
@@ -56,6 +60,7 @@ entities:
         date_end: 'Fin le'
         type: 'Type de visite'
         price: 'Prix'
+      total: 'Total visites'
       types:
         museum: 'Musée'
         place: 'Lieu touristique'
