@@ -3,6 +3,9 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\AbstractStep;
+use AppBundle\Entity\Step\AccomodationStep;
+use AppBundle\Entity\Step\TourStep;
+use AppBundle\Entity\Step\TransportationStep;
 use AppBundle\Entity\Travel;
 use AppBundle\Form\TravelType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -74,9 +77,33 @@ class TravelController extends Controller
             'travel' => $travel,
         ), array('dateStart' => 'ASC'));
 
+        $totalTransportation = 0;
+        $totalAccomodation = 0;
+        $totalTour = 0;
+        $total = 0;
+
+        foreach($steps as &$step) {
+            $price = $step->getPrice();
+            if(isset($price) && is_numeric($price)) {
+                if($step instanceof TransportationStep) {
+                    $totalTransportation += $price;
+                } elseif($step instanceof AccomodationStep) {
+                    $totalAccomodation += $price;
+                } elseif($step instanceof TourStep) {
+                    $totalTour += $price;
+                }
+
+                $total += $price;
+            }
+        }
+
         return $this->render('@App/travel/view.html.twig', array(
             'travel' => $travel,
             'steps' => $steps,
+            'totalTransportation' => $totalTransportation,
+            'totalAccomodation' => $totalAccomodation,
+            'totalTour' => $totalTour,
+            'total' => $total,
         ));
     }
 

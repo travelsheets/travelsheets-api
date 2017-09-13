@@ -27,7 +27,9 @@
         </main>
         {% block javascripts %}{% endblock %}
         <script>
-            $('.collapse').collapse();
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip()
+            })
         </script>
     </body>
 </html>

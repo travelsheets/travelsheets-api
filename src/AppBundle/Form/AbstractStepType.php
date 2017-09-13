@@ -26,25 +26,31 @@ abstract class AbstractStepType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('name', TextType::class, array(
-            'label' => 'Nom',
+            'label' => 'form.name',
         ));
 
         $builder->add('dateStart', DateTimeType::class, array(
-            'label' => 'Date de début',
+            'label' => 'form.date_start',
+            'placeholder' => array(
+                'year' => 'form.date.year', 'month' => 'form.date.month', 'day' => 'form.date.day', 'hour' => 'form.date.hour', 'minute' => 'form.date.minute',
+            ),
         ));
 
         $builder->add('dateEnd', DateTimeType::class, array(
-            'label' => 'Date de fin',
+            'label' => 'form.date_end',
+            'placeholder' => array(
+                'year' => 'form.date.year', 'month' => 'form.date.month', 'day' => 'form.date.day', 'hour' => 'form.date.hour', 'minute' => 'form.date.minute',
+            ),
             'required' => false,
         ));
 
         $builder->add('summary', TextareaType::class, array(
-            'label' => 'Description / Notes',
+            'label' => 'form.summary',
             'required' => false,
         ));
 
         $builder->add('price', MoneyType::class, array(
-            'label' => 'Prix',
+            'label' => 'form.price',
             'required' => false,
         ));
 

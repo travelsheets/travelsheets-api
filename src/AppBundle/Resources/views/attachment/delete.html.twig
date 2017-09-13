@@ -8,10 +8,10 @@
 {% block title %}{{ 'actions.delete'|trans }} // {{ travel.name }}{% endblock %}
 
 {% block main %}
-    <h2>{{ 'entities.step.delete'|trans({'%name%': step.name}) }}</h2>
-    <p>{{ 'entities.step.delete_confirm'|trans }}</p>
+    <h2>{{ 'entities.attachments.delete'|trans({'%name%': attachment.name}) }}"</h2>
+    <p>{{ 'entities.attachments.delete_confirm'|trans }}</p>
     <p>
         <a href="{{ path('app_travel_view', { 'travel': travel.id } ) }}" class="btn btn-default">{{ 'actions.cancel'|trans }}</a>
-        <a href="{{ path('app_step_delete', { 'step': step.id, 'travel': travel.id, 'confirm': true }) }}" class="btn btn-danger">{{ 'actions.delete'|trans }}</a>
+        <a href="{{ path('app_attachment_delete', { 'attachment': attachment.id, 'travel': travel.id, 'step': app.request.get('step'), 'confirm': true }) }}" class="btn btn-danger">{{ 'actions.delete'|trans }}</a>
     </p>
 {% endblock %}

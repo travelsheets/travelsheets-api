@@ -1,15 +1,22 @@
 {% extends '::base.html.twig' %}
 {% block nav_left %}
     <ul class="nav navbar-nav">
-        <li><a href="{{ path('app_travel_view', { 'travel': travel.id } ) }}"><i class="glyphicon glyphicon-arrow-left"></i></a></li>
+        <li><a href="{{ path('app_travel_view', { 'travel': travel.id, 'display_step': step.id } ) }}"><i class="glyphicon glyphicon-arrow-left"></i></a></li>
     </ul>
 {% endblock %}
 
-{% block title %}Modifier // {{ step.name }}{% endblock %}
+{% block title %}{{ 'actions.edit'|trans }} // {{ step.name }}{% endblock %}
 
 {% block main %}
-    <h2>Modifier "{{ step.name }}"</h2>
+    <h2>{{ 'entities.step.edit'|trans({'%name%': step.name}) }}</h2>
     {{ form_start(form) }}
     {{ form_widget(form) }}
     {{ form_end(form) }}
+
+    <h3>{{ 'entities.attachments.plural'|trans }} <a href="{{ path('app_attachment_new_step', {'step': step.id, 'travel': travel.id}) }}" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-plus"></i></a></h3>
+    {% if step.attachments is not empty %}
+        {% include '@App/attachment/list.html.twig' with {'attachments': step.attachments, 'travel': travel, 'editable': true } %}
+    {% else %}
+        <p>{{ 'entities.attachments.nothing'|trans({'%link_start%': '<a href="' ~ path('app_attachment_new_step', {'step': step.id, 'travel': travel.id}) ~ '">', '%link_end%': '</a>'})|raw }}</p>
+    {% endif %}
 {% endblock %}
