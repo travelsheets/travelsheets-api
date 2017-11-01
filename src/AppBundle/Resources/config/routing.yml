@@ -1,5 +1,6 @@
-app_homepage:
-    path:     /
+app_travel_list:
+    path: /travels
+    methods: [GET]
     defaults:
       _controller: 'AppBundle:Travel:list'
 
