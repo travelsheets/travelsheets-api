@@ -17,3 +17,5 @@
 /web/bundles/
 /var/attachments
 .idea
+
+docker/db/data
