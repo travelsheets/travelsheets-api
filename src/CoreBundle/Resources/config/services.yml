@@ -1,4 +1,26 @@
 services:
-#    core.example:
-#        class: CoreBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]
+  # JSON Encoder
+  core.encoder.json:
+    class: Symfony\Component\Serializer\Encoder\JsonEncoder
+
+  # Serializer
+  core.serializer.default:
+    class: Symfony\Component\Serializer\Serializer
+    arguments:
+      0:
+        - '@app.normalizer.travel'
+      1:
+        - '@core.encoder.json'
+
+  core.api.response:
+    class: CoreBundle\Api\ApiResponse
+    arguments: ['@core.serializer.default']
+
+  core.processor.form:
+    class: CoreBundle\Processor\FormProcessor
+
+  core.subscriber.exception:
+    class: CoreBundle\EventListener\ApiExceptionSubscriber
+    tags:
+      - { name: kernel.event_subscriber }
+    arguments: ['@kernel', '@core.api.response', '@logger']
