@@ -3,13 +3,24 @@ services:
   core.encoder.json:
     class: Symfony\Component\Serializer\Encoder\JsonEncoder
 
+  # Normalizer
+  core.normalizer.date_time:
+    class: Symfony\Component\Serializer\Normalizer\DateTimeNormalizer
+
+  core.normalizer.paginated_collection:
+    class: CoreBundle\Normalizer\PaginatedCollectionNormalizer
+
   # Serializer
   core.serializer.default:
     class: Symfony\Component\Serializer\Serializer
     arguments:
       0:
+        - '@core.normalizer.date_time'
         - '@core.normalizer.paginated_collection'
         - '@app.normalizer.travel'
+        - '@app.normalizer.accomodation_step'
+        - '@app.normalizer.tour_step'
+        - '@app.normalizer.transportation_step'
       1:
         - '@core.encoder.json'
 
@@ -25,9 +36,6 @@ services:
     tags:
       - { name: kernel.event_subscriber }
     arguments: ['@kernel', '@core.api.response', '@logger']
-
-  core.normalizer.paginated_collection:
-    class: CoreBundle\Normalizer\PaginatedCollectionNormalizer
 
   core.factory.pagination:
     class: CoreBundle\Pagination\PaginationFactory

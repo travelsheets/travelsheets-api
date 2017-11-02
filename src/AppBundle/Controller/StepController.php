@@ -10,14 +10,35 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\AbstractStep;
 use AppBundle\Entity\Travel;
+use CoreBundle\Controller\BaseController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class StepController extends Controller
+class StepController extends BaseController
 {
+
+    /**
+     * List all Steps for Travel
+     *
+     * @param Travel $travel
+     * @param Request $request
+     * @return Response
+     */
+    public function listAction(Travel $travel, Request $request)
+    {
+        $qb = $this->getDoctrine()
+            ->getRepository(AbstractStep::class)
+            ->findAllByTravelQueryBuilder($travel)
+        ;
+
+        $paginatedCollection = $this->get('core.factory.pagination')->createCollection($qb, $request);
+
+        return $this->createApiResponse($paginatedCollection, 200);
+    }
+
     /**
      * Add new Step in Travel
      *
@@ -35,14 +56,14 @@ class StepController extends Controller
         $type = $params['type'];
         $formType = 'AppBundle\\Form\\Step\\' . ucfirst($type) . 'StepType';
 
-        if(!class_exists($formType)) {
+        if (!class_exists($formType)) {
             throw new NotFoundHttpException('Type not found');
         }
 
         $form = $this->createForm($formType);
         $form->handleRequest($request);
 
-        if($form->isValid()) {
+        if ($form->isValid()) {
             /** @var AbstractStep $step */
             $step = $form->getData();
             $step->setTravel($travel);
@@ -71,7 +92,8 @@ class StepController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function editAction(AbstractStep $step, Travel $travel, Request $request) {
+    public function editAction(AbstractStep $step, Travel $travel, Request $request)
+    {
         $formType = 'AppBundle\\Form\\Step\\' . ucfirst($step->getDType()) . 'StepType';
 
         $form = $this->createForm($formType, $step);
@@ -107,7 +129,7 @@ class StepController extends Controller
     {
         $confirm = $request->get('confirm', false);
 
-        if($confirm) {
+        if ($confirm) {
             $em = $this->getDoctrine()->getManager();
             $em->remove($step);
             $em->flush();

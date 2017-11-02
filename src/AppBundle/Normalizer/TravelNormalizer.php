@@ -13,10 +13,14 @@ use DateTime;
 use Symfony\Component\Serializer\Exception\CircularReferenceException;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Exception\LogicException;
+use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
+use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
-class TravelNormalizer implements NormalizerInterface
+class TravelNormalizer implements NormalizerInterface, NormalizerAwareInterface
 {
+    use NormalizerAwareTrait;
 
     /**
      * Normalizes an object into a set of arrays/scalars.
@@ -39,8 +43,8 @@ class TravelNormalizer implements NormalizerInterface
             '@id' => $object->getId(),
             'name' => $object->getName(),
             'summary' => $object->getSummary(),
-            'dateStart' => $object->getDateStart(),
-            'dateEnd' => $object->getDateEnd(),
+            'dateStart' => $this->normalizer->normalize($object->getDateStart(), $format, array(DateTimeNormalizer::FORMAT_KEY => 'Y-m-d')),
+            'dateEnd' => $this->normalizer->normalize($object->getDateEnd(), $format, array(DateTimeNormalizer::FORMAT_KEY => 'Y-m-d')),
         );
     }
 

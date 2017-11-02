@@ -13,10 +13,14 @@ use AppBundle\Entity\AbstractStep;
 use Symfony\Component\Serializer\Exception\CircularReferenceException;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Exception\LogicException;
+use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
+use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
-abstract class AbstractStepNormalizer implements NormalizerInterface
+abstract class AbstractStepNormalizer implements NormalizerInterface, NormalizerAwareInterface
 {
+    use NormalizerAwareTrait;
 
     /**
      * Normalizes an object into a set of arrays/scalars.
@@ -36,10 +40,11 @@ abstract class AbstractStepNormalizer implements NormalizerInterface
     {
         return array(
             '@id' => $object->getId(),
+            '@type' => 'AbstractStep',
             'name' => $object->getName(),
             'summary' => $object->getSummary(),
-            'dateStart' => $object->getDateStart(),
-            'dateEnd' => $object->getDateEnd(),
+            'dateStart' => $this->normalizer->normalize($object->getDateStart(), $format, array(DateTimeNormalizer::FORMAT_KEY => 'Y-m-d H:i:s')),
+            'dateEnd' => $this->normalizer->normalize($object->getDateEnd(), $format, array(DateTimeNormalizer::FORMAT_KEY => 'Y-m-d H:i:s')),
             'price' => $object->getPrice(),
             'currency' => $object->getCurrency(),
         );

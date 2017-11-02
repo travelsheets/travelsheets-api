@@ -13,6 +13,7 @@ use AppBundle\Normalizer\AbstractStepNormalizer;
 use Symfony\Component\Serializer\Exception\CircularReferenceException;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Exception\LogicException;
+use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 
 class TransportationStepNormalizer extends AbstractStepNormalizer
 {
@@ -39,8 +40,8 @@ class TransportationStepNormalizer extends AbstractStepNormalizer
             'company' => $object->getCompany(),
             'bookingNumber' => $object->getBookingNumber(),
             'flightNumber' => $object->getFlightNumber(),
-            'openingLuggage' => $object->getOpeningLuggage('Y-m-d H:i:s'),
-            'closingLuggage' => $object->getClosingLuggage('Y-m-d H:i:s'),
+            'openingLuggage' => $this->normalizer->normalize($object->getOpeningLuggage(), $format, array(DateTimeNormalizer::FORMAT_KEY => 'Y-m-d H:i:s')),
+            'closingLuggage' => $this->normalizer->normalize($object->getClosingLuggage(), $format, array(DateTimeNormalizer::FORMAT_KEY => 'Y-m-d H:i:s')),
             'seat' => $object->getSeat(),
             'type' => $object->getType(),
         ));
