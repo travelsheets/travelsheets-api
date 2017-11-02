@@ -83,6 +83,26 @@ class StepController extends BaseController
     }
 
     /**
+     * Get a Step
+     *
+     * @param $travel
+     * @param AbstractStep $step
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function getAction($travel, AbstractStep $step, Request $request)
+    {
+        if($step->getTravel()->getId() != $travel) {
+            throw new NotFoundHttpException("Step not found");
+        }
+
+        $view = explode(',', $request->get('view', 'detail'));
+
+        return $this->createApiResponse($step, 200, $view);
+    }
+
+    /**
      * Edit a Step in Travel
      *
      * @param AbstractStep $step

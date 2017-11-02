@@ -10,6 +10,12 @@ app_step_new:
   defaults:
     _controller: 'AppBundle:Step:new'
 
+app_step_get:
+  path: /travels/{travel}/steps/{step}
+  methods: [GET]
+  defaults:
+    _controller: 'AppBundle:Step:get'
+
 app_step_edit:
     path: /travels/{travel}/steps/{step}/edit
     defaults:
