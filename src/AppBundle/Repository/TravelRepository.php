@@ -10,4 +10,18 @@ namespace AppBundle\Repository;
  */
 class TravelRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findAllQueryBuilder($search = null)
+    {
+        $qb = $this->createQueryBuilder('entity');
+
+        if(isset($search) && !empty($search)) {
+            $qb
+                ->where('entity.name LIKE :search')
+                ->orWhere('entity.summary LIKE :search')
+                ->setParameter(':search', '%'.$search.'%');
+            ;
+        }
+
+        return $qb;
+    }
 }

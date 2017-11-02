@@ -1,0 +1,33 @@
+services:
+  # JSON Encoder
+  core.encoder.json:
+    class: Symfony\Component\Serializer\Encoder\JsonEncoder
+
+  # Serializer
+  core.serializer.default:
+    class: Symfony\Component\Serializer\Serializer
+    arguments:
+      0:
+        - '@core.normalizer.paginated_collection'
+        - '@app.normalizer.travel'
+      1:
+        - '@core.encoder.json'
+
+  core.api.response:
+    class: CoreBundle\Api\ApiResponse
+    arguments: ['@core.serializer.default']
+
+  core.processor.form:
+    class: CoreBundle\Processor\FormProcessor
+
+  core.subscriber.exception:
+    class: CoreBundle\EventListener\ApiExceptionSubscriber
+    tags:
+      - { name: kernel.event_subscriber }
+    arguments: ['@kernel', '@core.api.response', '@logger']
+
+  core.normalizer.paginated_collection:
+    class: CoreBundle\Normalizer\PaginatedCollectionNormalizer
+
+  core.factory.pagination:
+    class: CoreBundle\Pagination\PaginationFactory

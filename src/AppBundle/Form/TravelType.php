@@ -17,6 +17,10 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Callback;
+use Symfony\Component\Validator\Constraints\Expression;
+use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class TravelType extends AbstractType
 {
@@ -25,28 +29,18 @@ class TravelType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name', TextType::class, array(
-            'label' => 'form.name',
-        ));
-        $builder->add('summary', TextareaType::class, array(
-            'label' => 'form.summary',
-            'required' => false,
-        ));
+        $builder->add('name', TextType::class);
+        $builder->add('summary', TextareaType::class);
         $builder->add('dateStart', DateType::class, array(
-            'label' => 'form.date_start',
-            'placeholder' => array(
-                'year' => 'form.date.year', 'month' => 'form.date.month', 'day' => 'form.date.day'
-            ),
+            'widget' => 'single_text',
+            'format' => 'yyyy-MM-dd',
             'model_timezone' => 'Europe/Paris',
         ));
         $builder->add('dateEnd', DateType::class, array(
-            'label' => 'form.date_end',
-            'placeholder' => array(
-                'year' => 'form.date.year', 'month' => 'form.date.month', 'day' => 'form.date.day'
-            ),
-            'required' => false,
+            'widget' => 'single_text',
+            'format' => 'yyyy-MM-dd',
+            'model_timezone' => 'Europe/Paris',
         ));
-        $builder->add('save', SubmitType::class, array('label' => 'actions.save'));
     }
 
     /**
@@ -56,7 +50,7 @@ class TravelType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => Travel::class,
+            'csrf_protection' => false,
         ));
     }
-
 }

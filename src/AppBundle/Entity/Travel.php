@@ -4,6 +4,8 @@ namespace AppBundle\Entity;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContext;
 
 /**
  * Travel
@@ -26,6 +28,8 @@ class Travel
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     *
+     * @Assert\NotBlank()
      */
     private $name;
 
@@ -40,6 +44,13 @@ class Travel
      * @var DateTime
      *
      * @ORM\Column(name="date_start", type="datetime")
+     *
+     * @Assert\NotBlank()
+     *
+     * @Assert\Expression(
+     *     "this.getDateStart() <= this.getDateEnd()",
+     *     message="Start date must be lower or equal than end date"
+     * )
      */
     private $dateStart;
 
@@ -47,6 +58,11 @@ class Travel
      * @var DateTime
      *
      * @ORM\Column(name="date_end", type="datetime", nullable=true)
+     *
+     * @Assert\Expression(
+     *     "this.getDateStart() <= this.getDateEnd()",
+     *     message="End date must be greater or equal than start date"
+     * )
      */
     private $dateEnd;
 
