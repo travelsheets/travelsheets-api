@@ -17,12 +17,13 @@ app_step_get:
     _controller: 'AppBundle:Step:get'
 
 app_step_edit:
-    path: /travels/{travel}/steps/{step}
-    methods: [PATCH]
-    defaults:
-      _controller: 'AppBundle:Step:edit'
+  path: /travels/{travel}/steps/{step}
+  methods: [PATCH]
+  defaults:
+    _controller: 'AppBundle:Step:edit'
 
 app_step_delete:
-    path: /travels/{travel}/steps/{step}/delete
-    defaults:
-      _controller: 'AppBundle:Step:delete'
+  path: /travels/{travel}/steps/{step}
+  methods: [DELETE]
+  defaults:
+    _controller: 'AppBundle:Step:delete'
