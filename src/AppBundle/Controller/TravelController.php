@@ -8,7 +8,7 @@ use AppBundle\Entity\Step\TourStep;
 use AppBundle\Entity\Step\TransportationStep;
 use AppBundle\Entity\Travel;
 use AppBundle\Form\TravelType;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use CoreBundle\Controller\BaseController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
  * Date: 08/08/2017
  * Time: 23:12
  */
-class TravelController extends Controller
+class TravelController extends BaseController
 {
     /**
      * List all Travels
@@ -28,11 +28,16 @@ class TravelController extends Controller
      */
     public function listAction(Request $request)
     {
-        $entities = $this->getDoctrine()->getRepository(Travel::class)->findAll();
+        $qb = $this->getDoctrine()
+            ->getRepository(Travel::class)
+            ->findAllQueryBuilder()
+        ;
 
-        return $this->render('@App/travel/list.html.twig', array(
-            'entities' => $entities,
-        ));
+        $paginatedCollection = $this->get('core.factory.pagination')->createCollection($qb, $request);
+
+        $response = $this->createApiResponse($paginatedCollection, 200);
+
+        return $response;
     }
 
     /**
