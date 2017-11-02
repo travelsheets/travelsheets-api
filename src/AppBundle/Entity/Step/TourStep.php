@@ -23,6 +23,13 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class TourStep extends AbstractStep
 {
+    const TYPE_MUSEUM = "museum";
+    const TYPE_PLACE = "place";
+    const TYPE_RESTAURANT = "restaurant";
+    const TYPE_COFFEE = "coffee";
+    const TYPE_CLUB = "club";
+    const TYPE_OTHER = "other";
+
     /**
      * @var Place
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Place", inversedBy="id")

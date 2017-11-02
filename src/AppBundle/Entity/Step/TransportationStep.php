@@ -13,6 +13,7 @@ use AppBundle\Entity\Place;
 use AppBundle\Entity\AbstractStep;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
  * Class TransportationStep
@@ -23,6 +24,15 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class TransportationStep extends AbstractStep
 {
+    const TYPE_PLANE = "plane";
+    const TYPE_BOAT = "boat";
+    const TYPE_CAR = "car";
+    const TYPE_TRAIN = "train";
+    const TYPE_TAXI = "taxi";
+    const TYPE_BIKE = "bike";
+    const TYPE_SUBWAY = "subway";
+    const TYPE_OTHER = "other";
+
     /**
      * @var Place
      *
@@ -68,14 +78,14 @@ class TransportationStep extends AbstractStep
     private $flightNumber;
 
     /**
-     * @var string
+     * @var DateTime
      *
      * @ORM\Column(name="opening_luggage", type="datetime", nullable=true)
      */
     private $openingLuggage;
 
     /**
-     * @var string
+     * @var DateTime
      *
      * @ORM\Column(name="closing_luggage", type="datetime", nullable=true)
      */
@@ -197,7 +207,7 @@ class TransportationStep extends AbstractStep
     }
 
     /**
-     * @return string
+     * @return DateTime
      */
     public function getOpeningLuggage()
     {
@@ -205,17 +215,17 @@ class TransportationStep extends AbstractStep
     }
 
     /**
-     * @param string $openingLuggage
+     * @param DateTime $openingLuggage
      * @return TransportationStep
      */
-    public function setOpeningLuggage($openingLuggage)
+    public function setOpeningLuggage(DateTime $openingLuggage)
     {
         $this->openingLuggage = $openingLuggage;
         return $this;
     }
 
     /**
-     * @return string
+     * @return DateTime
      */
     public function getClosingLuggage()
     {
@@ -223,10 +233,10 @@ class TransportationStep extends AbstractStep
     }
 
     /**
-     * @param string $closingLuggage
+     * @param DateTime $closingLuggage
      * @return TransportationStep
      */
-    public function setClosingLuggage($closingLuggage)
+    public function setClosingLuggage(DateTime $closingLuggage)
     {
         $this->closingLuggage = $closingLuggage;
         return $this;
