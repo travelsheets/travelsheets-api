@@ -78,6 +78,7 @@ class ApiExceptionSubscriber implements EventSubscriberInterface
         }
 
         if ($this->isDev) {
+            $apiProblem->set('message', $e->getMessage());
             $apiProblem->set('file', $e->getFile());
             $apiProblem->set('line', $e->getLine());
             $apiProblem->set('trace', $e->getTrace());

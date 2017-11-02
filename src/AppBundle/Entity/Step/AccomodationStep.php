@@ -23,6 +23,13 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class AccomodationStep extends AbstractStep
 {
+
+    const TYPE_HOTEL = "hotel";
+    const TYPE_LOCATION = "location";
+    const TYPE_CAMPING = "camping";
+    const TYPE_HOSTEL = "hostel";
+    const TYPE_OTHER = "other";
+
     /**
      * @var Place
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Place", inversedBy="id")
@@ -36,6 +43,17 @@ class AccomodationStep extends AbstractStep
      * @ORM\Column(name="type", type="string", length=255)
      */
     private $type;
+
+    public static function getTypes()
+    {
+        return array(
+            self::TYPE_HOTEL,
+            self::TYPE_LOCATION,
+            self::TYPE_CAMPING,
+            self::TYPE_HOSTEL,
+            self::TYPE_OTHER,
+        );
+    }
 
     /**
      * @return Place

@@ -23,16 +23,7 @@ class TourStepType extends AbstractStepType
     {
 //        $builder->add('place', )
         $builder->add('type', ChoiceType::class, array(
-            'label' => 'entities.step.tour.info.type',
-            'choices' => array(
-                'entities.step.tour.types.museum' => 'museum',
-                'entities.step.tour.types.place' => 'place',
-                'entities.step.tour.types.restaurant' => 'restaurant',
-                'entities.step.tour.types.coffee' => 'coffee',
-                'entities.step.tour.types.club' => 'club',
-                'entities.step.tour.types.other' => 'other',
-            ),
-            'placeholder' => 'entities.step.tour.info.type',
+            'choices' => TourStep::getTypes(),
         ));
     }
 
@@ -43,6 +34,7 @@ class TourStepType extends AbstractStepType
     {
         $resolver->setDefaults(array(
             'data_class' => TourStep::class,
+            'csrf_protection' => false,
         ));
     }
 }

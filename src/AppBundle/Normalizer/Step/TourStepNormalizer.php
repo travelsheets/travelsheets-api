@@ -2,30 +2,25 @@
 /**
  * Created by PhpStorm.
  * User: quentinmachard
- * Date: 01/11/2017
- * Time: 20:05
+ * Date: 02/11/2017
+ * Time: 16:57
  */
 
-namespace AppBundle\Normalizer;
+namespace AppBundle\Normalizer\Step;
 
-use AppBundle\Entity\Travel;
-use DateTime;
+
+use AppBundle\Entity\Step\TourStep;
+use AppBundle\Normalizer\AbstractStepNormalizer;
 use Symfony\Component\Serializer\Exception\CircularReferenceException;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Exception\LogicException;
-use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
-use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
-use Symfony\Component\Serializer\Normalizer\NormalizerAwareTrait;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
-class TravelNormalizer implements NormalizerInterface, NormalizerAwareInterface
+class TourStepNormalizer extends AbstractStepNormalizer
 {
-    use NormalizerAwareTrait;
-
     /**
      * Normalizes an object into a set of arrays/scalars.
      *
-     * @param Travel $object object to normalize
+     * @param TourStep $object object to normalize
      * @param string $format format the normalization result will be encoded as
      * @param array $context Context options for the normalizer
      *
@@ -38,14 +33,11 @@ class TravelNormalizer implements NormalizerInterface, NormalizerAwareInterface
      */
     public function normalize($object, $format = null, array $context = array())
     {
-        return array(
-            '@type' => 'Travel',
-            '@id' => $object->getId(),
-            'name' => $object->getName(),
-            'summary' => $object->getSummary(),
-            'dateStart' => $this->normalizer->normalize($object->getDateStart(), $format, array(DateTimeNormalizer::FORMAT_KEY => 'Y-m-d')),
-            'dateEnd' => $this->normalizer->normalize($object->getDateEnd(), $format, array(DateTimeNormalizer::FORMAT_KEY => 'Y-m-d')),
-        );
+        return array_merge(parent::normalize($object, $format, $context), array(
+            '@type' => 'TourStep',
+            'place' => $object->getPlace(),
+            'type' => $object->getType(),
+        ));
     }
 
     /**
@@ -58,6 +50,6 @@ class TravelNormalizer implements NormalizerInterface, NormalizerAwareInterface
      */
     public function supportsNormalization($data, $format = null)
     {
-        return $data instanceof Travel;
+        return $data instanceof TourStep;
     }
 }

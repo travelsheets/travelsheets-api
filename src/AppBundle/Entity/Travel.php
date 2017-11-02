@@ -5,7 +5,7 @@ namespace AppBundle\Entity;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\Context\ExecutionContext;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * Travel
@@ -46,11 +46,6 @@ class Travel
      * @ORM\Column(name="date_start", type="datetime")
      *
      * @Assert\NotBlank()
-     *
-     * @Assert\Expression(
-     *     "this.getDateStart() <= this.getDateEnd()",
-     *     message="Start date must be lower or equal than end date"
-     * )
      */
     private $dateStart;
 
@@ -58,11 +53,6 @@ class Travel
      * @var DateTime
      *
      * @ORM\Column(name="date_end", type="datetime", nullable=true)
-     *
-     * @Assert\Expression(
-     *     "this.getDateStart() <= this.getDateEnd()",
-     *     message="End date must be greater or equal than start date"
-     * )
      */
     private $dateEnd;
 
@@ -161,6 +151,22 @@ class Travel
         $this->dateEnd = $dateEnd;
 
         return $this;
+    }
+
+    /**
+     * @param ExecutionContextInterface $context
+     * @Assert\Callback()
+     */
+    public function isValidDate(ExecutionContextInterface $context)
+    {
+        if(isset($this->dateStart) && isset($this->dateEnd)) {
+            if($this->dateStart->getTimestamp() > $this->dateEnd->getTimestamp()) {
+                $context->addViolation(
+                    'End date must be greater than or equal to start date',
+                    array()
+                );
+            }
+        }
     }
 }
 
