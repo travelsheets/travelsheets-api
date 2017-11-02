@@ -17,7 +17,8 @@ app_step_get:
     _controller: 'AppBundle:Step:get'
 
 app_step_edit:
-    path: /travels/{travel}/steps/{step}/edit
+    path: /travels/{travel}/steps/{step}
+    methods: [PATCH]
     defaults:
       _controller: 'AppBundle:Step:edit'
 

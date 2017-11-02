@@ -91,7 +91,7 @@ class StepController extends BaseController
      *
      * @return Response
      */
-    public function getAction($travel, AbstractStep $step, Request $request)
+    public function getAction(AbstractStep $step, $travel, Request $request)
     {
         if($step->getTravel()->getId() != $travel) {
             throw new NotFoundHttpException("Step not found");
@@ -106,33 +106,25 @@ class StepController extends BaseController
      * Edit a Step in Travel
      *
      * @param AbstractStep $step
-     * @param Travel $travel
      * @param Request $request
      * @return Response
      */
-    public function editAction(AbstractStep $step, Travel $travel, Request $request)
+    public function editAction(AbstractStep $step, $travel, Request $request)
     {
+        if($step->getTravel()->getId() != $travel) {
+            throw new NotFoundHttpException("Step not found");
+        }
+
         $formType = 'AppBundle\\Form\\Step\\' . ucfirst($step->getDType()) . 'StepType';
 
         $form = $this->createForm($formType, $step);
-        $form->handleRequest($request);
+        $this->processForm($form, $request);
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($step);
-            $em->flush();
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($step);
+        $em->flush();
 
-            return $this->redirectToRoute('app_travel_view', array(
-                'travel' => $travel->getId(),
-                'display_step' => $step->getId(),
-            ));
-        }
-
-        return $this->render('@App/step/edit.html.twig', array(
-            'travel' => $travel,
-            'step' => $step,
-            'form' => $form->createView(),
-        ));
+        return $this->createApiResponse($step, 200, array('detail'));
     }
 
     /**
