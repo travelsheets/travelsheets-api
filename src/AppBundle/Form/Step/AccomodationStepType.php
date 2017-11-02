@@ -22,15 +22,7 @@ class AccomodationStepType extends AbstractStepType
     {
 //        $builder->add('place', )
         $builder->add('type', ChoiceType::class, array(
-            'label' => 'entities.step.accomodation.info.type',
-            'choices' => array(
-                'entities.step.accomodation.types.hotel' => 'hotel',
-                'entities.step.accomodation.types.location' => 'location',
-                'entities.step.accomodation.types.camping' => 'camping',
-                'entities.step.accomodation.types.hostel' => 'hostel',
-                'entities.step.accomodation.types.other' => 'other',
-            ),
-            'placeholder' => 'entities.step.accomodation.info.type',
+            'choices' => AccomodationStep::getTypes(),
         ));
     }
 
@@ -41,6 +33,7 @@ class AccomodationStepType extends AbstractStepType
     {
         $resolver->setDefaults(array(
             'data_class' => AccomodationStep::class,
+            'csrf_protection' => false,
         ));
     }
 }

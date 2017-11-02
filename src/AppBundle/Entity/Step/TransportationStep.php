@@ -12,8 +12,8 @@ namespace AppBundle\Entity\Step;
 use AppBundle\Entity\Place;
 use AppBundle\Entity\AbstractStep;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
  * Class TransportationStep
@@ -97,6 +97,23 @@ class TransportationStep extends AbstractStep
      * @ORM\Column(name="seat", type="string", nullable=true)
      */
     private $seat;
+
+    /**
+     * @return array
+     */
+    public static function getTypes()
+    {
+        return array(
+            self::TYPE_PLANE,
+            self::TYPE_BOAT,
+            self::TYPE_CAR,
+            self::TYPE_TRAIN,
+            self::TYPE_TAXI,
+            self::TYPE_BIKE,
+            self::TYPE_SUBWAY,
+            self::TYPE_OTHER,
+        );
+    }
 
     /**
      * @return Place

@@ -10,6 +10,8 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\AbstractStep;
 use AppBundle\Entity\Travel;
+use CoreBundle\Api\ApiProblem;
+use CoreBundle\Api\ApiProblemException;
 use CoreBundle\Controller\BaseController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -51,7 +53,13 @@ class StepController extends BaseController
         // Resolve all query params
         $optionResolver = new OptionsResolver();
         $optionResolver->setRequired(array('type'));
-        $params = $optionResolver->resolve($request->query->all());
+        try {
+            $params = $optionResolver->resolve($request->query->all());
+        } catch(\Exception $e) {
+            $apiProblem = new ApiProblem(400);
+            $apiProblem->set('message', $e->getMessage());
+            throw new ApiProblemException($apiProblem);
+        }
 
         $type = $params['type'];
         $formType = 'AppBundle\\Form\\Step\\' . ucfirst($type) . 'StepType';
@@ -61,27 +69,17 @@ class StepController extends BaseController
         }
 
         $form = $this->createForm($formType);
-        $form->handleRequest($request);
+        $this->processForm($form, $request);
 
-        if ($form->isValid()) {
-            /** @var AbstractStep $step */
-            $step = $form->getData();
-            $step->setTravel($travel);
+        /** @var AbstractStep $step */
+        $step = $form->getData();
+        $step->setTravel($travel);
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($step);
-            $em->flush();
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($step);
+        $em->flush();
 
-            return $this->redirectToRoute('app_travel_view', array(
-                'travel' => $travel->getId(),
-            ));
-        }
-
-        return $this->render('@App/step/new.html.twig', array(
-            'travel' => $travel,
-            'type' => $type,
-            'form' => $form->createView(),
-        ));
+        return $this->createApiResponse($step, 201, array('detail'));
     }
 
     /**

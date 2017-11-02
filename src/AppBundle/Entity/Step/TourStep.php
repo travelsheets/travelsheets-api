@@ -45,6 +45,21 @@ class TourStep extends AbstractStep
     private $type;
 
     /**
+     * @return array
+     */
+    public static function getTypes()
+    {
+        return array(
+            self::TYPE_MUSEUM,
+            self::TYPE_PLACE,
+            self::TYPE_RESTAURANT,
+            self::TYPE_COFFEE,
+            self::TYPE_CLUB,
+            self::TYPE_OTHER,
+        );
+    }
+
+    /**
      * @return Place
      */
     public function getPlace()

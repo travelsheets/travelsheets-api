@@ -44,6 +44,17 @@ class AccomodationStep extends AbstractStep
      */
     private $type;
 
+    public static function getTypes()
+    {
+        return array(
+            self::TYPE_HOTEL,
+            self::TYPE_LOCATION,
+            self::TYPE_CAMPING,
+            self::TYPE_HOSTEL,
+            self::TYPE_OTHER,
+        );
+    }
+
     /**
      * @return Place
      */

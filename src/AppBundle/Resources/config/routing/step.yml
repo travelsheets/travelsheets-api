@@ -5,9 +5,10 @@ app_step_list:
     _controller: 'AppBundle:Step:list'
 
 app_step_new:
-    path: /travels/{travel}/steps/new
-    defaults:
-      _controller: 'AppBundle:Step:new'
+  path: /travels/{travel}/steps
+  methods: [POST]
+  defaults:
+    _controller: 'AppBundle:Step:new'
 
 app_step_edit:
     path: /travels/{travel}/steps/{step}/edit
