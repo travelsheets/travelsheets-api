@@ -59,7 +59,7 @@ class TravelController extends BaseController
         $em->persist($travel);
         $em->flush();
 
-        return $this->createApiResponse($travel, 201, array('detail'));
+        return $this->createApiResponse($travel, 201, array('details'));
     }
 
     /**
@@ -71,38 +71,8 @@ class TravelController extends BaseController
      */
     public function viewAction(Travel $travel, Request $request)
     {
-        $steps = $this->getDoctrine()->getRepository(AbstractStep::class)->findBy(array(
-            'travel' => $travel,
-        ), array('dateStart' => 'ASC'));
-
-        $totalTransportation = 0;
-        $totalAccomodation = 0;
-        $totalTour = 0;
-        $total = 0;
-
-        foreach($steps as &$step) {
-            $price = $step->getPrice();
-            if(isset($price) && is_numeric($price)) {
-                if($step instanceof TransportationStep) {
-                    $totalTransportation += $price;
-                } elseif($step instanceof AccomodationStep) {
-                    $totalAccomodation += $price;
-                } elseif($step instanceof TourStep) {
-                    $totalTour += $price;
-                }
-
-                $total += $price;
-            }
-        }
-
-        return $this->render('@App/travel/view.html.twig', array(
-            'travel' => $travel,
-            'steps' => $steps,
-            'totalTransportation' => $totalTransportation,
-            'totalAccomodation' => $totalAccomodation,
-            'totalTour' => $totalTour,
-            'total' => $total,
-        ));
+        $view = explode(',', $request->get('view', 'details'));
+        return $this->createApiResponse($travel, 200, $view);
     }
 
     /**

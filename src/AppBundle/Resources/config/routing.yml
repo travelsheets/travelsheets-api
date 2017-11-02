@@ -12,6 +12,7 @@ app_travel_new:
 
 app_travel_view:
     path: /travels/{travel}
+    methods: [GET]
     defaults:
       _controller: 'AppBundle:Travel:view'
 
