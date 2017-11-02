@@ -85,22 +85,10 @@ class TravelController extends BaseController
     public function editAction(Travel $travel, Request $request)
     {
         $form = $this->createForm(TravelType::class, $travel);
-        $form->handleRequest($request);
+        $this->processForm($form, $request);
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($travel);
-            $em->flush();
-
-            return $this->redirectToRoute('app_travel_view', array(
-                'travel' => $travel->getId(),
-            ));
-        }
-
-        return $this->render('@App/travel/edit.html.twig', array(
-            'travel' => $travel,
-            'form' => $form->createView(),
-        ));
+        $view = explode(',', $request->get('view', 'details'));
+        return $this->createApiResponse($travel, 200, $view);
     }
 
     /**

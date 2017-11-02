@@ -46,6 +46,11 @@ class Travel
      * @ORM\Column(name="date_start", type="datetime")
      *
      * @Assert\NotBlank()
+     *
+     * @Assert\Expression(
+     *     "this.getDateStart() <= this.getDateEnd()",
+     *     message="Start date must be lower or equal than end date"
+     * )
      */
     private $dateStart;
 
@@ -56,7 +61,7 @@ class Travel
      *
      * @Assert\Expression(
      *     "this.getDateStart() <= this.getDateEnd()",
-     *     message="End date must be greater of equal than start date"
+     *     message="End date must be greater or equal than start date"
      * )
      */
     private $dateEnd;

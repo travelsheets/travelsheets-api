@@ -17,7 +17,8 @@ app_travel_view:
       _controller: 'AppBundle:Travel:view'
 
 app_travel_edit:
-    path: /travels/{travel}/edit
+    path: /travels/{travel}
+    methods: [PATCH]
     defaults:
       _controller: 'AppBundle:Travel:edit'
 
