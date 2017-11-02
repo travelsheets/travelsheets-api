@@ -50,25 +50,16 @@ class TravelController extends BaseController
      */
     public function newAction(Request $request)
     {
-        $form = $this->createForm(TravelType::class);
-        $form->handleRequest($request);
+        $travel = new Travel();
 
-        if ($form->isValid()) {
-            /** @var Travel $travel */
-            $travel = $form->getData();
+        $form = $this->createForm(TravelType::class, $travel);
+        $this->processForm($form, $request);
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($travel);
-            $em->flush();
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($travel);
+        $em->flush();
 
-            return $this->redirectToRoute('app_travel_view', array(
-                'travel' => $travel->getId(),
-            ));
-        }
-
-        return $this->render('@App/travel/new.html.twig', array(
-            'form' => $form->createView(),
-        ));
+        return $this->createApiResponse($travel, 201, array('detail'));
     }
 
     /**

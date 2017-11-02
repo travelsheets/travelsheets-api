@@ -9,6 +9,7 @@
 namespace AppBundle\Normalizer;
 
 use AppBundle\Entity\Travel;
+use DateTime;
 use Symfony\Component\Serializer\Exception\CircularReferenceException;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Exception\LogicException;
@@ -33,12 +34,15 @@ class TravelNormalizer implements NormalizerInterface
      */
     public function normalize($object, $format = null, array $context = array())
     {
+        $dateStart = $object->getDateStart();
+        $dateEnd = $object->getDateEnd();
+
         return array(
             'id' => $object->getId(),
             'name' => $object->getName(),
             'summary' => $object->getSummary(),
-            'date_start' => $object->getDateStart()->format('Y-m-d'),
-            'date_end' => $object->getDateEnd()->format('Y-m-d'),
+            'date_start' => isset($dateStart) && $dateStart instanceof DateTime ? $dateStart->format('Y-m-d') : null,
+            'date_end' => isset($dateEnd) && $dateEnd instanceof DateTime ? $dateEnd->format('Y-m-d') : null,
         );
     }
 

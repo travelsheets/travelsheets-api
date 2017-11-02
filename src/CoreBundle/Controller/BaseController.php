@@ -10,7 +10,9 @@ namespace CoreBundle\Controller;
 
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 abstract class BaseController extends Controller
 {
@@ -26,5 +28,16 @@ abstract class BaseController extends Controller
     protected function createApiResponse($data, $statusCode, $serializerGroups = [])
     {
         return $this->get('core.api.response')->createApiResponse($data, $statusCode, $serializerGroups);
+    }
+
+    /**
+     * @param FormInterface $form
+     *
+     * @param Request $request
+     * @param bool $clearMissing
+     * @param bool $required
+     */
+    protected function processForm(FormInterface $form, Request $request, $clearMissing = false, $required = true) {
+        $this->get('core.processor.form')->processForm($form, $request, $clearMissing, $required);
     }
 }

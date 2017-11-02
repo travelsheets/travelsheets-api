@@ -5,7 +5,8 @@ app_travel_list:
       _controller: 'AppBundle:Travel:list'
 
 app_travel_new:
-    path: /travels/new
+    path: /travels
+    methods: [POST]
     defaults:
       _controller: 'AppBundle:Travel:new'
 
