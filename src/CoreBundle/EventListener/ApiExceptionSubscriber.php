@@ -9,11 +9,13 @@
 namespace CoreBundle\EventListener;
 
 
+use CoreBundle\Api\ApiProblem;
 use Monolog\Logger;
 use CoreBundle\Api\ApiProblemException;
 use CoreBundle\Api\ApiResponse;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
+use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\HttpKernel\KernelInterface;
 
@@ -55,11 +57,25 @@ class ApiExceptionSubscriber implements EventSubscriberInterface
     {
         $e = $event->getException();
 
-        if (!$e instanceof ApiProblemException) {
-            return;
-        }
+        if ($e instanceof ApiProblemException) {
+            $apiProblem = $e->getApiProblem();
+        } else {
+            $statusCode = $e instanceof HttpExceptionInterface ? $e->getStatusCode() : 500;
 
-        $apiProblem = $e->getApiProblem();
+            switch($statusCode) {
+                case 404:
+                    $type = ApiProblem::TYPE_NOT_FOUND;
+                    break;
+                case 400:
+                    $type = ApiProblem::TYPE_VALIDATION_ERROR;
+                    break;
+                default:
+                    $type = null;
+                    break;
+            }
+
+            $apiProblem = new ApiProblem($statusCode, $type);
+        }
 
         if ($this->isDev) {
             $apiProblem->set('file', $e->getFile());

@@ -35,10 +35,13 @@ class ApiProblem
     const TYPE_VALIDATION_ERROR = 'validation_error';
     const TYPE_INVALID_REQUEST_BODY_FORMAT = 'invalid_body_format';
     const TYPE_INVALID_TOKEN = 'invalid_token';
+    const TYPE_NOT_FOUND = 'not_found';
+
     private static $titles = array(
         self::TYPE_VALIDATION_ERROR => 'There was a validation error',
         self::TYPE_INVALID_REQUEST_BODY_FORMAT => 'Invalid JSON format sent',
         self::TYPE_INVALID_TOKEN => 'Invalid token',
+        self::TYPE_NOT_FOUND => 'Not found',
     );
     /**
      * ApiProblem constructor.
@@ -47,6 +50,7 @@ class ApiProblem
      */
     public function __construct($statusCode, $type = null) {
         $this->statusCode = $statusCode;
+
         if($type === null) {
             // no type? The default is about:blank and the title should
             // be the standard status code message
