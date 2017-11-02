@@ -87,6 +87,10 @@ class TravelController extends BaseController
         $form = $this->createForm(TravelType::class, $travel);
         $this->processForm($form, $request);
 
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($travel);
+        $em->flush();
+
         $view = explode(',', $request->get('view', 'details'));
         return $this->createApiResponse($travel, 200, $view);
     }
@@ -95,23 +99,14 @@ class TravelController extends BaseController
      * Delete a Travel
      *
      * @param Travel $travel
-     * @param Request $request
      * @return Response
      */
-    public function deleteAction(Travel $travel, Request $request)
+    public function deleteAction(Travel $travel)
     {
-        $confirm = $request->get('confirm', false);
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($travel);
+        $em->flush();
 
-        if($confirm) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($travel);
-            $em->flush();
-
-            return $this->redirectToRoute('app_homepage');
-        }
-
-        return $this->render('@App/travel/delete.html.twig', array(
-            'travel' => $travel,
-        ));
+        return $this->createApiResponse(null, 204);
     }
 }
