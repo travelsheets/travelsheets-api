@@ -1,0 +1,5 @@
+app_upload_new:
+  path: /uploads
+  methods: [POST]
+  defaults:
+    _controller: AppBundle:Upload:new
