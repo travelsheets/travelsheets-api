@@ -1,5 +1,14 @@
 FROM php:7.1-fpm-alpine
 
+RUN apk add --no-cache $PHPIZE_DEPS \
+    && pecl install xdebug-2.5.0 \
+    && docker-php-ext-enable xdebug \
+    && echo "xdebug.idekey=PHPSTORM" >> /usr/local/etc/php/conf.d/xdebug.ini \
+    && echo "xdebug.remote_enable=1"  >> /usr/local/etc/php/conf.d/xdebug.ini \
+    && echo "xdebug.remote_connect_back=1" >> /usr/local/etc/php/conf.d/xdebug.ini \
+    && echo "xdebug.remote_autostart=1" >> /usr/local/etc/php/conf.d/xdebug.ini \
+    && echo "memory_limit = 64M" > /usr/local/etc/php/conf.d/php.ini
+
 RUN apk add --no-cache --virtual .persistent-deps \
 		git \
 		icu-libs \
@@ -63,6 +72,8 @@ RUN composer dump-autoload --optimize --classmap-authoritative --no-dev
 
 COPY docker/app/docker-entrypoint.sh /usr/local/bin/docker-app-entrypoint
 RUN chmod +x /usr/local/bin/docker-app-entrypoint
+
+EXPOSE 9000
 
 ENTRYPOINT ["docker-app-entrypoint"]
 CMD ["php-fpm"]
