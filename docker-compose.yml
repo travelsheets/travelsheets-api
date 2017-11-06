@@ -36,8 +36,8 @@ services:
 #      - db-data:/var/lib/mysql:rw
       # You may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
       - ./docker/db/data:/var/lib/mysql:rw
-#    ports:
-#      - "3306:3306"
+    ports:
+      - "3306:3306"
   nginx:
     build:
       context: ./docker/nginx
