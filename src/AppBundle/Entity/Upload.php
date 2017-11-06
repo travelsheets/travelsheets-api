@@ -98,25 +98,6 @@ class Upload
     }
 
     /**
-     * Set file
-     *
-     * @param File $file
-     *
-     * @return Upload
-     */
-    private function setFile(File $file)
-    {
-        $this->file = $file;
-
-        $this->path = $file->getPath();
-        $this->filename = $file->getFilename();
-
-        $this->uploadedFile = null;
-
-        return $this;
-    }
-
-    /**
      * Get file
      *
      * @return File
@@ -196,10 +177,13 @@ class Upload
         // Remove old file
         $this->deleteFile();
 
-        $this->setFile($this->uploadedFile->move(
+        $this->file = $this->uploadedFile->move(
             $this->getUploadRootDir(),
             $fileName
-        ));
+        );
+        $this->filename = $fileName;
+
+        $this->uploadedFile = null;
 
         return $this;
     }
