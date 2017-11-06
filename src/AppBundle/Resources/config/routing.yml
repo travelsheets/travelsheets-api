@@ -7,6 +7,9 @@ app_step:
 app_upload:
   resource: routing/upload.yml
 
+app_step_attachment:
+  resource: routing/step_attachment.yml
+
 app_attachment_new:
     path: /travels/{travel}/attachments/new
     defaults:

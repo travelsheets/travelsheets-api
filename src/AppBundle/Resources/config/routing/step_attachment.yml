@@ -1,0 +1,5 @@
+app_step_attachment_list:
+  path: /travels/{travel}/steps/{step}/attachments
+  methods: [GET]
+  defaults:
+    _controller: AppBundle:StepAttachment:list
