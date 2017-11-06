@@ -1,12 +1,7 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: quentinmachard
- * Date: 10/08/2017
- * Time: 14:52
- */
 
 namespace AppBundle\Entity;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -14,26 +9,103 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="step_attachment")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\StepAttachmentRepository")
- * @ORM\HasLifecycleCallbacks()
  */
 class StepAttachment
 {
     /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=255)
+     */
+    private $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="summary", type="text", nullable=true)
+     */
+    private $summary;
+
+    /**
      * @var AbstractStep
      *
-     * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="Appbundle\Entity\AbstractStep", inversedBy="attachments", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\AbstractStep")
      */
     private $step;
 
     /**
-     * @var Attachment
+     * @var Upload
      *
-     * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Attachment", fetch="EAGER")
-     * @ORM\JoinColumn(name="attachment_id", referencedColumnName="id", onDelete="CASCADE")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Upload")
      */
-    private $attachment;
+    private $file;
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return $this
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set summary
+     *
+     * @param string $summary
+     *
+     * @return $this
+     */
+    public function setSummary($summary)
+    {
+        $this->summary = $summary;
+
+        return $this;
+    }
+
+    /**
+     * Get summary
+     *
+     * @return string
+     */
+    public function getSummary()
+    {
+        return $this->summary;
+    }
 
     /**
      * @return AbstractStep
@@ -45,7 +117,8 @@ class StepAttachment
 
     /**
      * @param AbstractStep $step
-     * @return StepAttachment
+     *
+     * @return $this
      */
     public function setStep(AbstractStep $step)
     {
@@ -54,20 +127,21 @@ class StepAttachment
     }
 
     /**
-     * @return Attachment
+     * @return Upload
      */
-    public function getAttachment()
+    public function getFile()
     {
-        return $this->attachment;
+        return $this->file;
     }
 
     /**
-     * @param Attachment $attachment
-     * @return StepAttachment
+     * @param Upload $file
+     *
+     * @return $this
      */
-    public function setAttachment(Attachment $attachment)
+    public function setFile(Upload $file)
     {
-        $this->attachment = $attachment;
+        $this->file = $file;
         return $this;
     }
 }
