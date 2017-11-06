@@ -21,6 +21,7 @@ services:
         - '@app.normalizer.accomodation_step'
         - '@app.normalizer.tour_step'
         - '@app.normalizer.transportation_step'
+        - '@app.normalizer.upload'
       1:
         - '@core.encoder.json'
 

@@ -10,3 +10,6 @@ services:
 
   app.normalizer.transportation_step:
     class: AppBundle\Normalizer\Step\TransportationStepNormalizer
+
+  app.normalizer.upload:
+    class: AppBundle\Normalizer\UploadNormalizer
