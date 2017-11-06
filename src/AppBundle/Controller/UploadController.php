@@ -55,4 +55,20 @@ class UploadController extends BaseController
     {
         return $this->createApiResponse($upload, 200);
     }
+
+    /**
+     * Delete an Upload
+     *
+     * @param Upload $upload
+     *
+     * @return Response
+     */
+    public function deleteAction(Upload $upload)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($upload);
+        $em->flush();
+
+        return $this->createApiResponse(null, 204);
+    }
 }

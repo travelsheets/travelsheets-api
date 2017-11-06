@@ -9,3 +9,9 @@ app_upload_get:
   methods: [GET]
   defaults:
     _controller: AppBundle:Upload:get
+
+app_upload_delete:
+  path: /uploads/{upload}
+  methods: [DELETE]
+  defaults:
+    _controller: AppBundle:Upload:delete
