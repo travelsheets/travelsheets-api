@@ -18,6 +18,8 @@ use Symfony\Component\HttpFoundation\Response;
 class UploadController extends BaseController
 {
     /**
+     * Upload a File
+     *
      * @param Request $request
      * @return Response
      */
@@ -30,7 +32,7 @@ class UploadController extends BaseController
             'file' => $request->files->get('file'),
         ));
 
-        if(!$form->isValid()) {
+        if (!$form->isValid()) {
             $this->throwApiProblemValidationException($form);
         }
 
@@ -39,5 +41,18 @@ class UploadController extends BaseController
         $em->flush();
 
         return $this->createApiResponse($upload, 201);
+    }
+
+    /**
+     * Get informations of an Upload
+     *
+     * @param Upload $upload
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function getAction(Upload $upload, Request $request)
+    {
+        return $this->createApiResponse($upload, 200);
     }
 }

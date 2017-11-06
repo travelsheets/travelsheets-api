@@ -210,7 +210,7 @@ class Upload
      */
     private function loadFile()
     {
-        $this->setFile(new File($this->getUploadRootDir() . $this->filename));
+        $this->file = new File($this->getUploadRootDir() . $this->filename);
 
         return $this;
     }
