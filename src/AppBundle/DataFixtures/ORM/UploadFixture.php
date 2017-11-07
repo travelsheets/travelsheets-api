@@ -24,6 +24,9 @@ class UploadFixture extends Fixture
      */
     public function load(ObjectManager $manager)
     {
+        $rootDir = __DIR__ . '/../../../../web/attachments';
+        exec("rm -r $rootDir");
+
         $sampleRealPath = __DIR__ . '/resources/sample.pdf';
         $tempRealPath = __DIR__ . '/resources/sample_temp.pdf';
 
