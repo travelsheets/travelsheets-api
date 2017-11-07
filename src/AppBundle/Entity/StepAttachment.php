@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * StepAttachment
@@ -25,6 +26,8 @@ class StepAttachment
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     *
+     * @Assert\NotBlank()
      */
     private $name;
 
@@ -46,6 +49,8 @@ class StepAttachment
      * @var Upload
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Upload")
+     *
+     * @Assert\NotBlank()
      */
     private $file;
 
