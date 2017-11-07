@@ -90,6 +90,30 @@ class StepAttachmentController extends BaseController
     }
 
     /**
+     * Update a StepAttachment
+     *
+     * @param Travel $travel
+     * @param AbstractStep $step
+     * @param StepAttachment $attachment
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function updateAction(Travel $travel, AbstractStep $step, StepAttachment $attachment, Request $request)
+    {
+        $this->checkNotFound($travel, $step, $attachment);
+
+        $form = $this->createForm(StepAttachmentType::class, $attachment);
+        $this->processForm($form, $request);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($attachment);
+        $em->flush();
+
+        return $this->createApiResponse($attachment, 200, array('details'));
+    }
+
+    /**
      * Check not found
      *
      * @param Travel $travel

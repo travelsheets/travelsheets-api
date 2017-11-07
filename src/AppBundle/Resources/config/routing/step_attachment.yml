@@ -15,3 +15,9 @@ app_step_attachment_get:
   methods: [GET]
   defaults:
     _controller: AppBundle:StepAttachment:get
+
+app_step_attachment_update:
+  path: /travels/{travel}/steps/{step}/attachments/{attachment}
+  methods: [PATCH]
+  defaults:
+    _controller: AppBundle:StepAttachment:update
