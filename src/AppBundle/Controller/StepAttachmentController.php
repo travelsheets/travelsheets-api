@@ -114,6 +114,26 @@ class StepAttachmentController extends BaseController
     }
 
     /**
+     * Delete a StepAttachment
+     *
+     * @param Travel $travel
+     * @param AbstractStep $step
+     * @param StepAttachment $attachment
+     *
+     * @return Response
+     */
+    public function deleteAction(Travel $travel, AbstractStep $step, StepAttachment $attachment)
+    {
+        $this->checkNotFound($travel, $step, $attachment);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($attachment);
+        $em->flush();
+
+        return $this->createApiResponse(null, 204);
+    }
+
+    /**
      * Check not found
      *
      * @param Travel $travel

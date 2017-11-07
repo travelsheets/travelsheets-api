@@ -21,3 +21,9 @@ app_step_attachment_update:
   methods: [PATCH]
   defaults:
     _controller: AppBundle:StepAttachment:update
+
+app_step_attachment_delete:
+  path: /travels/{travel}/steps/{step}/attachments/{attachment}
+  methods: [DELETE]
+  defaults:
+    _controller: AppBundle:StepAttachment:delete
