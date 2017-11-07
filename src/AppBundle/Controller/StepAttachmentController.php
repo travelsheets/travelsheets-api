@@ -74,6 +74,22 @@ class StepAttachmentController extends BaseController
     }
 
     /**
+     * Get information of a StepAttachment
+     *
+     * @param Travel $travel
+     * @param AbstractStep $step
+     * @param StepAttachment $attachment
+     *
+     * @return Response
+     */
+    public function getAction(Travel $travel, AbstractStep $step, StepAttachment $attachment)
+    {
+        $this->checkNotFound($travel, $step, $attachment);
+
+        return $this->createApiResponse($attachment, 200, array('details'));
+    }
+
+    /**
      * Check not found
      *
      * @param Travel $travel

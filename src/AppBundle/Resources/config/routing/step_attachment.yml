@@ -9,3 +9,9 @@ app_step_attachment_new:
   methods: [POST]
   defaults:
     _controller: AppBundle:StepAttachment:new
+
+app_step_attachment_get:
+  path: /travels/{travel}/steps/{step}/attachments/{attachment}
+  methods: [GET]
+  defaults:
+    _controller: AppBundle:StepAttachment:get
