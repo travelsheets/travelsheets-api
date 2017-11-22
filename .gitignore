@@ -19,3 +19,4 @@
 .idea
 
 docker/db/data
+docker-compose.yml
