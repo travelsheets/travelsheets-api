@@ -20,7 +20,7 @@ class PaginationFactory
     {
         $currentPage = $request->query->get('page', 1);
 
-        $adapter = new DoctrineORMAdapter($qb);
+        $adapter = new DoctrineORMAdapter($qb, false);
         $pagerfanta = new Pagerfanta($adapter);
         $pagerfanta->setMaxPerPage(10);
         $pagerfanta->setCurrentPage($currentPage);

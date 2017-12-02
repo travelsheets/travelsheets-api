@@ -14,6 +14,8 @@ class TravelRepository extends \Doctrine\ORM\EntityRepository
     {
         $qb = $this->createQueryBuilder('entity');
 
+        $qb->addOrderBy('entity.dateStart', 'DESC');
+
         if(isset($search) && !empty($search)) {
             $qb
                 ->where('entity.name LIKE :search')
