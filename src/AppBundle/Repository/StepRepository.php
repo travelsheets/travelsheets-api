@@ -17,6 +17,7 @@ class StepRepository extends \Doctrine\ORM\EntityRepository
         return $this->createQueryBuilder('entity')
             ->where('entity.travel = :travel')
             ->setParameter(':travel', $travel)
+            ->addOrderBy('entity.dateStart', 'ASC')
         ;
     }
 }
