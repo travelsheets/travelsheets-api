@@ -13,6 +13,7 @@ use AppBundle\Entity\Step\AccomodationStep;
 use AppBundle\Entity\Step\TourStep;
 use AppBundle\Form\AbstractStepType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -25,6 +26,8 @@ class TourStepType extends AbstractStepType
         $builder->add('type', ChoiceType::class, array(
             'choices' => TourStep::getTypes(),
         ));
+
+        $builder->add('bookingNumber', TextType::class);
     }
 
     /**
