@@ -62,7 +62,7 @@ class StepController extends BaseController
         }
 
         $type = $params['type'];
-        $formType = 'AppBundle\\Form\\Step\\' . ucfirst($type) . 'StepType';
+        $formType = 'AppBundle\\Form\\Step\\' . ucfirst($type) . 'Type';
 
         if (!class_exists($formType)) {
             throw new NotFoundHttpException('Type not found');

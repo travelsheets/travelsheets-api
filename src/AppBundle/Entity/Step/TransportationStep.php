@@ -235,7 +235,7 @@ class TransportationStep extends AbstractStep
      * @param DateTime $openingLuggage
      * @return TransportationStep
      */
-    public function setOpeningLuggage(DateTime $openingLuggage)
+    public function setOpeningLuggage(DateTime $openingLuggage = null)
     {
         $this->openingLuggage = $openingLuggage;
         return $this;
@@ -253,7 +253,7 @@ class TransportationStep extends AbstractStep
      * @param DateTime $closingLuggage
      * @return TransportationStep
      */
-    public function setClosingLuggage(DateTime $closingLuggage)
+    public function setClosingLuggage(DateTime $closingLuggage = null)
     {
         $this->closingLuggage = $closingLuggage;
         return $this;
