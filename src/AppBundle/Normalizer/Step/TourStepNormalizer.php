@@ -37,6 +37,7 @@ class TourStepNormalizer extends AbstractStepNormalizer
             '@type' => 'TourStep',
             'place' => $object->getPlace(),
             'type' => $object->getType(),
+            'bookingNumber' => $object->getBookingNumber(),
         ));
     }
 

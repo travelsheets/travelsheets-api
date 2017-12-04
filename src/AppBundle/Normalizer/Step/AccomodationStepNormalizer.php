@@ -37,6 +37,8 @@ class AccomodationStepNormalizer extends AbstractStepNormalizer
             '@type' => 'AccomodationStep',
             'place' => $object->getPlace(),
             'type' => $object->getType(),
+            'company' => $object->getCompany(),
+            'bookingNumber' => $object->getBookingNumber(),
         ));
     }
 
