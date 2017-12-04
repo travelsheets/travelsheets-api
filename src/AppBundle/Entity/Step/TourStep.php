@@ -45,6 +45,21 @@ class TourStep extends AbstractStep
     private $type;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="booking_number", type="string", length=255, nullable=true)
+     */
+    private $bookingNumber;
+
+    /**
+     * @return string
+     */
+    public function getDType()
+    {
+        return 'tour';
+    }
+
+    /**
      * @return array
      */
     public static function getTypes()
@@ -98,8 +113,18 @@ class TourStep extends AbstractStep
     /**
      * @return string
      */
-    public function getDType()
+    public function getBookingNumber()
     {
-        return 'tour';
+        return $this->bookingNumber;
+    }
+
+    /**
+     * @param string $bookingNumber
+     * @return $this
+     */
+    public function setBookingNumber($bookingNumber)
+    {
+        $this->bookingNumber = $bookingNumber;
+        return $this;
     }
 }
