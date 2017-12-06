@@ -134,6 +134,44 @@ class StepAttachmentController extends BaseController
     }
 
     /**
+     * Download a StepAttachment
+     *
+     * @param Travel $travel
+     * @param AbstractStep $step
+     * @param StepAttachment $attachment
+     *
+     * @return Response
+     */
+    public function downloadAction(Travel $travel, AbstractStep $step, StepAttachment $attachment)
+    {
+        $this->checkNotFound($travel, $step, $attachment);
+
+        $file = $attachment->getFile();
+
+        if(!isset($file)) {
+            throw new NotFoundHttpException();
+        }
+
+        $filename = $file->getFile()->getPathname();
+
+        // Generate response
+        $response = new Response();
+
+        // Set headers
+        $response->headers->set('Cache-Control', 'private');
+        $response->headers->set('Content-type', mime_content_type($filename));
+        $response->headers->set('Content-Disposition', 'attachment; filename="' . $attachment->getName() . '.' . $file->getExtension() . '";');
+        $response->headers->set('Content-length', filesize($filename));
+
+        // Send headers before outputting anything
+        $response->sendHeaders();
+
+        $response->setContent(file_get_contents($filename));
+
+        return $response;
+    }
+
+    /**
      * Check not found
      *
      * @param Travel $travel

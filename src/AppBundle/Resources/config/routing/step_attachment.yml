@@ -27,3 +27,9 @@ app_step_attachment_delete:
   methods: [DELETE]
   defaults:
     _controller: AppBundle:StepAttachment:delete
+
+app_step_attachment_download:
+  path: /travels/{travel}/steps/{step}/attachments/{attachment}/download
+  methods: [GET]
+  defaults:
+    _controller: AppBundle:StepAttachment:download

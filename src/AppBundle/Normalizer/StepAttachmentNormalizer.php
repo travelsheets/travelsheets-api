@@ -40,7 +40,6 @@ class StepAttachmentNormalizer extends BaseNormalizer
             '@id' => $object->getId(),
             'name' => $object->getName(),
             'summary' => $object->getSummary(),
-            'file' => $this->normalizer->normalize($object->getFile()),
         );
     }
 
