@@ -10,18 +10,24 @@ namespace AppBundle\Repository;
  */
 class TravelRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function findAllQueryBuilder($search = null)
+    public function findAllQueryBuilder($search = null, $past = false)
     {
         $qb = $this->createQueryBuilder('entity');
 
-        $qb->addOrderBy('entity.dateStart', 'DESC');
+        $qb->addOrderBy('entity.dateStart', $past ? 'DESC' : 'ASC');
 
         if(isset($search) && !empty($search)) {
             $qb
-                ->where('entity.name LIKE :search')
+                ->andWhere('entity.name LIKE :search')
                 ->orWhere('entity.summary LIKE :search')
                 ->setParameter(':search', '%'.$search.'%');
             ;
+        }
+
+        if($past) {
+            $qb->andWhere('(entity.dateEnd IS NOT NULL AND entity.dateEnd <= CURRENT_TIMESTAMP()) OR (entity.dateEnd IS NULL AND entity.dateStart <= CURRENT_TIMESTAMP())');
+        } else {
+            $qb->andWhere('(entity.dateEnd IS NOT NULL AND entity.dateEnd > CURRENT_TIMESTAMP()) OR (entity.dateEnd IS NULL AND entity.dateStart > CURRENT_TIMESTAMP())');
         }
 
         return $qb;

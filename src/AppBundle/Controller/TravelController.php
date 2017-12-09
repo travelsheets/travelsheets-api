@@ -28,11 +28,12 @@ class TravelController extends BaseController
      */
     public function listAction(Request $request)
     {
-        $search = $request->get('search', null);
+        $search = $request->query->get('search', null);
+        $past = $request->query->getBoolean('past', false);
 
         $qb = $this->getDoctrine()
             ->getRepository(Travel::class)
-            ->findAllQueryBuilder($search)
+            ->findAllQueryBuilder($search, $past)
         ;
 
         $paginatedCollection = $this->get('core.factory.pagination')->createCollection($qb, $request);
