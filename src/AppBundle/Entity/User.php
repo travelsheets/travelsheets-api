@@ -50,6 +50,11 @@ class User implements UserInterface
     private $password;
 
     /**
+     * @var string
+     */
+    private $plainPassword;
+
+    /**
      * @var bool
      *
      * @ORM\Column(name="verified", type="boolean")
@@ -171,6 +176,26 @@ class User implements UserInterface
     }
 
     /**
+     * @return string
+     */
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    /**
+     * @param string $plainPassword
+     * @return User
+     */
+    public function setPlainPassword($plainPassword)
+    {
+        $this->plainPassword = $plainPassword;
+        $this->password = null;
+
+        return $this;
+    }
+
+    /**
      * Set verified
      *
      * @param boolean $verified
@@ -247,7 +272,7 @@ class User implements UserInterface
      */
     public function eraseCredentials()
     {
-        // TODO: Implement eraseCredentials() method.
+        $this->plainPassword = null;
     }
 }
 
