@@ -22,7 +22,7 @@ class FormProcessor
      * @param bool $clearMissing
      * @param bool $required
      */
-    public function processForm(FormInterface $form, Request $request, $clearMissing = FALSE, $required = TRUE)
+    public function processForm(FormInterface $form, Request $request, $clearMissing = TRUE, $required = TRUE)
     {
         $body = $this->parseBody($request, $required);
         $this->processFormData($body, $form, $clearMissing);
@@ -33,7 +33,7 @@ class FormProcessor
      * @param FormInterface $form
      * @param bool $clearMissing
      */
-    public function processFormData($data, FormInterface $form, $clearMissing = FALSE)
+    public function processFormData($data, FormInterface $form, $clearMissing = TRUE)
     {
         $form->submit($data, $clearMissing);
         if (!$form->isValid()) {
