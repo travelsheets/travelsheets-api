@@ -1,0 +1,4 @@
+app_authentication_register:
+  path: /register
+  defaults:
+    _controller: AppBundle:Authentication:register

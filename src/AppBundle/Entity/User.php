@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -10,6 +11,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  *
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
+ * @UniqueEntity("email")
  */
 class User implements UserInterface
 {
@@ -32,6 +34,7 @@ class User implements UserInterface
      * @var string
      *
      * @ORM\Column(name="lastname", type="string", length=255)
+     *
      */
     private $lastname;
 
@@ -68,6 +71,13 @@ class User implements UserInterface
      */
     private $token;
 
+    /**
+     * User constructor.
+     */
+    public function __construct()
+    {
+        $this->verified = false;
+    }
 
     /**
      * Get id

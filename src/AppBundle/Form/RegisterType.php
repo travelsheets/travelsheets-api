@@ -25,19 +25,34 @@ class RegisterType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('firstname', TextType::class);
-
-        $builder->add('lastname', TextType::class);
-
-        $builder->add('email', TextType::class);
-
-        $builder->add('confirmEmail', TextType::class);
-
-        $builder->add('password', TextType::class, array(
-            'property_path' => 'plainPassword',
+        $builder->add('firstname', TextType::class, array(
+            'constraints' => array(
+                new NotBlank(),
+            ),
         ));
 
-        $builder->add('confirmPassword', TextType::class);
+        $builder->add('lastname', TextType::class, array(
+            'constraints' => array(
+                new NotBlank(),
+            ),
+        ));
+
+        $builder->add('email', TextType::class, array(
+            'constraints' => array(
+                new NotBlank(),
+                new Email(),
+            ),
+        ));
+
+        $builder->add('password', TextType::class, array(
+            'constraints' => array(
+                new NotBlank(),
+                new Regex(array(
+                    'pattern' => '/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,30}$/',
+                    'message' => 'Le mot de passe doit contenir entre 8 et 30 caractères et être composé d\'au moins une minuscule, une majuscule et un chiffre',
+                )),
+            ),
+        ));
     }
 
     /**
