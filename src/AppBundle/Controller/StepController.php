@@ -10,12 +10,13 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\AbstractStep;
 use AppBundle\Entity\Travel;
+use AppBundle\Entity\User;
 use CoreBundle\Api\ApiProblem;
 use CoreBundle\Api\ApiProblemException;
 use CoreBundle\Controller\BaseController;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -31,6 +32,8 @@ class StepController extends BaseController
      */
     public function listAction(Travel $travel, Request $request)
     {
+        $this->checkAuthorization($travel);
+
         $qb = $this->getDoctrine()
             ->getRepository(AbstractStep::class)
             ->findAllByTravelQueryBuilder($travel)
@@ -50,6 +53,8 @@ class StepController extends BaseController
      */
     public function newAction(Travel $travel, Request $request)
     {
+        $this->checkAuthorization($travel);
+
         // Resolve all query params
         $optionResolver = new OptionsResolver();
         $optionResolver->setRequired(array('type'));
@@ -85,15 +90,17 @@ class StepController extends BaseController
     /**
      * Get a Step
      *
-     * @param $travel
+     * @param Travel $travel
      * @param AbstractStep $step
      * @param Request $request
      *
      * @return Response
      */
-    public function getAction(AbstractStep $step, $travel, Request $request)
+    public function getAction(AbstractStep $step, Travel $travel, Request $request)
     {
-        if($step->getTravel()->getId() != $travel) {
+        $this->checkAuthorization($travel);
+
+        if($step->getTravel()->getId() != $travel->getId()) {
             throw new NotFoundHttpException("Step not found");
         }
 
@@ -106,19 +113,22 @@ class StepController extends BaseController
      * Edit a Step in Travel
      *
      * @param AbstractStep $step
+     * @param Travel $travel
      * @param Request $request
      * @return Response
      */
-    public function editAction(AbstractStep $step, $travel, Request $request)
+    public function editAction(AbstractStep $step, Travel $travel, Request $request)
     {
-        if($step->getTravel()->getId() != $travel) {
+        $this->checkAuthorization($travel);
+
+        if($step->getTravel()->getId() != $travel->getId()) {
             throw new NotFoundHttpException("Step not found");
         }
 
         $formType = 'AppBundle\\Form\\Step\\' . ucfirst($step->getDType()) . 'StepType';
 
         $form = $this->createForm($formType, $step);
-        $this->processForm($form, $request);
+        $this->processForm($form, $request, FALSE);
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($step);
@@ -135,9 +145,11 @@ class StepController extends BaseController
      * @param Request $request
      * @return Response
      */
-    public function deleteAction(AbstractStep $step, $travel, Request $request)
+    public function deleteAction(AbstractStep $step, Travel $travel, Request $request)
     {
-        if($step->getTravel()->getId() != $travel) {
+        $this->checkAuthorization($travel);
+
+        if($step->getTravel()->getId() != $travel->getId()) {
             throw new NotFoundHttpException("Step not found");
         }
 
@@ -146,5 +158,22 @@ class StepController extends BaseController
         $em->flush();
 
         return $this->createApiResponse(null, 204);
+    }
+
+    /**
+     * Check authorization of Travel for current User
+     *
+     * @param Travel $travel
+     *
+     * @throws AccessDeniedHttpException
+     */
+    private function checkAuthorization(Travel $travel)
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+
+        if($travel->getUser()->getId() !== $user->getId()) {
+            throw new AccessDeniedHttpException('You d\'ont have access to this Travel');
+        }
     }
 }

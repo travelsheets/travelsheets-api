@@ -72,6 +72,13 @@ class User implements UserInterface
     private $token;
 
     /**
+     * @var Travel[]
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Travel", mappedBy="user")
+     */
+    private $travels;
+
+    /**
      * User constructor.
      */
     public function __construct()

@@ -12,10 +12,12 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\AbstractStep;
 use AppBundle\Entity\StepAttachment;
 use AppBundle\Entity\Travel;
+use AppBundle\Entity\User;
 use AppBundle\Form\StepAttachmentType;
 use CoreBundle\Controller\BaseController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class StepAttachmentController extends BaseController
@@ -31,6 +33,7 @@ class StepAttachmentController extends BaseController
      */
     public function listAction(Travel $travel, AbstractStep $step, Request $request)
     {
+        $this->checkAuthorization($travel);
         $this->checkNotFound($travel, $step);
 
         $qb = $this->getDoctrine()
@@ -56,6 +59,7 @@ class StepAttachmentController extends BaseController
      */
     public function newAction(Travel $travel, AbstractStep $step, Request $request)
     {
+        $this->checkAuthorization($travel);
         $this->checkNotFound($travel, $step);
 
         $stepAttachment = new StepAttachment();
@@ -84,6 +88,7 @@ class StepAttachmentController extends BaseController
      */
     public function getAction(Travel $travel, AbstractStep $step, StepAttachment $attachment)
     {
+        $this->checkAuthorization($travel);
         $this->checkNotFound($travel, $step, $attachment);
 
         return $this->createApiResponse($attachment, 200, array('details'));
@@ -101,10 +106,11 @@ class StepAttachmentController extends BaseController
      */
     public function updateAction(Travel $travel, AbstractStep $step, StepAttachment $attachment, Request $request)
     {
+        $this->checkAuthorization($travel);
         $this->checkNotFound($travel, $step, $attachment);
 
         $form = $this->createForm(StepAttachmentType::class, $attachment);
-        $this->processForm($form, $request);
+        $this->processForm($form, $request, FALSE);
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($attachment);
@@ -124,6 +130,7 @@ class StepAttachmentController extends BaseController
      */
     public function deleteAction(Travel $travel, AbstractStep $step, StepAttachment $attachment)
     {
+        $this->checkAuthorization($travel);
         $this->checkNotFound($travel, $step, $attachment);
 
         $em = $this->getDoctrine()->getManager();
@@ -144,6 +151,7 @@ class StepAttachmentController extends BaseController
      */
     public function downloadAction(Travel $travel, AbstractStep $step, StepAttachment $attachment)
     {
+        $this->checkAuthorization($travel);
         $this->checkNotFound($travel, $step, $attachment);
 
         $file = $attachment->getFile();
@@ -190,6 +198,23 @@ class StepAttachmentController extends BaseController
             if ($stepAttachment->getStep()->getId() !== $step->getId()) {
                 throw new NotFoundHttpException();
             }
+        }
+    }
+
+    /**
+     * Check authorization of Travel for current User
+     *
+     * @param Travel $travel
+     *
+     * @throws AccessDeniedHttpException
+     */
+    private function checkAuthorization(Travel $travel)
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+
+        if($travel->getUser()->getId() !== $user->getId()) {
+            throw new AccessDeniedHttpException('You d\'ont have access to this Travel');
         }
     }
 }
