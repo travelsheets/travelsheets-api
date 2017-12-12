@@ -10,6 +10,7 @@ namespace AppBundle\Controller;
 
 
 use AppBundle\Entity\User;
+use AppBundle\Form\LoginType;
 use AppBundle\Form\RegisterConfirmType;
 use AppBundle\Form\RegisterType;
 use CoreBundle\Controller\BaseController;
@@ -87,10 +88,15 @@ class AuthenticationController extends BaseController
      */
     public function loginAction(Request $request)
     {
+        $form = $this->createForm(LoginType::class);
+        $this->processForm($form, $request);
+
+        $data = $form->getNormData();
+
         $user = $this->getDoctrine()
-            ->getRepository('AppBundle:User')
+            ->getRepository(User::class)
             ->findOneBy(array(
-                'email' => $request->getUser(),
+                'email' => $data['email'],
             ));
 
         if(!$user) {
@@ -103,7 +109,7 @@ class AuthenticationController extends BaseController
 
         $encoder = $this->get('security.password_encoder');
 
-        if(!$encoder->isPasswordValid($user, $request->getPassword())) {
+        if(!$encoder->isPasswordValid($user, $data['password'])) {
             throw new BadCredentialsException('Bad credentials');
         }
 
