@@ -10,13 +10,11 @@ namespace AppBundle\Controller;
 
 
 use AppBundle\Entity\User;
-use AppBundle\Form\LoginType;
 use AppBundle\Form\RegisterConfirmType;
 use AppBundle\Form\RegisterType;
 use CoreBundle\Controller\BaseController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 
@@ -108,6 +106,14 @@ class AuthenticationController extends BaseController
             throw new BadCredentialsException('Bad credentials');
         }
 
-        var_dump($user); die;
+        $token = $this->get('lexik_jwt_authentication.encoder')
+            ->encode([
+                'username' => $user->getUsername(),
+                'exp' => time() + 3600 // 1 hour expiration
+            ]);
+
+        return $this->createApiResponse(array(
+            'token' => $token,
+        ), 201);
     }
 }
