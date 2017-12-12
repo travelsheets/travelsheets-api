@@ -45,6 +45,7 @@ class RegisterType extends AbstractType
         ));
 
         $builder->add('password', TextType::class, array(
+            'property_path' => 'plainPassword',
             'constraints' => array(
                 new NotBlank(),
                 new Regex(array(
