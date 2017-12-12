@@ -22,13 +22,6 @@ security:
 
             # https://symfony.com/doc/current/security/form_login_setup.html
             #form_login: ~
-            form_login:
-                # The route name that the login form submits to
-                check_path: security_login_check
-                login_path: security_login_form
-            logout:
-                # The route name the user can go to in order to logout
-                path: security_logout
 
             guard:
                 authenticators:

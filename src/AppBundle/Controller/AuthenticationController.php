@@ -10,9 +10,11 @@ namespace AppBundle\Controller;
 
 
 use AppBundle\Entity\User;
+use AppBundle\Form\LoginType;
 use AppBundle\Form\RegisterConfirmType;
 use AppBundle\Form\RegisterType;
 use CoreBundle\Controller\BaseController;
+use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationSuccessEvent;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -86,10 +88,15 @@ class AuthenticationController extends BaseController
      */
     public function loginAction(Request $request)
     {
+        $form = $this->createForm(LoginType::class);
+        $this->processForm($form, $request);
+
+        $data = $form->getNormData();
+
         $user = $this->getDoctrine()
-            ->getRepository('AppBundle:User')
+            ->getRepository(User::class)
             ->findOneBy(array(
-                'email' => $request->getUser(),
+                'email' => $data['email'],
             ));
 
         if(!$user) {
@@ -102,7 +109,7 @@ class AuthenticationController extends BaseController
 
         $encoder = $this->get('security.password_encoder');
 
-        if(!$encoder->isPasswordValid($user, $request->getPassword())) {
+        if(!$encoder->isPasswordValid($user, $data['password'])) {
             throw new BadCredentialsException('Bad credentials');
         }
 
@@ -112,8 +119,10 @@ class AuthenticationController extends BaseController
                 'exp' => time() + 3600 // 1 hour expiration
             ]);
 
-        return $this->createApiResponse(array(
-            'token' => $token,
-        ), 201);
+        // Generate the refresh token
+        $event = new AuthenticationSuccessEvent(array('token' => $token), $user, new Response());
+        $this->get('gesdinet.jwtrefreshtoken.send_token')->attachRefreshToken($event);
+
+        return $this->createApiResponse($event->getData(), 200);
     }
 }
