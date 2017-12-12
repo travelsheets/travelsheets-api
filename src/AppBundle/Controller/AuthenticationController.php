@@ -14,10 +14,17 @@ use AppBundle\Form\RegisterConfirmType;
 use AppBundle\Form\RegisterType;
 use CoreBundle\Controller\BaseController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class AuthenticationController extends BaseController
 {
+    /**
+     * Registration
+     *
+     * @param Request $request
+     * @return Response
+     */
     public function registerAction(Request $request)
     {
         $user = new User();
@@ -36,6 +43,12 @@ class AuthenticationController extends BaseController
         return $this->createApiResponse($user, 201, 'details');
     }
 
+    /**
+     * Register Confirmation
+     *
+     * @param Request $request
+     * @return Response
+     */
     public function registerConfirmAction(Request $request)
     {
         $form = $this->createForm(RegisterConfirmType::class);
