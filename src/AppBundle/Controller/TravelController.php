@@ -2,15 +2,13 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\AbstractStep;
-use AppBundle\Entity\Step\AccomodationStep;
-use AppBundle\Entity\Step\TourStep;
-use AppBundle\Entity\Step\TransportationStep;
 use AppBundle\Entity\Travel;
+use AppBundle\Entity\User;
 use AppBundle\Form\TravelType;
 use CoreBundle\Controller\BaseController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
  * Created by PhpStorm.
@@ -77,6 +75,8 @@ class TravelController extends BaseController
      */
     public function viewAction(Travel $travel, Request $request)
     {
+        $this->checkAuthorization($travel);
+
         $view = explode(',', $request->get('view', 'details'));
         return $this->createApiResponse($travel, 200, $view);
     }
@@ -90,6 +90,8 @@ class TravelController extends BaseController
      */
     public function editAction(Travel $travel, Request $request)
     {
+        $this->checkAuthorization($travel);
+
         $form = $this->createForm(TravelType::class, $travel);
         $this->processForm($form, $request);
 
@@ -109,10 +111,29 @@ class TravelController extends BaseController
      */
     public function deleteAction(Travel $travel)
     {
+        $this->checkAuthorization($travel);
+
         $em = $this->getDoctrine()->getManager();
         $em->remove($travel);
         $em->flush();
 
         return $this->createApiResponse(null, 204);
+    }
+
+    /**
+     * Check authorization of Travel for current User
+     *
+     * @param Travel $travel
+     *
+     * @throws AccessDeniedHttpException
+     */
+    private function checkAuthorization(Travel $travel)
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+
+        if($travel->getUser()->getId() !== $user->getId()) {
+            throw new AccessDeniedHttpException('You d\'ont have access to this Travel');
+        }
     }
 }
