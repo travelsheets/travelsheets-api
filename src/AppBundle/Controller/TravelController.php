@@ -93,7 +93,7 @@ class TravelController extends BaseController
         $this->checkAuthorization($travel);
 
         $form = $this->createForm(TravelType::class, $travel);
-        $this->processForm($form, $request);
+        $this->processForm($form, $request, FALSE);
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($travel);

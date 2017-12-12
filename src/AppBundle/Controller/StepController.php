@@ -128,7 +128,7 @@ class StepController extends BaseController
         $formType = 'AppBundle\\Form\\Step\\' . ucfirst($step->getDType()) . 'StepType';
 
         $form = $this->createForm($formType, $step);
-        $this->processForm($form, $request);
+        $this->processForm($form, $request, FALSE);
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($step);

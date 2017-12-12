@@ -104,7 +104,7 @@ class StepAttachmentController extends BaseController
         $this->checkNotFound($travel, $step, $attachment);
 
         $form = $this->createForm(StepAttachmentType::class, $attachment);
-        $this->processForm($form, $request);
+        $this->processForm($form, $request, FALSE);
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($attachment);
