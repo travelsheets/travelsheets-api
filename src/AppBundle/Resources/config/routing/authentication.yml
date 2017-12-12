@@ -15,3 +15,9 @@ app_authentication_login:
   defaults:
     _controller: AppBundle:Authentication:login
   methods: [POST]
+
+app_authentication_refresh:
+  path: /auth/refresh
+  defaults:
+    _controller: gesdinet.jwtrefreshtoken:refresh
+  methods: [POST]
