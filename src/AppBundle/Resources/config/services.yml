@@ -16,3 +16,12 @@ services:
 
   app.normalizer.step_attachment:
     class: AppBundle\Normalizer\StepAttachmentNormalizer
+
+  app.normalizer.user:
+    class: AppBundle\Normalizer\UserNormalizer
+
+  app.doctrine.hash_password_listener:
+    class: AppBundle\Doctrine\HashPasswordListener
+    autowire: true
+    tags:
+      - { name: doctrine.event_subscriber }

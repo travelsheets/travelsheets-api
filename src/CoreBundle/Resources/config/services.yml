@@ -23,6 +23,7 @@ services:
         - '@app.normalizer.transportation_step'
         - '@app.normalizer.upload'
         - '@app.normalizer.step_attachment'
+        - '@app.normalizer.user'
       1:
         - '@core.encoder.json'
 

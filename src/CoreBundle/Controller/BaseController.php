@@ -39,7 +39,7 @@ abstract class BaseController extends Controller
      * @param bool $clearMissing
      * @param bool $required
      */
-    protected function processForm(FormInterface $form, Request $request, $clearMissing = false, $required = true) {
+    protected function processForm(FormInterface $form, Request $request, $clearMissing = true, $required = true) {
         $this->get('core.processor.form')->processForm($form, $request, $clearMissing, $required);
     }
 
