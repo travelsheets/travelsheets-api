@@ -57,6 +57,10 @@ class TravelController extends BaseController
         $form = $this->createForm(TravelType::class, $travel);
         $this->processForm($form, $request);
 
+        // Link travel to current User
+        $user = $this->getUser();
+        $travel->setUser($user);
+
         $em = $this->getDoctrine()->getManager();
         $em->persist($travel);
         $em->flush();
