@@ -4,8 +4,8 @@ security:
 
     # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
-        our_users:
-            entity: { class: AppBundle\Entity\User, property: email }
+        in_memory:
+            memory: ~
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -14,7 +14,9 @@ security:
             security: false
 
         main:
-            anonymous: ~
+            anonymous: true
+            stateless:  true
+
             # activate different ways to authenticate
 
             # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
