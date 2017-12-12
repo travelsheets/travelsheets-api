@@ -18,6 +18,7 @@ use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Component\Security\Core\Exception\InsufficientAuthenticationException;
 
 class ApiExceptionSubscriber implements EventSubscriberInterface
 {
@@ -62,7 +63,14 @@ class ApiExceptionSubscriber implements EventSubscriberInterface
         } else {
             $statusCode = $e instanceof HttpExceptionInterface ? $e->getStatusCode() : 500;
 
+            if($e instanceof InsufficientAuthenticationException) {
+                $statusCode = 401;
+            }
+
             switch($statusCode) {
+                case 401:
+                    $type = ApiProblem::TYPE_UNAUTHORIZED;
+                    break;
                 case 404:
                     $type = ApiProblem::TYPE_NOT_FOUND;
                     break;

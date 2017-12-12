@@ -1,9 +1,9 @@
 app_authentication_register:
-  path: /register
+  path: /auth/register
   defaults:
     _controller: AppBundle:Authentication:register
 
 app_authentication_register_confirm:
-  path: /register/confirm
+  path: /auth/register/confirm
   defaults:
     _controller: AppBundle:Authentication:registerConfirm

@@ -36,12 +36,14 @@ class ApiProblem
     const TYPE_INVALID_REQUEST_BODY_FORMAT = 'invalid_body_format';
     const TYPE_INVALID_TOKEN = 'invalid_token';
     const TYPE_NOT_FOUND = 'not_found';
+    const TYPE_UNAUTHORIZED = 'unauthorized';
 
     private static $titles = array(
         self::TYPE_VALIDATION_ERROR => 'There was a validation error',
         self::TYPE_INVALID_REQUEST_BODY_FORMAT => 'Invalid JSON format sent',
         self::TYPE_INVALID_TOKEN => 'Invalid token',
         self::TYPE_NOT_FOUND => 'Not found',
+        self::TYPE_UNAUTHORIZED => 'Unauthorized',
     );
     /**
      * ApiProblem constructor.
