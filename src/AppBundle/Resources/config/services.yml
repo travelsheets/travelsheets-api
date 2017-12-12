@@ -25,3 +25,7 @@ services:
     autowire: true
     tags:
       - { name: doctrine.event_subscriber }
+
+  app.security.jwt_token_authenticator:
+    class: AppBundle\Security\JwtTokenAuthenticator
+    autowire: true
