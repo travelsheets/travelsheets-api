@@ -4,8 +4,8 @@ security:
 
     # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
-        in_memory:
-            memory: ~
+        our_users:
+            entity: { class: AppBundle\Entity\User, property: email }
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -22,6 +22,21 @@ security:
 
             # https://symfony.com/doc/current/security/form_login_setup.html
             #form_login: ~
+            form_login:
+                # The route name that the login form submits to
+                check_path: security_login_check
+                login_path: security_login_form
+            logout:
+                # The route name the user can go to in order to logout
+                path: security_logout
+
+            guard:
+                authenticators:
+                    - 'app.security.jwt_token_authenticator'
+
+    access_control:
+        - { path: ^/auth, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/, roles: ROLE_USER }
 
     encoders:
         AppBundle\Entity\User: bcrypt
