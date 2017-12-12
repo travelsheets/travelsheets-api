@@ -57,6 +57,14 @@ class Travel
     private $dateEnd;
 
     /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="travels")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
+    /**
      * Get id
      *
      * @return int
@@ -167,6 +175,24 @@ class Travel
                 );
             }
         }
+    }
+
+    /**
+     * @return User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param User $user
+     * @return Travel
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+        return $this;
     }
 }
 
