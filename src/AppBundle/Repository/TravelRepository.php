@@ -10,4 +10,24 @@ namespace AppBundle\Repository;
  */
 class TravelRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findAllQueryBuilder($user, $past = false)
+    {
+        $qb = $this->createQueryBuilder('entity');
+
+        $qb->addOrderBy('entity.dateStart', $past ? 'DESC' : 'ASC');
+
+        // List travel of the user
+        $qb
+            ->andWhere('entity.user = :user')
+            ->setParameter('user', $user)
+        ;
+
+        if($past) {
+            $qb->andWhere('(entity.dateEnd IS NOT NULL AND entity.dateEnd <= CURRENT_TIMESTAMP()) OR (entity.dateEnd IS NULL AND entity.dateStart <= CURRENT_TIMESTAMP())');
+        } else {
+            $qb->andWhere('(entity.dateEnd IS NOT NULL AND entity.dateEnd > CURRENT_TIMESTAMP()) OR (entity.dateEnd IS NULL AND entity.dateStart > CURRENT_TIMESTAMP())');
+        }
+
+        return $qb;
+    }
 }

@@ -12,6 +12,7 @@ namespace AppBundle\Form\Step;
 use AppBundle\Entity\Step\AccomodationStep;
 use AppBundle\Form\AbstractStepType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -22,16 +23,12 @@ class AccomodationStepType extends AbstractStepType
     {
 //        $builder->add('place', )
         $builder->add('type', ChoiceType::class, array(
-            'label' => 'entities.step.accomodation.info.type',
-            'choices' => array(
-                'entities.step.accomodation.types.hotel' => 'hotel',
-                'entities.step.accomodation.types.location' => 'location',
-                'entities.step.accomodation.types.camping' => 'camping',
-                'entities.step.accomodation.types.hostel' => 'hostel',
-                'entities.step.accomodation.types.other' => 'other',
-            ),
-            'placeholder' => 'entities.step.accomodation.info.type',
+            'choices' => AccomodationStep::getTypes(),
         ));
+
+        $builder->add('company', TextType::class);
+
+        $builder->add('bookingNumber', TextType::class);
     }
 
     /**
@@ -41,6 +38,7 @@ class AccomodationStepType extends AbstractStepType
     {
         $resolver->setDefaults(array(
             'data_class' => AccomodationStep::class,
+            'csrf_protection' => false,
         ));
     }
 }

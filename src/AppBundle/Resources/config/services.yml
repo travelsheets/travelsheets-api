@@ -1,4 +1,31 @@
 services:
-#    app.example:
-#        class: AppBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]
+  app.normalizer.travel:
+    class: AppBundle\Normalizer\TravelNormalizer
+
+  app.normalizer.accomodation_step:
+    class: AppBundle\Normalizer\Step\AccomodationStepNormalizer
+
+  app.normalizer.tour_step:
+    class: AppBundle\Normalizer\Step\TourStepNormalizer
+
+  app.normalizer.transportation_step:
+    class: AppBundle\Normalizer\Step\TransportationStepNormalizer
+
+  app.normalizer.upload:
+    class: AppBundle\Normalizer\UploadNormalizer
+
+  app.normalizer.step_attachment:
+    class: AppBundle\Normalizer\StepAttachmentNormalizer
+
+  app.normalizer.user:
+    class: AppBundle\Normalizer\UserNormalizer
+
+  app.doctrine.hash_password_listener:
+    class: AppBundle\Doctrine\HashPasswordListener
+    autowire: true
+    tags:
+      - { name: doctrine.event_subscriber }
+
+  app.security.jwt_token_authenticator:
+    class: AppBundle\Security\JwtTokenAuthenticator
+    autowire: true

@@ -1,4 +1,10 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: quentinmachard
+ * Date: 06/11/2017
+ * Time: 15:24
+ */
 
 namespace AppBundle\Entity;
 
@@ -7,17 +13,16 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\Intl\Exception\UnexpectedTypeException;
-use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
- * Attachment
+ * Upload
  *
- * @ORM\Table(name="attachment")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\AttachmentRepository")
+ * @ORM\Table(name="upload")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\UploadRepository")
  * @ORM\HasLifecycleCallbacks()
  */
-class Attachment
+class Upload
 {
     /**
      * @var int
@@ -27,13 +32,6 @@ class Attachment
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="name", type="string", length=255)
-     */
-    protected $name;
 
     /**
      * @var string
@@ -50,16 +48,7 @@ class Attachment
     protected $path;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="mimeType", type="string", length=255)
-     */
-    protected $mimeType;
-
-    /**
      * @var UploadedFile
-     *
-     * @Assert\NotBlank(groups={"Upload"})
      */
     protected $uploadedFile;
 
@@ -69,13 +58,6 @@ class Attachment
     protected $file;
 
     /**
-     * @var Travel
-     *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Travel")
-     */
-    protected $travel;
-
-    /**
      * Get id
      *
      * @return int
@@ -83,24 +65,6 @@ class Attachment
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set filename
-     *
-     * @param string $filename
-     *
-     * @return Attachment
-     */
-    public function setFilename($filename)
-    {
-        if (!is_string($filename)) {
-            throw new UnexpectedTypeException($filename, 'string');
-        }
-
-        $this->filename = $filename;
-
-        return $this;
     }
 
     /**
@@ -124,24 +88,6 @@ class Attachment
     }
 
     /**
-     * Set path
-     *
-     * @param string $path
-     *
-     * @return Attachment
-     */
-    public function setPath($path)
-    {
-        if (!is_string($path)) {
-            throw new UnexpectedTypeException($path, 'string');
-        }
-
-        $this->path = $path;
-
-        return $this;
-    }
-
-    /**
      * Get path
      *
      * @return string
@@ -149,48 +95,6 @@ class Attachment
     public function getPath()
     {
         return $this->path;
-    }
-
-    /**
-     * Set mimeType
-     *
-     * @param string $mimeType
-     *
-     * @return Attachment
-     */
-    public function setMimeType($mimeType)
-    {
-        if (!is_string($mimeType)) {
-            throw new UnexpectedTypeException($mimeType, 'string');
-        }
-
-        $this->mimeType = $mimeType;
-
-        return $this;
-    }
-
-    /**
-     * Get mimeType
-     *
-     * @return string
-     */
-    public function getMimeType()
-    {
-        return $this->mimeType;
-    }
-
-    /**
-     * Set file
-     *
-     * @param File $file
-     *
-     * @return Attachment
-     */
-    public function setFile(File $file)
-    {
-        $this->file = $file;
-
-        return $this;
     }
 
     /**
@@ -204,11 +108,12 @@ class Attachment
     }
 
     /**
-     * @param File|UploadedFile $uploadedFile
+     * @param File|Upload $uploadedFile
      */
     public function setUploadedFile(File $uploadedFile)
     {
         $this->uploadedFile = $uploadedFile;
+
         $this->filename = null;
         $this->path = null;
     }
@@ -221,6 +126,8 @@ class Attachment
         return $this->uploadedFile;
     }
 
+    // --- CALLBACKS
+
     /**
      * @ORM\PrePersist()
      */
@@ -232,7 +139,8 @@ class Attachment
     /**
      * @ORM\PreUpdate()
      */
-    public function preUpdate() {
+    public function preUpdate()
+    {
         $this->uploadFile();
     }
 
@@ -249,8 +157,10 @@ class Attachment
      */
     public function postLoad()
     {
-        $this->file = new File($this->getUploadRootDir() . $this->filename);
+        $this->loadFile();
     }
+
+    // --- ACTIONS
 
     /**
      * Upload file and set data of entity
@@ -271,10 +181,9 @@ class Attachment
             $this->getUploadRootDir(),
             $fileName
         );
-        $this->uploadedFile = null;
-
-        $this->mimeType = $this->file->getMimeType();
         $this->filename = $fileName;
+
+        $this->uploadedFile = null;
 
         return $this;
     }
@@ -284,13 +193,24 @@ class Attachment
      *
      * @return $this
      */
-    private function deleteFile() {
-        if(isset($this->file) && $this->file instanceof File) {
+    private function deleteFile()
+    {
+        if (isset($this->file) && $this->file instanceof File) {
             $fs = new Filesystem();
             $fs->remove($this->file);
         }
 
         $this->file = null;
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    private function loadFile()
+    {
+        $this->file = new File($this->getUploadRootDir() . $this->filename);
 
         return $this;
     }
@@ -305,7 +225,7 @@ class Attachment
             $this->path = '/attachments/' . $date->format('Y/m/d') . '/';
         }
 
-        $rootDir = __DIR__ . '/../../../var' . $this->path;
+        $rootDir = __DIR__ . '/../../../web' . $this->path;
 
         if (!file_exists($rootDir)) {
             mkdir($rootDir, 0777, true);
@@ -321,45 +241,22 @@ class Attachment
      */
     public function getExtension()
     {
-        if (isset($this->file)) {
+        if ($this->file instanceof File) {
             return $this->file->guessExtension();
         }
         return null;
     }
 
     /**
-     * @return string
+     * Get the mime type of file
+     *
+     * @return null|string
      */
-    public function getName()
+    public function getMimeType()
     {
-        return $this->name;
-    }
-
-    /**
-     * @param string $name
-     * @return $this
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-        return $this;
-    }
-
-    /**
-     * @return Travel
-     */
-    public function getTravel()
-    {
-        return $this->travel;
-    }
-
-    /**
-     * @param Travel $travel
-     * @return $this
-     */
-    public function setTravel($travel)
-    {
-        $this->travel = $travel;
-        return $this;
+        if ($this->file instanceof File) {
+            return $this->file->getMimeType();
+        }
+        return null;
     }
 }

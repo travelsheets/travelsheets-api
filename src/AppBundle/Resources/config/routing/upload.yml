@@ -1,0 +1,17 @@
+app_upload_new:
+  path: /uploads
+  methods: [POST]
+  defaults:
+    _controller: AppBundle:Upload:new
+
+app_upload_get:
+  path: /uploads/{upload}
+  methods: [GET]
+  defaults:
+    _controller: AppBundle:Upload:get
+
+app_upload_delete:
+  path: /uploads/{upload}
+  methods: [DELETE]
+  defaults:
+    _controller: AppBundle:Upload:delete

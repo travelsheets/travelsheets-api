@@ -14,7 +14,9 @@ security:
             security: false
 
         main:
-            anonymous: ~
+            anonymous: true
+            stateless:  true
+
             # activate different ways to authenticate
 
             # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
@@ -22,3 +24,14 @@ security:
 
             # https://symfony.com/doc/current/security/form_login_setup.html
             #form_login: ~
+
+            guard:
+                authenticators:
+                    - 'app.security.jwt_token_authenticator'
+
+    access_control:
+        - { path: ^/auth, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/, roles: ROLE_USER }
+
+    encoders:
+        AppBundle\Entity\User: bcrypt

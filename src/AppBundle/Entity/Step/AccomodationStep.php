@@ -11,6 +11,7 @@ namespace AppBundle\Entity\Step;
 
 use AppBundle\Entity\AbstractStep;
 use AppBundle\Entity\Place;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -23,6 +24,13 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class AccomodationStep extends AbstractStep
 {
+
+    const TYPE_HOTEL = "hotel";
+    const TYPE_LOCATION = "location";
+    const TYPE_CAMPING = "camping";
+    const TYPE_HOSTEL = "hostel";
+    const TYPE_OTHER = "other";
+
     /**
      * @var Place
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Place", inversedBy="id")
@@ -33,9 +41,34 @@ class AccomodationStep extends AbstractStep
     /**
      * @var string
      *
+     * @ORM\Column(name="company", type="string", length=255, nullable=true)
+     */
+    private $company;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="booking_number", type="string", length=255, nullable=true)
+     */
+    private $bookingNumber;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="type", type="string", length=255)
      */
     private $type;
+
+    public static function getTypes()
+    {
+        return array(
+            self::TYPE_HOTEL,
+            self::TYPE_LOCATION,
+            self::TYPE_CAMPING,
+            self::TYPE_HOSTEL,
+            self::TYPE_OTHER,
+        );
+    }
 
     /**
      * @return Place
@@ -73,6 +106,41 @@ class AccomodationStep extends AbstractStep
         return $this;
     }
 
+    /**
+     * @return string
+     */
+    public function getCompany()
+    {
+        return $this->company;
+    }
+
+    /**
+     * @param string $company
+     * @return AccomodationStep
+     */
+    public function setCompany($company)
+    {
+        $this->company = $company;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBookingNumber()
+    {
+        return $this->bookingNumber;
+    }
+
+    /**
+     * @param string $bookingNumber
+     * @return AccomodationStep
+     */
+    public function setBookingNumber($bookingNumber)
+    {
+        $this->bookingNumber = $bookingNumber;
+        return $this;
+    }
 
     /**
      * @return string

@@ -1,0 +1,35 @@
+app_step_attachment_list:
+  path: /travels/{travel}/steps/{step}/attachments
+  methods: [GET]
+  defaults:
+    _controller: AppBundle:StepAttachment:list
+
+app_step_attachment_new:
+  path: /travels/{travel}/steps/{step}/attachments
+  methods: [POST]
+  defaults:
+    _controller: AppBundle:StepAttachment:new
+
+app_step_attachment_get:
+  path: /travels/{travel}/steps/{step}/attachments/{attachment}
+  methods: [GET]
+  defaults:
+    _controller: AppBundle:StepAttachment:get
+
+app_step_attachment_update:
+  path: /travels/{travel}/steps/{step}/attachments/{attachment}
+  methods: [PATCH]
+  defaults:
+    _controller: AppBundle:StepAttachment:update
+
+app_step_attachment_delete:
+  path: /travels/{travel}/steps/{step}/attachments/{attachment}
+  methods: [DELETE]
+  defaults:
+    _controller: AppBundle:StepAttachment:delete
+
+app_step_attachment_download:
+  path: /travels/{travel}/steps/{step}/attachments/{attachment}/download
+  methods: [GET]
+  defaults:
+    _controller: AppBundle:StepAttachment:download

@@ -1,0 +1,44 @@
+services:
+  # JSON Encoder
+  core.encoder.json:
+    class: Symfony\Component\Serializer\Encoder\JsonEncoder
+
+  # Normalizer
+  core.normalizer.date_time:
+    class: Symfony\Component\Serializer\Normalizer\DateTimeNormalizer
+
+  core.normalizer.paginated_collection:
+    class: CoreBundle\Normalizer\PaginatedCollectionNormalizer
+
+  # Serializer
+  core.serializer.default:
+    class: Symfony\Component\Serializer\Serializer
+    arguments:
+      0:
+        - '@core.normalizer.date_time'
+        - '@core.normalizer.paginated_collection'
+        - '@app.normalizer.travel'
+        - '@app.normalizer.accomodation_step'
+        - '@app.normalizer.tour_step'
+        - '@app.normalizer.transportation_step'
+        - '@app.normalizer.upload'
+        - '@app.normalizer.step_attachment'
+        - '@app.normalizer.user'
+      1:
+        - '@core.encoder.json'
+
+  core.api.response:
+    class: CoreBundle\Api\ApiResponse
+    arguments: ['@core.serializer.default']
+
+  core.processor.form:
+    class: CoreBundle\Processor\FormProcessor
+
+  core.subscriber.exception:
+    class: CoreBundle\EventListener\ApiExceptionSubscriber
+    tags:
+      - { name: kernel.event_subscriber }
+    arguments: ['@kernel', '@core.api.response', '@logger']
+
+  core.factory.pagination:
+    class: CoreBundle\Pagination\PaginationFactory

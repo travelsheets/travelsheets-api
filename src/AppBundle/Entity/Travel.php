@@ -4,6 +4,8 @@ namespace AppBundle\Entity;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * Travel
@@ -26,6 +28,8 @@ class Travel
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     *
+     * @Assert\NotBlank()
      */
     private $name;
 
@@ -40,6 +44,8 @@ class Travel
      * @var DateTime
      *
      * @ORM\Column(name="date_start", type="datetime")
+     *
+     * @Assert\NotBlank()
      */
     private $dateStart;
 
@@ -49,6 +55,14 @@ class Travel
      * @ORM\Column(name="date_end", type="datetime", nullable=true)
      */
     private $dateEnd;
+
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="travels")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
 
     /**
      * Get id
@@ -144,6 +158,40 @@ class Travel
     {
         $this->dateEnd = $dateEnd;
 
+        return $this;
+    }
+
+    /**
+     * @param ExecutionContextInterface $context
+     * @Assert\Callback()
+     */
+    public function isValidDate(ExecutionContextInterface $context)
+    {
+        if(isset($this->dateStart) && isset($this->dateEnd)) {
+            if($this->dateStart->getTimestamp() > $this->dateEnd->getTimestamp()) {
+                $context->addViolation(
+                    'End date must be greater than or equal to start date',
+                    array()
+                );
+            }
+        }
+    }
+
+    /**
+     * @return User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param User $user
+     * @return Travel
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
         return $this;
     }
 }

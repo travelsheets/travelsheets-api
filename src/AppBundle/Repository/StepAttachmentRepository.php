@@ -8,8 +8,16 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\AbstractStep;
 use Doctrine\ORM\EntityRepository;
 
 class StepAttachmentRepository extends EntityRepository
 {
+    public function findAllByStepQueryBuilder(AbstractStep $step)
+    {
+        return $this->createQueryBuilder('entity')
+            ->where('entity.step = :step')
+            ->setParameter(':step', $step)
+        ;
+    }
 }

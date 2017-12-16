@@ -2,15 +2,13 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\AbstractStep;
-use AppBundle\Entity\Step\AccomodationStep;
-use AppBundle\Entity\Step\TourStep;
-use AppBundle\Entity\Step\TransportationStep;
 use AppBundle\Entity\Travel;
+use AppBundle\Entity\User;
 use AppBundle\Form\TravelType;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use CoreBundle\Controller\BaseController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
  * Created by PhpStorm.
@@ -18,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
  * Date: 08/08/2017
  * Time: 23:12
  */
-class TravelController extends Controller
+class TravelController extends BaseController
 {
     /**
      * List all Travels
@@ -28,11 +26,20 @@ class TravelController extends Controller
      */
     public function listAction(Request $request)
     {
-        $entities = $this->getDoctrine()->getRepository(Travel::class)->findAll();
+        $user = $this->getUser();
 
-        return $this->render('@App/travel/list.html.twig', array(
-            'entities' => $entities,
-        ));
+        $past = $request->query->getBoolean('past', false);
+
+        $qb = $this->getDoctrine()
+            ->getRepository(Travel::class)
+            ->findAllQueryBuilder($user, $past)
+        ;
+
+        $paginatedCollection = $this->get('core.factory.pagination')->createCollection($qb, $request);
+
+        $response = $this->createApiResponse($paginatedCollection, 200);
+
+        return $response;
     }
 
     /**
@@ -43,25 +50,20 @@ class TravelController extends Controller
      */
     public function newAction(Request $request)
     {
-        $form = $this->createForm(TravelType::class);
-        $form->handleRequest($request);
+        $travel = new Travel();
 
-        if ($form->isValid()) {
-            /** @var Travel $travel */
-            $travel = $form->getData();
+        $form = $this->createForm(TravelType::class, $travel);
+        $this->processForm($form, $request);
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($travel);
-            $em->flush();
+        // Link travel to current User
+        $user = $this->getUser();
+        $travel->setUser($user);
 
-            return $this->redirectToRoute('app_travel_view', array(
-                'travel' => $travel->getId(),
-            ));
-        }
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($travel);
+        $em->flush();
 
-        return $this->render('@App/travel/new.html.twig', array(
-            'form' => $form->createView(),
-        ));
+        return $this->createApiResponse($travel, 201, array('details'));
     }
 
     /**
@@ -73,38 +75,10 @@ class TravelController extends Controller
      */
     public function viewAction(Travel $travel, Request $request)
     {
-        $steps = $this->getDoctrine()->getRepository(AbstractStep::class)->findBy(array(
-            'travel' => $travel,
-        ), array('dateStart' => 'ASC'));
+        $this->checkAuthorization($travel);
 
-        $totalTransportation = 0;
-        $totalAccomodation = 0;
-        $totalTour = 0;
-        $total = 0;
-
-        foreach($steps as &$step) {
-            $price = $step->getPrice();
-            if(isset($price) && is_numeric($price)) {
-                if($step instanceof TransportationStep) {
-                    $totalTransportation += $price;
-                } elseif($step instanceof AccomodationStep) {
-                    $totalAccomodation += $price;
-                } elseif($step instanceof TourStep) {
-                    $totalTour += $price;
-                }
-
-                $total += $price;
-            }
-        }
-
-        return $this->render('@App/travel/view.html.twig', array(
-            'travel' => $travel,
-            'steps' => $steps,
-            'totalTransportation' => $totalTransportation,
-            'totalAccomodation' => $totalAccomodation,
-            'totalTour' => $totalTour,
-            'total' => $total,
-        ));
+        $view = explode(',', $request->get('view', 'details'));
+        return $this->createApiResponse($travel, 200, $view);
     }
 
     /**
@@ -116,46 +90,50 @@ class TravelController extends Controller
      */
     public function editAction(Travel $travel, Request $request)
     {
+        $this->checkAuthorization($travel);
+
         $form = $this->createForm(TravelType::class, $travel);
-        $form->handleRequest($request);
+        $this->processForm($form, $request, FALSE);
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($travel);
-            $em->flush();
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($travel);
+        $em->flush();
 
-            return $this->redirectToRoute('app_travel_view', array(
-                'travel' => $travel->getId(),
-            ));
-        }
-
-        return $this->render('@App/travel/edit.html.twig', array(
-            'travel' => $travel,
-            'form' => $form->createView(),
-        ));
+        $view = explode(',', $request->get('view', 'details'));
+        return $this->createApiResponse($travel, 200, $view);
     }
 
     /**
      * Delete a Travel
      *
      * @param Travel $travel
-     * @param Request $request
      * @return Response
      */
-    public function deleteAction(Travel $travel, Request $request)
+    public function deleteAction(Travel $travel)
     {
-        $confirm = $request->get('confirm', false);
+        $this->checkAuthorization($travel);
 
-        if($confirm) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($travel);
-            $em->flush();
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($travel);
+        $em->flush();
 
-            return $this->redirectToRoute('app_homepage');
+        return $this->createApiResponse(null, 204);
+    }
+
+    /**
+     * Check authorization of Travel for current User
+     *
+     * @param Travel $travel
+     *
+     * @throws AccessDeniedHttpException
+     */
+    private function checkAuthorization(Travel $travel)
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+
+        if($travel->getUser()->getId() !== $user->getId()) {
+            throw new AccessDeniedHttpException('You d\'ont have access to this Travel');
         }
-
-        return $this->render('@App/travel/delete.html.twig', array(
-            'travel' => $travel,
-        ));
     }
 }

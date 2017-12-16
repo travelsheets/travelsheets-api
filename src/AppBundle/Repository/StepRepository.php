@@ -2,6 +2,8 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\Travel;
+
 /**
  * StepRepository
  *
@@ -10,4 +12,12 @@ namespace AppBundle\Repository;
  */
 class StepRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findAllByTravelQueryBuilder(Travel $travel)
+    {
+        return $this->createQueryBuilder('entity')
+            ->where('entity.travel = :travel')
+            ->setParameter(':travel', $travel)
+            ->addOrderBy('entity.dateStart', 'ASC')
+        ;
+    }
 }

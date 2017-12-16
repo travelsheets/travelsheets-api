@@ -15,5 +15,8 @@
 !var/SymfonyRequirements.php
 /vendor/
 /web/bundles/
-/var/attachments
+/web/attachments
 .idea
+
+docker/db/data
+docker-compose.yml
