@@ -1,12 +1,8 @@
-FROM php:7.1-fpm-alpine
+FROM php:5.6-fpm-alpine
 
 RUN apk add --no-cache $PHPIZE_DEPS \
     && pecl install xdebug-2.5.0 \
     && docker-php-ext-enable xdebug \
-    && echo "xdebug.idekey=PHPSTORM" >> /usr/local/etc/php/conf.d/xdebug.ini \
-    && echo "xdebug.remote_enable=1"  >> /usr/local/etc/php/conf.d/xdebug.ini \
-    && echo "xdebug.remote_connect_back=1" >> /usr/local/etc/php/conf.d/xdebug.ini \
-    && echo "xdebug.remote_autostart=1" >> /usr/local/etc/php/conf.d/xdebug.ini \
     && echo "memory_limit = 64M" > /usr/local/etc/php/conf.d/php.ini
 
 RUN apk add --no-cache --virtual .persistent-deps \
@@ -14,7 +10,7 @@ RUN apk add --no-cache --virtual .persistent-deps \
 		icu-libs \
 		zlib
 
-ENV APCU_VERSION 5.1.8
+ENV APCU_VERSION 4.0.11
 
 RUN set -xe \
 	&& apk add --no-cache --virtual .build-deps \
