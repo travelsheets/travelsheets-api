@@ -25,7 +25,7 @@ services:
 #      - ./composer.json:/srv/symfony/composer.json
 #      - ./composer.lock:/srv/symfony/composer.lock
   db:
-    image: mysql
+    image: mysql:5.5
     environment:
       - MYSQL_DATABASE=symfony
       # You should definitely change the password in production
