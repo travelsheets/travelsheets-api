@@ -18,7 +18,7 @@ class Version20170808211110 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE travel ADD date_start DATETIME NOT NULL DEFAULT NOW(), ADD date_end DATETIME DEFAULT NULL');
+        $this->addSql('ALTER TABLE travel ADD date_start DATETIME NOT NULL, ADD date_end DATETIME DEFAULT NULL');
     }
 
     /**
