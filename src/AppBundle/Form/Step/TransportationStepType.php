@@ -42,13 +42,13 @@ class TransportationStepType extends AbstractStepType
 
         $builder->add('openingLuggage', DateTimeType::class, array(
             'widget' => 'single_text',
-            'format' => 'yyyy-MM-dd HH:ii:ss',
+            'format' => 'yyyy-MM-dd HH:mm:ss',
             'model_timezone' => 'Europe/Paris',
         ));
 
         $builder->add('closingLuggage', DateTimeType::class, array(
             'widget' => 'single_text',
-            'format' => 'yyyy-MM-dd HH:ii:ss',
+            'format' => 'yyyy-MM-dd HH:mm:ss',
             'model_timezone' => 'Europe/Paris',
         ));
 

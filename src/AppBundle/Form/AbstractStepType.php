@@ -30,13 +30,13 @@ abstract class AbstractStepType extends AbstractType
 
         $builder->add('dateStart', DateTimeType::class, array(
             'widget' => 'single_text',
-            'format' => 'yyyy-MM-dd hh:mm:ss',
+            'format' => 'yyyy-MM-dd HH:mm:ss',
             'model_timezone' => 'Europe/Paris',
         ));
 
         $builder->add('dateEnd', DateTimeType::class, array(
             'widget' => 'single_text',
-            'format' => 'yyyy-MM-dd HH:ii:ss',
+            'format' => 'yyyy-MM-dd HH:mm:ss',
             'model_timezone' => 'Europe/Paris',
         ));
 
