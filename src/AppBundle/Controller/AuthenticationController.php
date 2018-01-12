@@ -39,6 +39,21 @@ class AuthenticationController extends BaseController
         $token = md5(uniqid($user->getUsername(), true));
         $user->setToken($token);
 
+        $url_confirm = $this->getParameter('app_url') . '/register/confirm?email=' . $user->getEmail() . '&token=' . $user->getToken();
+
+        $mailer = $this->get('mailer');
+        $message = (new \Swift_Message('subject', 'body'))
+            ->setFrom($this->getParameter('mailer_from'))
+            ->setTo($user->getEmail())
+            ->setBody(
+                $this->renderView('@App/authentication/register.html.twig', array(
+                    'url_confirm' => $url_confirm,
+                    'firstname' => $user->getFirstname(),
+                ))
+            );
+
+        $mailer->send($message);
+
         $em = $this->getDoctrine()->getManager();
         $em->persist($user);
         $em->flush();
