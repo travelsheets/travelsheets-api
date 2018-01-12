@@ -49,7 +49,8 @@ class AuthenticationController extends BaseController
                 $this->renderView('@App/authentication/register.html.twig', array(
                     'url_confirm' => $url_confirm,
                     'firstname' => $user->getFirstname(),
-                ))
+                )),
+                'text/html'
             );
 
         $mailer->send($message);
