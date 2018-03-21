@@ -2,8 +2,7 @@ FROM php:5.6-fpm-alpine
 
 RUN apk add --no-cache $PHPIZE_DEPS \
     && pecl install xdebug-2.5.0 \
-    && docker-php-ext-enable xdebug \
-    && echo "memory_limit = 64M" > /usr/local/etc/php/conf.d/php.ini
+    && docker-php-ext-enable xdebug
 
 RUN apk add --no-cache --virtual .persistent-deps \
 		git \
@@ -29,8 +28,8 @@ RUN set -xe \
 
 COPY ./etc/docker/app/php.ini /usr/local/etc/php/php.ini
 
-COPY ./etc/docker/app/install.sh /usr/local/bin/docker-app-install
-RUN chmod +x /usr/local/bin/docker-app-install
+COPY ./etc/docker/app/install-composer.sh /usr/local/bin/docker-app-install-composer
+RUN chmod +x /usr/local/bin/docker-app-install-composer
 
 RUN set -xe \
 	&& apk add --no-cache --virtual .fetch-deps \
