@@ -1,0 +1,74 @@
+dist: trusty
+sudo: required
+
+language: php
+
+env:
+    global:
+        - TRAVELSHEETS_CACHE_DIR=$HOME/.TRAVELSHEETS-cache
+        - TRAVELSHEETS_BUILD_DIR=etc/build
+
+addons:
+    apt:
+        sources:
+            - google-chrome
+        packages:
+            - google-chrome-stable
+
+services:
+    - mysql
+
+matrix:
+    include:
+        -
+            sudo: required
+            php: 7.1
+            env:
+                - TRAVELSHEETS_SUITE="application"
+                - TRAVIS_NODE_VERSION="7.5"
+            services:
+                - memcached
+        -
+            sudo: false
+            php: 7.1
+            env: TRAVELSHEETS_SUITE="docs packages"
+            addons:
+                apt:
+                    packages:
+                        - parallel
+
+cache:
+    yarn: true
+    directories:
+        - ~/.composer/cache/files
+        - ~/.cache/pip
+        - vendor
+        - node_modules
+        - $TRAVELSHEETS_CACHE_DIR
+
+before_install:
+    - etc/travis/run-suite.sh before_install "${TRAVELSHEETS_SUITE}"
+
+install:
+    - etc/travis/run-suite.sh install "${TRAVELSHEETS_SUITE}"
+
+before_script:
+    - etc/travis/run-suite.sh before_script "${TRAVELSHEETS_SUITE}"
+
+script:
+    - etc/travis/run-suite.sh script "${TRAVELSHEETS_SUITE}"
+
+before_cache:
+    - etc/travis/run-suite.sh before_cache "${TRAVELSHEETS_SUITE}"
+
+after_success:
+    - etc/travis/run-suite.sh after_success "${TRAVELSHEETS_SUITE}"
+
+after_failure:
+    - etc/travis/run-suite.sh after_failure "${TRAVELSHEETS_SUITE}"
+
+after_script:
+    - etc/travis/run-suite.sh after_script "${TRAVELSHEETS_SUITE}"
+
+notifications:
+    email: false
