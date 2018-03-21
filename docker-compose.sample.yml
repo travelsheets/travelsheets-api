@@ -4,7 +4,7 @@ services:
   app:
     build:
       context: .
-      dockerfile: ./Dockerfile
+      dockerfile: ./etc/docker/app/Dockerfile
     links:
       - db
     environment:
@@ -35,16 +35,16 @@ services:
     volumes:
 #      - db-data:/var/lib/mysql:rw
       # You may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
-      - ./docker/db/data:/var/lib/mysql:rw
+      - ./etc/docker/db/data:/var/lib/mysql:rw
     ports:
       - "3306:3306"
   nginx:
     build:
-      context: ./docker/nginx
-      dockerfile: ./Dockerfile
+      context: ./etc/docker/nginx
+      dockerfile: ./etc/docker/app/Dockerfile
     volumes:
       # Comment out the next line in production
-      - ./docker/nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./etc/docker/nginx/conf.d:/etc/nginx/conf.d:ro
       - ./web:/srv/symfony/web:ro
     ports:
       - "8080:80"

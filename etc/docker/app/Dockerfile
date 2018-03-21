@@ -27,10 +27,10 @@ RUN set -xe \
 	&& docker-php-ext-enable --ini-name 05-opcache.ini opcache \
 	&& apk del .build-deps
 
-COPY docker/app/php.ini /usr/local/etc/php/php.ini
+COPY ./etc/docker/app/php.ini /usr/local/etc/php/php.ini
 
-COPY docker/app/install-composer.sh /usr/local/bin/docker-app-install-composer
-RUN chmod +x /usr/local/bin/docker-app-install-composer
+COPY ./etc/docker/app/install.sh /usr/local/bin/docker-app-install
+RUN chmod +x /usr/local/bin/docker-app-install
 
 RUN set -xe \
 	&& apk add --no-cache --virtual .fetch-deps \
@@ -66,7 +66,7 @@ COPY web web/
 
 RUN composer dump-autoload --optimize --classmap-authoritative --no-dev
 
-COPY docker/app/docker-entrypoint.sh /usr/local/bin/docker-app-entrypoint
+COPY ./etc/docker/app/docker-entrypoint.sh /usr/local/bin/docker-app-entrypoint
 RUN chmod +x /usr/local/bin/docker-app-entrypoint
 
 EXPOSE 9000
