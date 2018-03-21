@@ -65,6 +65,13 @@ class Travel
     private $user;
 
     /**
+     * @var AbstractStep[]
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\AbstractStep", mappedBy="travel")
+     */
+    private $steps;
+
+    /**
      * Get id
      *
      * @return int
@@ -193,6 +200,14 @@ class Travel
     {
         $this->user = $user;
         return $this;
+    }
+
+    /**
+     * @return AbstractStep[]
+     */
+    public function getSteps()
+    {
+        return $this->steps;
     }
 }
 

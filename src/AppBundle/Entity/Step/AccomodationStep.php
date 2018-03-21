@@ -33,7 +33,7 @@ class AccomodationStep extends AbstractStep
 
     /**
      * @var Place
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Place", inversedBy="id")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Place")
      * @ORM\JoinColumn(nullable=true)
      */
     private $place;
