@@ -8,13 +8,6 @@ env:
         - TRAVELSHEETS_CACHE_DIR=$HOME/.TRAVELSHEETS-cache
         - TRAVELSHEETS_BUILD_DIR=etc/build
 
-addons:
-    apt:
-        sources:
-            - google-chrome
-        packages:
-            - google-chrome-stable
-
 services:
     - mysql
 
@@ -22,20 +15,11 @@ matrix:
     include:
         -
             sudo: required
-            php: 7.1
+            php: 5.6
             env:
                 - TRAVELSHEETS_SUITE="application"
-                - TRAVIS_NODE_VERSION="7.5"
             services:
                 - memcached
-        -
-            sudo: false
-            php: 7.1
-            env: TRAVELSHEETS_SUITE="docs packages"
-            addons:
-                apt:
-                    packages:
-                        - parallel
 
 cache:
     yarn: true
