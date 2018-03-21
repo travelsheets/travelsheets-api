@@ -68,7 +68,7 @@ abstract class AbstractStep
     /**
      * @var Travel
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Travel", inversedBy="id")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Travel", inversedBy="steps")
      */
     private $travel;
 

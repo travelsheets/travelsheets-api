@@ -1,5 +1,6 @@
 {
     "name": "quentinmachard/travelsheets",
+    "description": "Prepare your travels like a boss!",
     "license": "proprietary",
     "type": "project",
     "autoload": {

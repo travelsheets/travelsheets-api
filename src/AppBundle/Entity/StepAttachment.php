@@ -41,7 +41,7 @@ class StepAttachment
     /**
      * @var AbstractStep
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\AbstractStep")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\AbstractStep", inversedBy="attachments")
      */
     private $step;
 
