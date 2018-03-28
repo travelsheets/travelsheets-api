@@ -17,6 +17,8 @@ services:
                 TIMEZONE: ${TIMEZONE}
         environment:
             APP_DEV_PERMITTED: ${APP_DEV_PERMITTED}
+        links:
+            - db
         volumes:
             - ${SYMFONY_APP_PATH}:/var/www/symfony
             - ./logs/symfony:/var/www/symfony/app/logs
