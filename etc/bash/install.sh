@@ -4,7 +4,7 @@ source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/common.lib.sh"
 
 # Install Composer dependencies
 print_header "Installing dependencies" "Travelsheets"
-run_command "composer install --no-interaction --prefer-dist" || exit $?
+run_command "composer install --prefer-dist" || exit $?
 
 # Install Application
 run_command "bin/console cache:warmup --env=dev --no-debug -vvv" || exit $?
@@ -22,4 +22,4 @@ fi
 # Initialize Database
 print_header "Initialize database" "Travelsheets"
 run_command "bin/console doctrine:database:create --if-not-exists --env=dev -vvv" || exit $? # Have to be run with debug = true, to omit generating proxies before setting up the database
-run_command "bin/console doctrine:migrations:migrate --no-interaction --env=dev --no-debug -vvv" || exit $?
+run_command "bin/console doctrine:migrations:migrate --env=dev --no-debug -vvv" || exit $?

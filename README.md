@@ -10,46 +10,40 @@ Manage your travels like a boss !
 ## With Docker
 
 * Clone the project
+
 ```sh
 $ git clone git@github.com:travelsheets/travelsheets-api.git
 $ cd travelsheets-api
 ```
 
 * Create your environment settings and edit it
+
 ```sh
 $ cd ./etc/docker
 $ cp .env.dist .env
 ```
 
 * Build and run the docker environement
+
 ```sh
 $ docker-compose build
 $ docker-compose up -d
 ```
 
 * Update your system host file
+
 ```sh
 $ sudo echo $(docker network inspect bridge | grep Gateway | grep -o -E '[0-9\.]+') "travelsheets.local" >> /etc/hosts
 ```
 
-* Prepare Symfony app
-
-  * Update app/config/parameters.yml
-
-```yml
-# path/to/your/symfony-project/app/config/parameters.yml
-parameters:
-    database_host: db
-```
-
-  * Composer install & create database
+* Install the application
 
 ```sh
 $ docker-compose exec php bash
-$ composer install
-$ php bin/console doctrine:database:create
-$ php bin/console doctrine:fixtures:load --no-interaction
+$ ./etc/bash/install.sh
 ```
+
+**Note:** `jwt_key_pass_phrase` is the pass phrase for JWT rsa key.
 
 * Enjoy !
 
@@ -60,6 +54,8 @@ Just run `docker-compose up -d`, then:
 * Symfony app: visit travelsheets.local
 * Symfony dev mode: visit travelsheets.local/app_dev.php
 * Logs (files location): logs/nginx and logs/symfony
+
+You can relaunch installation script to update the project.
 
 # Useful commands
 
