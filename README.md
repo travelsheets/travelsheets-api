@@ -1,5 +1,12 @@
-TravelSheets
-============
+<h1 align="center">
+    <a href="http://travelsheets.quentinmachard.fr/" target="_blank">
+        <img src="http://travelsheets.quentinmachard.fr/banner.png" />
+    </a>
+    <br />
+    <a href="https://travis-ci.org/travelsheets/travelsheets-api" title="Build status" target="_blank">
+        <img src="https://img.shields.io/travis/travelsheets/travelsheets-api/master.svg" />
+    </a>
+</h1>
 
 ![TravelSheets](https://avatars1.githubusercontent.com/u/37581783)
 
