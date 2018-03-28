@@ -19,4 +19,4 @@
 .idea
 
 /etc/docker/db/data
-docker-compose.yml
+*.env
