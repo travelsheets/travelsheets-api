@@ -8,10 +8,6 @@
     </a>
 </h1>
 
-![TravelSheets](https://avatars1.githubusercontent.com/u/37581783)
-
-Manage your travels like a boss !
-
 # Installation
 
 ## With Docker
