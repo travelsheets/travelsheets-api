@@ -65,6 +65,7 @@ print_success() {
 # Argument 1: Action
 # Argument 2: Subject
 print_header() {
+    echo "--"
     echo -e "$(bold "$1"): $(bold_green "$2")"
 }
 

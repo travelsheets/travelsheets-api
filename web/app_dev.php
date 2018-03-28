@@ -9,16 +9,14 @@ use Symfony\Component\HttpFoundation\Request;
 //umask(0000);
 $whiteListedAddresses = ['127.0.0.1', '::1'];
 
-if (isset($_SERVER['EXTRA_WHITELIST'])) {
-    $extraWhitelist = explode(',', $_SERVER['EXTRA_WHITELIST']);
-    $whiteListedAddresses = array_merge($whiteListedAddresses, $extraWhitelist);
-}
-
 // This check prevents access to debug front controllers that are deployed by accident to production servers.
 // Feel free to remove this, extend it, or make something more sophisticated.
-if (isset($_SERVER['HTTP_CLIENT_IP'])
-    || isset($_SERVER['HTTP_X_FORWARDED_FOR'])
-    || !(in_array(@$_SERVER['REMOTE_ADDR'], $whiteListedAddresses, true) || PHP_SAPI === 'cli-server')
+if (!getenv("APP_DEV_PERMITTED")
+    && (
+        isset($_SERVER['HTTP_CLIENT_IP'])
+        || isset($_SERVER['HTTP_X_FORWARDED_FOR'])
+        || !(in_array(@$_SERVER['REMOTE_ADDR'], $whiteListedAddresses, true) || PHP_SAPI === 'cli-server')
+    )
 ) {
     header('HTTP/1.0 403 Forbidden');
     exit('You are not allowed to access this file. Check '.basename(__FILE__).' for more information.');
