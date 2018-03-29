@@ -2,5 +2,5 @@
 
 source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/../../../../bash/common.lib.sh"
 
-print_header "Validating (Composer)" "Jedisjeux"
+print_header "Validating (Composer)" "TravelSheets"
 run_command "composer validate --strict"
