@@ -23,3 +23,7 @@ fi
 print_header "Initialize database" "Travelsheets"
 run_command "bin/console doctrine:database:create --if-not-exists --env=dev -vvv" || exit $? # Have to be run with debug = true, to omit generating proxies before setting up the database
 run_command "bin/console doctrine:migrations:migrate --env=dev --no-debug -vvv" || exit $?
+
+# Load Fixtures
+print_header "Load Fixtures" "Travelsheets"
+run_command "bin/console doctrine:fixtures:load --env=dev --no-debug -vvv" || exit $?

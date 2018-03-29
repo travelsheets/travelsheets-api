@@ -27,8 +27,8 @@ class UserFixtures extends Fixture
             $user = new User();
             $user->setFirstname('Lorem ' . $i);
             $user->setLastname('Ipsum ' . $i);
-            $user->setEmail('lorem.ipsum.' . $i . '@example.com');
-            $user->setPlainPassword('LoremIpsum' . $i);
+            $user->setEmail('user' . $i . '@example.com');
+            $user->setPlainPassword('user' . $i);
             $user->setVerified(true);
 
             $manager->persist($user);
