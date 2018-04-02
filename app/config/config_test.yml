@@ -18,3 +18,8 @@ swiftmailer:
 #doctrine:
 #    dbal:
 #        dbname: "%database_name%_test"
+
+lexik_jwt_authentication:
+    private_key_path:   '%kernel.root_dir%/../var/jwt/test/private.pem'
+    public_key_path:    '%kernel.root_dir%/../var/jwt/test/public.pem'
+    pass_phrase:        'test'
