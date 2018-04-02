@@ -128,4 +128,9 @@ class JwtTokenAuthenticator extends AbstractGuardAuthenticator
         $apiProblem->set('detail', $message);
         return new JsonResponse($apiProblem->toArray(), 401);
     }
+
+    public function supports(Request $request)
+    {
+        return $request->headers->has('Authorization');
+    }
 }
