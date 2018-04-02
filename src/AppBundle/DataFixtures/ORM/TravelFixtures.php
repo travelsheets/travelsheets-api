@@ -28,12 +28,39 @@ class TravelFixtures extends Fixture
         $users = $manager->getRepository(User::class)->findAll();
 
         foreach($users as &$user) {
+
+            // Current travel
+            $travel = new Travel();
+            $travel->setName("Current Travel");
+            $travel->setSummary($user->getFirstname() . '\'s current travel');
+            $travel->setDateStart((new DateTime())->modify('-2 days'));
+            $travel->setDateEnd((new DateTime())->modify('+2 days'));
+
+            $travel->setUser($user);
+
+            $manager->persist($travel);
+
+            // Create future travels
+            for($i=1; $i<5; $i++) {
+                $travel = new Travel();
+                $travel->setName("Future Travel $i");
+                $travel->setSummary($user->getFirstname() . '\'s future travel');
+                $travel->setDateStart((new DateTime())->modify('+'.($i * 10).' days'));
+                $travel->setDateEnd((new DateTime())->modify('+'.($i * 10 + 5).' days'));
+
+                $travel->setUser($user);
+
+                $manager->persist($travel);
+            }
+
+            // Create past travels
             for($i=1; $i<=5; $i++) {
                 $travel = new Travel();
-                $travel->setName('Travel ' . $i);
-                $travel->setSummary('Lorem ipsum dolor sit amet ' . $i);
-                $travel->setDateStart((new DateTime())->setDate(2017, 11, $i));
-                $travel->setDateEnd((new DateTime())->setDate(2017, 11, $i + 5));
+                $travel->setName("Past Travel $i");
+                $travel->setSummary($user->getFirstname() . '\'s past travel');
+                $travel->setDateStart((new DateTime())->modify('-'.($i * 10 + 5).' days'));
+                $travel->setDateEnd((new DateTime())->modify('-'.($i * 10).' days'));
+
                 $travel->setUser($user);
 
                 $manager->persist($travel);
