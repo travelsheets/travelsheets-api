@@ -2,6 +2,7 @@
 
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Config\Loader\LoaderInterface;
+use \PSS\SymfonyMockerContainer\DependencyInjection\MockerContainer;
 
 class AppKernel extends Kernel
 {
@@ -69,5 +70,14 @@ class AppKernel extends Kernel
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
         $loader->load($this->getRootDir().'/config/config_'.$this->getEnvironment().'.yml');
+    }
+
+    protected function getContainerBaseClass()
+    {
+        if ('test' === $this->environment) {
+            return MockerContainer::class;
+        }
+
+        return parent::getContainerBaseClass();
     }
 }
