@@ -10,7 +10,7 @@ namespace AppBundle\Security;
 
 use AppBundle\Entity\User;
 use CoreBundle\Api\ApiProblem;
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Exception\JWTDecodeFailureException;
 use Lexik\Bundle\JWTAuthenticationBundle\TokenExtractor\AuthorizationHeaderTokenExtractor;
@@ -35,7 +35,7 @@ class JwtTokenAuthenticator extends AbstractGuardAuthenticator
      */
     private $em;
 
-    public function __construct(JWTEncoderInterface $jwtEncoder, EntityManager $em)
+    public function __construct(JWTEncoderInterface $jwtEncoder, EntityManagerInterface $em)
     {
 
         $this->jwtEncoder = $jwtEncoder;
