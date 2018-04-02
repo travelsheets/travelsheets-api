@@ -9,7 +9,7 @@ commands=(
     validate-doctrine-schema
     test-fixtures
 #    test-phpspec
-#    test-phpunit
+    test-phpunit
 )
 
 for command in ${commands[@]}; do
