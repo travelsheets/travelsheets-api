@@ -30,9 +30,11 @@ services:
   core.api.response:
     class: CoreBundle\Api\ApiResponse
     arguments: ['@core.serializer.default']
+    public: true
 
   core.processor.form:
     class: CoreBundle\Processor\FormProcessor
+    public: true
 
   core.subscriber.exception:
     class: CoreBundle\EventListener\ApiExceptionSubscriber
@@ -42,3 +44,4 @@ services:
 
   core.factory.pagination:
     class: CoreBundle\Pagination\PaginationFactory
+    public: true
