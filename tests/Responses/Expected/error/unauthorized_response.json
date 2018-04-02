@@ -1,0 +1,6 @@
+{
+  "detail": "Not privileged to request the resource.",
+  "status": 401,
+  "type": "about:blank",
+  "title": "Unauthorized"
+}
