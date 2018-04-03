@@ -8,7 +8,6 @@
 
 namespace tests\Controller;
 
-
 use Lakion\ApiTestCase\JsonApiTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
