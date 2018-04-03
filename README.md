@@ -8,6 +8,10 @@
     </a>
 </h1>
 
+# Documentation
+
+Documentation is available at [https://travelsheets.docs.apiary.io/](https://travelsheets.docs.apiary.io/).
+
 # Installation
 
 ## With Docker
