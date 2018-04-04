@@ -21,24 +21,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class UserExampleFactory extends AbstractExampleFactory
 {
     /**
-     * @var \Faker\Generator
-     */
-    private $faker;
-
-    /**
-     * @var OptionsResolver
-     */
-    private $optionsResolver;
-
-    public function __construct()
-    {
-        $this->faker = \Faker\Factory::create();
-        $this->optionsResolver = new OptionsResolver();
-
-        $this->configureOptions($this->optionsResolver);
-    }
-
-    /**
      * @param OptionsResolver $resolver
      */
     protected function configureOptions(OptionsResolver $resolver)
