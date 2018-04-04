@@ -2,7 +2,6 @@
 
 namespace AppBundle\Fixture;
 
-
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 
 class UserFixture extends AbstractResourceFixture
