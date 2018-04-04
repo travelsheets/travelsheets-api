@@ -15,6 +15,14 @@ services:
         tags:
             - { name: sylius_fixtures.fixture }
 
+    app.fixture.transportation_step:
+        class: AppBundle\Fixture\TransportationStepFixture
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@app.fixture.example_factory.transportation_step"
+        tags:
+            - { name: sylius_fixtures.fixture }
+
     app.fixture.travel:
         class: AppBundle\Fixture\TravelFixture
         arguments:
