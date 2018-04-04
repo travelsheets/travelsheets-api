@@ -18,6 +18,9 @@ abstract class AbstractStepExampleFactory extends AbstractExampleFactory
         $travelRepository = $this->entityManager->getRepository(Travel::class);
 
         $resolver
+            ->setDefault('travel', LazyOption::randomOne($travelRepository))
+            ->setNormalizer('travel', LazyOption::findOneBy($travelRepository, 'name'))
+
             ->setDefault('name', function (Options $options) {
                 return ucfirst($this->faker->city);
             })
@@ -27,12 +30,12 @@ abstract class AbstractStepExampleFactory extends AbstractExampleFactory
             })
 
             ->setDefault('date_start', function (Options $options) {
-                return $this->faker->dateTimeInInterval('-1 month', '+1 month');
+                return $this->faker->dateTimeInInterval($options['travel']->getDateStart()->format('c'), $options['travel']->getDateEnd()->format('c'));
             })
             ->setNormalizer('date_start', DateOption::fromString())
 
             ->setDefault('date_end', function(Options $options) {
-                return $this->faker->dateTimeBetween($options['date_start'], '+1 month');
+                return $this->faker->dateTimeBetween($options['date_start']->format('c'), $options['travel']->getDateEnd()->format('c'));
             })
             ->setNormalizer('date_end', DateOption::fromString())
 
@@ -43,9 +46,6 @@ abstract class AbstractStepExampleFactory extends AbstractExampleFactory
             ->setDefault('currency', function(Options $options) {
                 return $this->faker->currencyCode;
             })
-
-            ->setDefault('travel', LazyOption::randomOne($travelRepository))
-            ->setNormalizer('travel', LazyOption::findOneBy($travelRepository, 'name'))
         ;
     }
 }

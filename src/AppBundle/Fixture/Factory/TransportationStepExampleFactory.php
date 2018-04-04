@@ -45,7 +45,7 @@ class TransportationStepExampleFactory extends AbstractStepExampleFactory
             })
 
             ->setDefault('seat', function (Options $options) {
-                return $this->faker->regexify('[A-Z][0-9]{1,3}');
+                return $this->faker->regexify('[A-F][0-9]{1,3}');
             })
 
             ->setDefault('type', function (Options $options) {
