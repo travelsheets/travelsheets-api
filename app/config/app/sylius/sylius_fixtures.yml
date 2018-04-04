@@ -44,3 +44,7 @@ sylius_fixtures:
                 accomodation_step:
                     options:
                         random: 20
+
+                tour_step:
+                    options:
+                        random: 20

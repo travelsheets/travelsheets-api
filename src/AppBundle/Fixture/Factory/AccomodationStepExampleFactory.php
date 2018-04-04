@@ -24,7 +24,7 @@ class AccomodationStepExampleFactory extends AbstractStepExampleFactory
             })
 
             ->setDefault('booking_number', function (Options $options) {
-                return $this->faker->regexify('[a-zA-Z0-9]{8,12}');
+                return $this->faker->regexify('[A-Z0-9]{8,12}');
             })
 
             ->setDefault('type', function (Options $options) {

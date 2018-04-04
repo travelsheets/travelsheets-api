@@ -7,6 +7,14 @@ services:
         tags:
             - { name: sylius_fixtures.fixture }
 
+    app.fixture.tour_step:
+        class: AppBundle\Fixture\TourStepFixture
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@app.fixture.example_factory.tour_step"
+        tags:
+            - { name: sylius_fixtures.fixture }
+
     app.fixture.travel:
         class: AppBundle\Fixture\TravelFixture
         arguments:

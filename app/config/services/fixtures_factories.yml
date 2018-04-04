@@ -4,6 +4,11 @@ services:
         arguments:
             - "@doctrine.orm.entity_manager"
 
+    app.fixture.example_factory.tour_step:
+        class: AppBundle\Fixture\Factory\TourStepExampleFactory
+        arguments:
+            - "@doctrine.orm.entity_manager"
+
     app.fixture.example_factory.travel:
         class: AppBundle\Fixture\Factory\TravelExampleFactory
         arguments:
