@@ -30,7 +30,7 @@ abstract class AbstractStepExampleFactory extends AbstractExampleFactory
             })
 
             ->setDefault('date_start', function (Options $options) {
-                return $this->faker->dateTimeInInterval($options['travel']->getDateStart()->format('c'), $options['travel']->getDateEnd()->format('c'));
+                return $this->faker->dateTimeBetween($options['travel']->getDateStart()->format('c'), $options['travel']->getDateEnd()->format('c'));
             })
             ->setNormalizer('date_start', DateOption::fromString())
 
