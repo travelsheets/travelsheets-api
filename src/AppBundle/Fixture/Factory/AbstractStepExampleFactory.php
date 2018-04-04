@@ -19,7 +19,7 @@ abstract class AbstractStepExampleFactory extends AbstractExampleFactory
 
         $resolver
             ->setDefault('name', function (Options $options) {
-                return ucfirst($this->faker->country);
+                return ucfirst($this->faker->city);
             })
 
             ->setDefault('summary', function(Options $options) {

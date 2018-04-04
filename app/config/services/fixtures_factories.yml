@@ -1,4 +1,9 @@
 services:
+    app.fixture.example_factory.accomodation_step:
+        class: AppBundle\Fixture\Factory\AccomodationStepExampleFactory
+        arguments:
+            - "@doctrine.orm.entity_manager"
+
     app.fixture.example_factory.travel:
         class: AppBundle\Fixture\Factory\TravelExampleFactory
         arguments:

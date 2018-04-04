@@ -40,3 +40,7 @@ sylius_fixtures:
                                 date_start: "+1 week"
                                 date_end: "+2 week"
                                 user: "user@example.com"
+
+                accomodation_step:
+                    options:
+                        random: 20
