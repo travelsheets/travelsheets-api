@@ -31,6 +31,7 @@ class AppKernel extends Kernel
             new Nelmio\CorsBundle\NelmioCorsBundle(),
             new Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle(),
             new Gesdinet\JWTRefreshTokenBundle\GesdinetJWTRefreshTokenBundle(),
+            new Sylius\Bundle\FixturesBundle\SyliusFixturesBundle(),
 
             // Custom
             new AppBundle\AppBundle(),

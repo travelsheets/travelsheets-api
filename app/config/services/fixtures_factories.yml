@@ -1,0 +1,7 @@
+services:
+    app.fixture.example_factory.travel:
+        class: AppBundle\Fixture\Factory\TravelExampleFactory
+        arguments:
+            - "@doctrine.orm.entity_manager"
+    app.fixture.example_factory.user:
+        class: AppBundle\Fixture\Factory\UserExampleFactory
