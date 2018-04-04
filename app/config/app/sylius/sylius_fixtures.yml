@@ -17,10 +17,26 @@ sylius_fixtures:
                                 email: "not.verified@example.com"
                                 password: "password"
                                 verified: false
-                                token: "thisisagreattoken"
+                                token: "ThisIsAGreatToken"
                 travel:
                     options:
                         random: 20
                         custom:
                             -
+                                name: "Dubrovnik"
+                                summary: "Old trip to Croatia"
+                                date_start: "-2 weeks"
+                                date_end: "-1 weeks"
+                                user: "user@example.com"
+                            -
                                 name: "Rome"
+                                summary: "Current trip to Italy!"
+                                date_start: "-1 week"
+                                date_end: "+1 week"
+                                user: "user@example.com"
+                            -
+                                name: "Porto"
+                                summary: "Next trip to Portugal"
+                                date_start: "+1 week"
+                                date_end: "+2 week"
+                                user: "user@example.com"

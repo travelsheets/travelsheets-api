@@ -33,7 +33,31 @@ class TravelExampleFactory extends AbstractExampleFactory
 
         $resolver
             ->setDefault('name', function (Options $options) {
-                return ucfirst($this->faker->words(3, true));
+                return ucfirst($this->faker->country);
+            })
+
+            ->setDefault('summary', function(Options $options) {
+                return $this->faker->sentence(15, true);
+            })
+
+            ->setDefault('date_start', function (Options $options) {
+                return $this->faker->dateTimeInInterval('-1 month', '+1 month');
+            })
+            ->setNormalizer('date_start', function(Options $options, $dateStart) {
+                if (!is_string($dateStart)) {
+                    return $dateStart;
+                }
+                return new \DateTime($dateStart);
+            })
+
+            ->setDefault('date_end', function(Options $options) {
+                return $this->faker->dateTimeBetween($options['date_start'], '+1 month');
+            })
+            ->setNormalizer('date_end', function(Options $options, $dateEnd) {
+                if (!is_string($dateEnd)) {
+                    return $dateEnd;
+                }
+                return new \DateTime($dateEnd);
             })
 
             ->setDefault('user', LazyOption::randomOne($userRepository))
@@ -53,8 +77,10 @@ class TravelExampleFactory extends AbstractExampleFactory
         $travel = new Travel();
 
         $travel->setName($options['name']);
+        $travel->setSummary($options['summary']);
+        $travel->setDateStart($options['date_start']);
+        $travel->setDateEnd($options['date_end']);
         $travel->setUser($options['user']);
-        $travel->setDateStart(new \DateTime());
 
         return $travel;
     }
