@@ -1,0 +1,17 @@
+sylius_fixtures:
+    suites:
+        default:
+            listeners:
+                orm_purger: ~
+                logger: ~
+
+            fixtures:
+                user:
+                    options:
+                        random: 20
+                travel:
+                    options:
+                        random: 20
+                        custom:
+                            -
+                                name: "Rome"

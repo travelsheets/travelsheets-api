@@ -1,0 +1,15 @@
+services:
+    app.fixture.travel:
+        class: AppBundle\Fixture\TravelFixture
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@app.fixture.example_factory.travel"
+        tags:
+            - { name: sylius_fixtures.fixture }
+    app.fixture.user:
+        class: AppBundle\Fixture\UserFixture
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@app.fixture.example_factory.user"
+        tags:
+            - { name: sylius_fixtures.fixture }
