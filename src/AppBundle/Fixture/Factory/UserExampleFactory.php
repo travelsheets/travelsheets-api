@@ -41,6 +41,14 @@ class UserExampleFactory extends AbstractExampleFactory
             ->setDefault('password', function (Options $options) {
                 return $this->faker->password;
             })
+
+            ->setDefault('verified', function (Options $options) {
+                return true;
+            })
+
+            ->setDefault('token', function(Options $options) {
+                return null;
+            })
         ;
     }
 
@@ -55,10 +63,15 @@ class UserExampleFactory extends AbstractExampleFactory
 
         $user = new User();
 
+        // Display email and password to console
+        echo $options['email'] . " : " . $options['password'] . "\r\n";
+
         $user->setFirstname($options['first_name']);
         $user->setLastname($options['last_name']);
         $user->setEmail($options['email']);
         $user->setPlainPassword($options['password']);
+        $user->setVerified($options['verified']);
+        $user->setToken($options['token']);
 
         return $user;
     }

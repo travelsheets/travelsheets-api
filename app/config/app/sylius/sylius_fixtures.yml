@@ -8,7 +8,16 @@ sylius_fixtures:
             fixtures:
                 user:
                     options:
-                        random: 20
+                        random: 5
+                        custom:
+                            -
+                                email: "user@example.com"
+                                password: "password"
+                            -
+                                email: "not.verified@example.com"
+                                password: "password"
+                                verified: false
+                                token: "thisisagreattoken"
                 travel:
                     options:
                         random: 20
