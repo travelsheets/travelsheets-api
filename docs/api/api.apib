@@ -1,0 +1,530 @@
+FORMAT: 1A
+HOST: http://api.travelsheets.quentinmachard.fr/
+
+# Travelsheets
+
+<h1 align="center">
+    <a href="http://travelsheets.quentinmachard.fr/" target="_blank">
+        <img src="http://travelsheets.quentinmachard.fr/banner.png" />
+    </a>
+</h1>
+
+This is the documentation for TravelSheets project. You can retrieve source [here](https://github.com/travelsheets/travelsheets-api).
+
+# Group Authentication
+
+## Registration [/auth/register]
+
+### Registration [POST /auth/register]
+
++ Request (application/json)
+
+    + Attributes (object)
+
+        + firstname: `Jack` (string, required)
+        + lastname: `Sparrow` (string, required)
+        + email: `jack.sparrow@blackpearl.net` (string, required) - Email
+        + password: `YoH0ho!` (string, required) - Password with at least one letter, one numeral, and six characters.
+
++ Response 200 (application/json)
+
+    + Attributes (User)
+
+### Confirm Registration [POST /auth/register/confirm]
+
++ Request (application/json)
+
+    + Attributes (object)
+
+        + email: `jack.sparrow@blackpearl.net` (string, required) - Email
+        + token: `e86c946dc6c1409b017624c62f2033f6` (string, required) - Token received by email
+
++ Response 200 (application/json)
+
+    + Attributes (User)
+
+## Login [/auth/login]
+
+### Login [POST /auth/login]
+
++ Request (application/json)
+
+    + Attributes (Login)
+
++ Response 200 (application/json)
+
+    + Attributes (Token)
+
+### Refresh Token [POST /auth/refresh]
+
++ Request (application/json)
+
+    + Attributes (object)
+
+        + refresh_token: `b73da7e573dac11433d65fd3fd464d235119e9291b18843a0d61b41344c23ee244401ca98d28eaf104ff77afaed49565126f3d8229fb9a527717214e1e0ab145` (string, required)
+
++ Response 200 (application/json)
+
+    + Attributes (Token)
+
+# Group Travel
+
+## Travels Collection [/travels{?page}{?past}]
+
+### List all Travels [GET]
+
++ Parameters
+
+    + page: `1` (number, optional)
+    + past: `true` (boolean, optional) - List only past travels
+
++ Response 200 (application/json)
+
+    + Attributes (Travels)
+
++ Response 206 (application/json)
+
+    + Attributes (Travels)
+
+### Create a Travel [POST]
+
++ Request (application/json)
+
+    + Attributes (object)
+
+        + name: `Voyage en Croatie` (string, required)
+        + summary: `Super voyage en Croatie du 23 au 30 mars` (string, optional)
+        + dateStart: `2018-03-31` (string, required) - Date YYYY-MM-DD
+        + dateEnd: `2018-04-04` (string, optional) - Date YYYY-MM-DD
+
++ Response 201 (application/json)
+
+    + Attributes (Travel)
+
+## Travel Entity [/travels/{id}]
+
++ Parameters
+
+    + id: `1` (number, required)
+
+### Get informations of a Travel [GET]
+
++ Response 200 (application/json)
+
+    + Attributes (Travel)
+
+### Update a Travel [PATCH]
+
++ Request (application/json)
+
+    + Attributes (object)
+
+        + name: `Voyage en Croatie` (string, required)
+        + summary: `Super voyage en Croatie du 23 au 30 mars` (string, optional)
+        + dateStart: `2018-03-31` (string, required) - Date YYYY-MM-DD
+        + dateEnd: `2018-04-04` (string, optional) - Date YYYY-MM-DD
+
++ Response 200 (application/json)
+
+    + Attributes (Travel)
+
+### Delete a Travel [DELETE]
+
++ Response 204 (application/json)
+
+
+# Group Step
+
+## Steps Collection [/travels/{travel}/steps{?page}]
+
++ Parameters
+
+    + travel: `1` (number, required)
+
+### List all Steps [GET]
+
++ Parameters
+
+    + page: `1` (number, optional)
+
++ Response 206 (application/json)
+
+    + Attributes (Steps)
+
++ Response 200 (application/json)
+
+    + Attributes (Steps)
+
+### Create a TourStep [POST /travels/{travel}/steps?type=tourStep]
+
++ Request (application/json)
+
+    + Attributes (object)
+
+        + name: `Parc naturel` (string, required)
+        + summary: `Réserve naturelle la plus belle de Croatie` (string, optional)
+        + dateStart: `2017-11-11 10:00:00` (string, required)
+        + dateEnd: `2017-11-13 10:00:00` (string, optional)
+        + price: `23.0` (number, optional)
+        + currency: `EUR` (string, optional)
+
++ Response 201 (application/json)
+
+    + Attributes (TourStep)
+
+### Create a AccomodationStep [POST /travels/{travel}/steps?type=accomodationStep]
+
++ Request (application/json)
+
+    + Attributes (object)
+
+        + name: `Studio` (string)
+        + summary: `Petit studio dans au coeur de Dubrovnik` (string)
+        + dateStart: `2017-11-11 10:00:00` (string)
+        + dateEnd: `2017-11-13 10:00:00` (string)
+        + price: `78.52` (number)
+        + currency: `EUR` (string)
+        + company: `AirBNB` (string)
+        + bookingNumber: `AZE234` (string)
+        + type: `location` (string)
+
++ Response 201 (application/json)
+
+    + Attributes (AccomodationStep)
+
+### Create a TransportationStep [POST /travels/{travel}/steps?type=transportationStep]
+
++ Request (application/json)
+
+    + Attributes (object)
+
+        + name: `Vol Paris -> Dubrovnik` (string)
+        + summary: `Vol depuis Paris` (string)
+        + dateStart: `2017-11-11 10:00:00` (string)
+        + dateEnd: `2017-11-11 12:00:00` (string)
+        + price: `135.34` (number)
+        + currency: `EUR` (string)
+        + company: `Air France` (string)
+        + bookingNumber: `AZE234` (string)
+        + flightNumber: `E4567` (string)
+        + openingLuggage: `2017-11-11 08:00:00` (string)
+        + closingLuggage: `2017-11-11 10:00:00` (string)
+        + seat: `E23, E24` (string)
+        + type: `plane` (string)
+
++ Response 201 (application/json)
+
+    + Attributes (TransportationStep)
+
+## Step Entity [/travels/{travel}/steps/{step}]
+
++ Parameters
+
+    + travel: `1` (number, required)
+    + step: `1` (number, required)
+
+### Get informations of a Step [GET]
+
++ Response 200 (application/json)
+
+    + Attributes (TourStep)
+
+### Update a Step [PATCH]
+
++ Request (application/json)
+
+    + Attributes (object)
+
+        + name: `Parc naturel` (string, required)
+        + summary: `Réserve naturelle la plus belle de Croatie` (string, optional)
+        + dateStart: `2017-11-11 10:00:00` (string, required)
+        + dateEnd: `2017-11-13 10:00:00` (string, optional)
+        + price: `23.0` (number, optional)
+        + currency: `EUR` (string, optional)
+
++ Response 200 (application/json)
+
+    + Attributes (TourStep)
+
+### Delete a Step [DELETE]
+
++ Response 204 (application/json)
+
+# Group Attachments
+
+## Attachments Collection [/travels/{travel}/steps/{step}/attachments{?page}]
+
++ Parameters
+
+    + travel: `1` (number, required)
+    + step: `1` (number, required)
+
+### List all Attachments [GET]
+
++ Parameters
+
+    + page: `1` (number, optional)
+
++ Response 206 (application/json)
+
+    + Attributes (Attachments)
+
++ Response 200 (application/json)
+
+    + Attributes (Attachments)
+
+### Add an Attachment [POST]
+
++ Request (application/json)
+
+    + Attributes (object)
+
+        + name: `Billets` (string, required)
+        + summary: `Billets d'avion` (string, optional)
+        + file: `5378` (number, required) - ID of Upload Resource
+
++ Response 201 (application/json)
+
+    + Attributes (Attachment)
+
+
+## Attachment Entity [/travels/{travel}/steps/{step}/attachments/{attachment}]
+
++ Parameters
+
+    + travel: `1` (number, required)
+    + step: `1` (number, required)
+    + attachment: `1` (number, required)
+
+### Get informations of an Attachment [GET]
+
++ Response 206 (application/json)
+
+    + Attributes (Attachment)
+
++ Response 200 (application/json)
+
+    + Attributes (Attachment)
+
+### Update an Attachment [PATCH]
+
++ Request (application/json)
+
+    + Attributes (object)
+
+        + name: `Billets` (string, required)
+        + summary: `Billets d'avion` (string, optional)
+        + file: `5378` (number, required) - ID of Upload Resource
+
++ Response 201 (application/json)
+
+    + Attributes (Attachment)
+
+### Delete an Attachment [DELETE]
+
++ Response 204 (application/json)
+
+# Group Upload
+
+## Uploads Collection [/uploads]
+
+### Upload a file [POST]
+
++ Request (multipart/form-data, boundary=AaB03x)
+
+    + Headers
+
+            Content-Length: $requestlen
+
+    + Body
+
+            --AaB03x
+            content-disposition: form-data; name="file"; filename="$filename"
+            Content-Type: $mimetype
+            Content-Transfer-Encoding: binary
+
+            $binarydata
+            --AaB03x--
+
++ Response 201 (application/json)
+
+    + Attributes (Upload)
+
+## Upload Entity [/uploads/{upload}]
+
+### Get informations of an Upload [GET]
+
++ Response 200 (application/json)
+
+    + Attributes (Upload)
+
+### Delete an Upload [DELETE]
+
++ Response 204 (application/json)
+
+# Data Structures
+
+## Errors
+
+### Error 400 (object)
+
++ errors (object)
++ message: `There was a validation error` (string)
++ status: `400` (number)
++ type: `/docs/errors#validation_error` (string)
++ title: `There was a validation error` (string)
+
+### Error 401 (object)
+
++ status: `401` (number)
++ type: `about:blank` (string)
++ title: `Unauthorized` (string)
+
+### Error 403 (object)
+
++ message: `You don't have access to this Travel` (string)
++ status: `403` (number)
++ type: `about:blank` (string)
++ title: `Forbidden` (string)
+
+### Error 404 (object)
+
++ message: `Object not found` (string)
++ status: `404` (number)
++ type: `about:blank` (string)
++ title: `Not found` (string)
+
+## Parameters
+
+### List Parameters (object)
+
++ page: `1` (number, optional)
+
+## Authentication
+
+### User (object)
+
++ firstname: `Jack` (string)
++ lastname: `Sparrow` (string)
++ email: `jack.sparrow@blackpearl.net` (string) - Email
+
+### Login (object)
+
++ email: `jack.sparrow@blackpearl.net` (string) - Email
++ password: `YoH0ho!` (string, required) - Password with at least one letter, one numeral, and six characters.
+
+### Token (object)
+
++ token: `eyJhbGciOiJSUzI1NiJ9.eyJ1c2VybmFtZSI6InVzZXIxQGV4YW1wbGUuY29tIiwiZXhwIjoxNTIyNjg0NjI3LCJpYXQiOjE1MjI2ODEwMjd9.kqvHkt1lfg3liNUTt5NwPZZxuLjPLugu7eEHoqqp_Kixsu78l7sFNMNZquaZp42AKDGKieQ6um9XTFkWIgZO6EyMBCaiguqvaDEL6B_iTNU4lTVoE4tucS-DyWqOBETIUzlvYe8kI_dZ1LIv2rYSkvciLaxiVPHiE6B8JuL4odKIt454CK9lxnn5Zvvejm82N_yEeRbHtI9YSqDZikXEpuQFH8725-dp-TMvRTkiXVLZcaFIPfUQnGBSnzfoT3eBp4p4tzI7k8YPHP_eLJlNQSQ2eMX1oQT8ypKV0MMKCdkCX4Vw--pXxi6wntZQ7kuxUHeQI7asuoMVx8aSIoXoEqfkLjDd1ZI2FdZHvxrHaAenOz9Bda_1-f6OrppSFjUcQoWzbz2t8kgl0cHFSPZhohyOiENKwcWuTe3n6mPxY2QRjmzl8StRkJQRQ4x8t6WUXlrhKFIwdOCBCD5i_dZff1X0QnwQDsiZmyJEQZnIynH_axXWpVozCJjGGuXqByo-3Ps4wLB3iqren85dd6PNIiENBqDdVZi_vtYHgJ2bsUdEweZGslNdksWOcZRX2-78wbiO_5cp0b3lJG9N2SzuqQgrZYNH2J993PfrJczkMzntvZogL1XBp07fXCBStkx7A0A_4emtD0hs9e8L4ofLt51dwJbLXUs7IJ-YGk-sElI` (string) - JWT Token
++ refresh_token: `b73da7e573dac11433d65fd3fd464d235119e9291b18843a0d61b41344c23ee244401ca98d28eaf104ff77afaed49565126f3d8229fb9a527717214e1e0ab145` (string)
+
+## Entity Travel
+
+### Travels (object)
+
++ items (array[Travel])
++ count: `1` (number)
++ total: `1` (number)
++ pagination (object)
+    + current: `1` (number)
+    + first: `1` (number)
+    + last: `1` (number)
+    + next: `2` (number)
+    + last: `2` (number)
+
+### Travel (object)
+
++ @type: `Travel` (string)
++ @id: `1` (number)
++ name: `Voyage en Croatie` (string)
++ summary: `Super voyage en Croatie du 23 au 30 mars` (string)
++ dateStart: `2018-03-31` (string)
++ dateEnd: `2018-04-04` (string)
+
+## Entity Step
+
+### Steps (object)
+
++ items (array[TourStep, AccomodationStep, TransportationStep])
++ count: `1` (number)
++ total: `1` (number)
++ pagination (object)
+    + current: `1` (number)
+    + first: `1` (number)
+    + last: `1` (number)
+    + next: `2` (number)
+    + last: `2` (number)
+
+### TourStep (object)
+
++ @id: `1` (number)
++ @type: `TourStep` (string)
++ name: `Parc naturel` (string)
++ summary: `Réserve naturelle la plus belle de Croatie` (string)
++ dateStart: `2017-11-11 10:00:00` (string)
++ dateEnd: `2017-11-13 10:00:00` (string)
++ price: `23.0` (number)
++ currency: `EUR` (string)
+
+### AccomodationStep (object)
+
++ @id: `2` (number)
++ @type: `AccomodationStep` (string)
++ name: `Studio` (string)
++ summary: `Petit studio dans au coeur de Dubrovnik` (string)
++ dateStart: `2017-11-11 10:00:00` (string)
++ dateEnd: `2017-11-13 10:00:00` (string)
++ price: `78.52` (number)
++ currency: `EUR` (string)
++ company: `AirBNB` (string)
++ bookingNumber: `AZE234` (string)
++ type: `location` (string)
+
+### TransportationStep (object)
+
++ @id: `3` (number)
++ @type: `TransportationStep` (string)
++ name: `Vol Paris -> Dubrovnik` (string)
++ summary: `Vol depuis Paris` (string)
++ dateStart: `2017-11-11 10:00:00` (string)
++ dateEnd: `2017-11-11 12:00:00` (string)
++ price: `135.34` (number)
++ currency: `EUR` (string)
++ company: `Air France` (string)
++ bookingNumber: `AZE234` (string)
++ flightNumber: `E4567` (string)
++ openingLuggage: `2017-11-11 08:00:00` (string)
++ closingLuggage: `2017-11-11 10:00:00` (string)
++ seat: `E23, E24` (string)
++ type: `plane` (string)
+
+## Entity Attachment
+
+### Attachments (object)
+
++ items (array[Attachment])
++ count: `1` (number)
++ total: `1` (number)
++ pagination (object)
+    + current: `1` (number)
+    + first: `1` (number)
+    + last: `1` (number)
+    + next: `2` (number)
+    + last: `2` (number)
+
+### Attachment (object)
+
++ @type: `StepAttachment` (string)
++ @id: `1` (number)
++ name: `Billets` (string)
++ summary: `Billets d'avion` (string)
+
+## Entity Upload
+
+### Upload (object)
+
++ @type: `Upload` (string)
++ @id: `1` (number)
++ filename: `238ba502fe15497ba7490aef96d3a16d.pdf` (string)
++ path: `/attachments/2018/04/02/` (string)
++ mimeType: `application/pdf` (string)
