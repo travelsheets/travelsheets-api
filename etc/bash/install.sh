@@ -26,4 +26,4 @@ run_command "bin/console doctrine:migrations:migrate --env=dev --no-debug -vvv" 
 
 # Load Fixtures
 print_header "Load Fixtures" "Travelsheets"
-run_command "bin/console doctrine:fixtures:load --env=dev --no-debug -vvv" || exit $?
+retry_run_command "bin/console sy:fi:lo --env=dev --no-debug -vvv --no-interaction"
