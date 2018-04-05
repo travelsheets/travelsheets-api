@@ -1,25 +1,25 @@
 services:
-    app.fixture.example_factory.accomodation_step:
-        class: AppBundle\Fixture\Factory\AccomodationStepExampleFactory
+    app.fixture.example_factory.abstract:
+        class: AppBundle\Fixture\Factory\AbstractExampleFactory
         arguments:
             - "@doctrine.orm.entity_manager"
+
+    app.fixture.example_factory.accomodation_step:
+        class: AppBundle\Fixture\Factory\AccomodationStepExampleFactory
+        parent: "app.fixture.example_factory.abstract"
 
     app.fixture.example_factory.tour_step:
         class: AppBundle\Fixture\Factory\TourStepExampleFactory
-        arguments:
-            - "@doctrine.orm.entity_manager"
+        parent: "app.fixture.example_factory.abstract"
 
     app.fixture.example_factory.transportation_step:
         class: AppBundle\Fixture\Factory\TransportationStepExampleFactory
-        arguments:
-            - "@doctrine.orm.entity_manager"
+        parent: "app.fixture.example_factory.abstract"
 
     app.fixture.example_factory.travel:
         class: AppBundle\Fixture\Factory\TravelExampleFactory
-        arguments:
-            - "@doctrine.orm.entity_manager"
+        parent: "app.fixture.example_factory.abstract"
 
     app.fixture.example_factory.user:
         class: AppBundle\Fixture\Factory\UserExampleFactory
-        arguments:
-            - "@doctrine.orm.entity_manager"
+        parent: "app.fixture.example_factory.abstract"
