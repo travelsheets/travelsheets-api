@@ -23,9 +23,7 @@ class TourStepFixture extends AbstractResourceFixture
 
         $resourceNode
             ->children()
-//            ->scalarNode('place')->end()
             ->scalarNode('booking_number')->end()
-            ->scalarNode('type')->end()
         ;
     }
 }

@@ -16,9 +16,6 @@ class AccomodationStepExampleFactory extends AbstractStepExampleFactory
         parent::configureOptions($resolver);
 
         $resolver
-//            ->setDefault('place', function (Options $options) {
-//                return null;
-//            })
             ->setDefault('company', function (Options $options) {
                 return $this->faker->company;
             })
@@ -50,12 +47,10 @@ class AccomodationStepExampleFactory extends AbstractStepExampleFactory
         $accomodationStep->setDateEnd($options['date_end']);
         $accomodationStep->setPrice($options['price']);
         $accomodationStep->setCurrency($options['currency']);
-//        $accomodationStep->setPlace($options['place']);
         $accomodationStep->setCompany($options['company']);
         $accomodationStep->setBookingNumber($options['booking_number']);
         $accomodationStep->setType($options['type']);
 
         return $accomodationStep;
     }
-
 }

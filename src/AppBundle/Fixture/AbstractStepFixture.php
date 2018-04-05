@@ -13,13 +13,14 @@ abstract class AbstractStepFixture extends AbstractResourceFixture
     {
         $resourceNode
             ->children()
-            ->scalarNode('name')->end()
+            ->scalarNode('travel')->cannotBeEmpty()->end()
+            ->scalarNode('type')->cannotBeEmpty()->end()
+            ->scalarNode('name')->cannotBeEmpty()->end()
             ->scalarNode('summary')->end()
-            ->scalarNode('date_start')->end()
+            ->scalarNode('date_start')->cannotBeEmpty()->end()
             ->scalarNode('date_end')->end()
             ->scalarNode('price')->end()
             ->scalarNode('currency')->end()
-            ->scalarNode('travel')->end()
         ;
     }
 }

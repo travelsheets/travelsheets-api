@@ -20,13 +20,10 @@ class AccomodationStepFixture extends AbstractResourceFixture
     protected function configureResourceNode(ArrayNodeDefinition $resourceNode)
     {
         parent::configureResourceNode($resourceNode);
-
         $resourceNode
             ->children()
-//            ->scalarNode('place')->end()
             ->scalarNode('company')->end()
             ->scalarNode('booking_number')->end()
-            ->scalarNode('type')->end()
         ;
     }
 }

@@ -16,10 +16,6 @@ class TourStepExampleFactory extends AbstractStepExampleFactory
         parent::configureOptions($resolver);
 
         $resolver
-//            ->setDefault('place', function (Options $options) {
-//                return null;
-//            })
-
             ->setDefault('booking_number', function (Options $options) {
                 return $this->faker->regexify('[A-Z0-9]{8,12}');
             })
@@ -48,11 +44,9 @@ class TourStepExampleFactory extends AbstractStepExampleFactory
         $tourStep->setPrice($options['price']);
         $tourStep->setCurrency($options['currency']);
 
-//        $tourStep->setPlace($options['place']);
         $tourStep->setBookingNumber($options['booking_number']);
         $tourStep->setType($options['type']);
 
         return $tourStep;
     }
-
 }

@@ -16,14 +16,6 @@ class TransportationStepExampleFactory extends AbstractStepExampleFactory
         parent::configureOptions($resolver);
 
         $resolver
-//            ->setDefault('from', function (Options $options) {
-//                return null;
-//            })
-
-//            ->setDefault('to', function (Options $options) {
-//                return null;
-//            })
-
             ->setDefault('company', function (Options $options) {
                 return $this->faker->company;
             })
@@ -72,8 +64,6 @@ class TransportationStepExampleFactory extends AbstractStepExampleFactory
         $transportationStep->setPrice($options['price']);
         $transportationStep->setCurrency($options['currency']);
 
-//        $transportationStep->setFrom($options['from']);
-//        $transportationStep->setTo($options['to']);
         $transportationStep->setCompany($options['company']);
         $transportationStep->setBookingNumber($options['booking_number']);
         $transportationStep->setFlightNumber($options['flight_number']);
@@ -84,5 +74,4 @@ class TransportationStepExampleFactory extends AbstractStepExampleFactory
 
         return $transportationStep;
     }
-
 }

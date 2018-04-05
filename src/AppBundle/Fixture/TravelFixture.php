@@ -24,11 +24,11 @@ class TravelFixture extends AbstractResourceFixture
     {
         $resourceNode
             ->children()
-            ->scalarNode('name')->end()
+            ->scalarNode('name')->cannotBeEmpty()->end()
             ->scalarNode('summary')->end()
-            ->scalarNode('date_start')->end()
+            ->scalarNode('date_start')->cannotBeEmpty()->end()
             ->scalarNode('date_end')->end()
-            ->scalarNode('user')->end()
+            ->scalarNode('user')->cannotBeEmpty()->end()
         ;
     }
 }

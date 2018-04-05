@@ -23,15 +23,12 @@ class TransportationStepFixture extends AbstractResourceFixture
 
         $resourceNode
             ->children()
-//            ->scalarNode('from')->end()
-//            ->scalarNode('to')->end()
             ->scalarNode('company')->end()
             ->scalarNode('booking_number')->end()
             ->scalarNode('flight_number')->end()
             ->scalarNode('opening_luggage')->end()
             ->scalarNode('closing_luggage')->end()
             ->scalarNode('seat')->end()
-            ->scalarNode('type')->end()
         ;
     }
 }

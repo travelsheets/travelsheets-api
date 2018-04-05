@@ -22,10 +22,10 @@ class UserFixture extends AbstractResourceFixture
     {
         $resourceNode
             ->children()
-            ->scalarNode('first_name')->end()
-            ->scalarNode('last_name')->end()
-            ->scalarNode('email')->end()
-            ->scalarNode('password')->end()
+            ->scalarNode('first_name')->cannotBeEmpty()->end()
+            ->scalarNode('last_name')->cannotBeEmpty()->end()
+            ->scalarNode('email')->cannotBeEmpty()->end()
+            ->scalarNode('password')->cannotBeEmpty()->end()
             ->scalarNode('verified')->end()
             ->scalarNode('token')->end()
         ;
