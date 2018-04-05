@@ -1,4 +1,28 @@
 services:
+    app.fixture.accomodation_step:
+        class: AppBundle\Fixture\AccomodationStepFixture
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@app.fixture.example_factory.accomodation_step"
+        tags:
+            - { name: sylius_fixtures.fixture }
+
+    app.fixture.tour_step:
+        class: AppBundle\Fixture\TourStepFixture
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@app.fixture.example_factory.tour_step"
+        tags:
+            - { name: sylius_fixtures.fixture }
+
+    app.fixture.transportation_step:
+        class: AppBundle\Fixture\TransportationStepFixture
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@app.fixture.example_factory.transportation_step"
+        tags:
+            - { name: sylius_fixtures.fixture }
+
     app.fixture.travel:
         class: AppBundle\Fixture\TravelFixture
         arguments:
@@ -6,6 +30,7 @@ services:
             - "@app.fixture.example_factory.travel"
         tags:
             - { name: sylius_fixtures.fixture }
+
     app.fixture.user:
         class: AppBundle\Fixture\UserFixture
         arguments:

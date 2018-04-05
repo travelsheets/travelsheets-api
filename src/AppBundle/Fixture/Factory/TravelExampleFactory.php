@@ -1,57 +1,16 @@
 <?php
 
-/**
- * This file is part of Jedisjeux
- *
- * (c) Loïc Frémont
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace AppBundle\Fixture\Factory;
+
 use AppBundle\Entity\Travel;
 use AppBundle\Entity\User;
+use AppBundle\Fixture\OptionsResolver\DateOption;
 use AppBundle\Fixture\OptionsResolver\LazyOption;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-
-/**
- * @author Loïc Frémont <loic@mobizel.com>
- */
 class TravelExampleFactory extends AbstractExampleFactory
 {
-    /**
-     * @var EntityManager
-     */
-    private $entityManager;
-
-    /**
-     * @var \Faker\Generator
-     */
-    private $faker;
-
-    /**
-     * @var OptionsResolver
-     */
-    private $optionsResolver;
-
-    /**
-     * @param EntityManager $entityManager
-     */
-    public function __construct(EntityManager $entityManager)
-    {
-        $this->entityManager = $entityManager;
-
-        $this->faker = \Faker\Factory::create();
-        $this->optionsResolver = new OptionsResolver();
-
-        $this->configureOptions($this->optionsResolver);
-    }
-
     /**
      * @param OptionsResolver $resolver
      */
@@ -61,8 +20,22 @@ class TravelExampleFactory extends AbstractExampleFactory
 
         $resolver
             ->setDefault('name', function (Options $options) {
-                return ucfirst($this->faker->words(3, true));
+                return ucfirst($this->faker->country);
             })
+
+            ->setDefault('summary', function(Options $options) {
+                return $this->faker->sentence(15, true);
+            })
+
+            ->setDefault('date_start', function (Options $options) {
+                return $this->faker->dateTimeInInterval('-1 month', '+1 month');
+            })
+            ->setNormalizer('date_start', DateOption::fromString())
+
+            ->setDefault('date_end', function(Options $options) {
+                return $this->faker->dateTimeBetween($options['date_start'], '+1 month');
+            })
+            ->setNormalizer('date_end', DateOption::fromString())
 
             ->setDefault('user', LazyOption::randomOne($userRepository))
             ->setNormalizer('user', LazyOption::findOneBy($userRepository, 'email'))
@@ -81,8 +54,10 @@ class TravelExampleFactory extends AbstractExampleFactory
         $travel = new Travel();
 
         $travel->setName($options['name']);
+        $travel->setSummary($options['summary']);
+        $travel->setDateStart($options['date_start']);
+        $travel->setDateEnd($options['date_end']);
         $travel->setUser($options['user']);
-        $travel->setDateStart(new \DateTime());
 
         return $travel;
     }

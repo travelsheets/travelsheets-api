@@ -1,43 +1,13 @@
 <?php
 
-/**
- * This file is part of Jedisjeux
- *
- * (c) Loïc Frémont
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace AppBundle\Fixture\Factory;
+
 use AppBundle\Entity\User;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-
-/**
- * @author Loïc Frémont <loic@mobizel.com>
- */
 class UserExampleFactory extends AbstractExampleFactory
 {
-    /**
-     * @var \Faker\Generator
-     */
-    private $faker;
-
-    /**
-     * @var OptionsResolver
-     */
-    private $optionsResolver;
-
-    public function __construct()
-    {
-        $this->faker = \Faker\Factory::create();
-        $this->optionsResolver = new OptionsResolver();
-
-        $this->configureOptions($this->optionsResolver);
-    }
-
     /**
      * @param OptionsResolver $resolver
      */
@@ -59,6 +29,14 @@ class UserExampleFactory extends AbstractExampleFactory
             ->setDefault('password', function (Options $options) {
                 return $this->faker->password;
             })
+
+            ->setDefault('verified', function (Options $options) {
+                return true;
+            })
+
+            ->setDefault('token', function(Options $options) {
+                return null;
+            })
         ;
     }
 
@@ -73,10 +51,15 @@ class UserExampleFactory extends AbstractExampleFactory
 
         $user = new User();
 
+        // Display email and password to console
+        echo $options['email'] . " : " . $options['password'] . "\r\n";
+
         $user->setFirstname($options['first_name']);
         $user->setLastname($options['last_name']);
         $user->setEmail($options['email']);
         $user->setPlainPassword($options['password']);
+        $user->setVerified($options['verified']);
+        $user->setToken($options['token']);
 
         return $user;
     }
